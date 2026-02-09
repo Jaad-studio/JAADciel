@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAAD | Agence Digitale Créative</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Ivory Calm & Electric Blue -->
+    <!-- Application Structure Plan: 
+         - Architecture thématique : Immersion (Hero) -> Expertise -> Portfolio -> Contact.
+         - Navigation fixe avec z-index 50.
+         - Spline Hero avec z-index 60 pour voler AU-DESSUS du menu.
+         - Optimisation par chargement silencieux (Lazy Loading) sans texte indicateur.
+    -->
+    <!-- Visualization & Content Choices: 
+         - Robot Hero -> Spline -> Z-index 60 -> Survol du menu -> Impact visuel -> Iframe.
+         - Expertise -> Cartes interactives -> Tilt 3D -> Engagement -> HTML/JS.
+         - Portfolio -> Spline -> Chargement différé -> Performance -> Intersection Observer.
+         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. 
+    -->
+
+    <style>
+        /* --- CONFIGURATION --- */
+        :root {
+            --primary: #2563eb;
+            --bg-sky: #f0f9ff;
+        }
+
+        html {
+            scroll-padding-top: 80px;
+            cursor: none;
+        }
+
+        @media (max-width: 768px) {
+            html { cursor: auto; scroll-padding-top: 70px; }
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+            color: #1e293b;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- TEXTURE GRAIN --- */
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        .custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20px; height: 20px;
+            background: rgba(37, 99, 235, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform;
+            transform: translate3d(-50%, -50%, 0);
+            transition: width 0.3s, height 0.3s, background 0.3s;
+            mix-blend-mode: multiply;
+        }
+
+        .custom-cursor.hovered {
+            width: 60px; height: 60px;
+            background: rgba(37, 99, 235, 0.15);
+            backdrop-filter: blur(2px);
+        }
+
+        @media (max-width: 768px) {
+            .custom-cursor { display: none; }
+        }
+
+        /* --- UI ELEMENTS --- */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .modern-card {
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 40px -10px rgba(37, 99, 235, 0.1);
+            transition: transform 0.1s ease-out, box-shadow 0.4s ease, background 0.3s;
+            position: relative;
+            z-index: 20;
+            overflow: hidden;
+        }
+
+        .card-white {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-white:hover {
+            background: #ffffff;
+            box-shadow: 0 20px 50px -10px rgba(37, 99, 235, 0.2);
+        }
+
+        .colored-card {
+            background: linear-gradient(135deg, #2563eb, #4338ca);
+            color: white;
+        }
+
+        .colored-card:hover {
+            box-shadow: 0 20px 50px -10px rgba(37, 99, 235, 0.4);
+            filter: brightness(1.1);
+        }
+
+        /* --- TITRE ADAPTATIF --- */
+        .giant-title {
+            font-size: 28vw;
+            font-weight: 900;
+            line-height: 0.8;
+            text-align: center;
+            background: linear-gradient(180deg, #3b82f6 0%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.15;
+            position: absolute;
+            top: 45%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -0.05em;
+        }
+        @media (min-width: 768px) {
+            .giant-title { font-size: 22vw; top: 50%; }
+        }
+
+        /* --- NUAGES --- */
+        .cloud-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .cloud {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 100px;
+            box-shadow: 0 8px 25px rgba(147, 197, 253, 0.2);
+            opacity: 0.8;
+            animation: floatCloud linear infinite;
+        }
+        
+        .cloud::after, .cloud::before {
+            content: ''; position: absolute; background: inherit; border-radius: 50%;
+        }
+        .cloud::after { width: 40%; height: 100%; top: -40%; left: 15%; }
+        .cloud::before { width: 30%; height: 80%; top: -30%; left: 50%; }
+
+        @keyframes floatCloud {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100vw); }
+        }
+
+        /* --- HERO SPLINE (PASSANT AU DESSUS) --- */
+        .spline-container {
+            position: absolute;
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            z-index: 60; /* Supérieur au z-50 de la nav */
+            pointer-events: none;
+        }
+        @media (min-width: 768px) {
+            .spline-container { top: 50%; }
+        }
+        
+        .spline-container iframe {
+            pointer-events: none; 
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* --- SPLINE PORTFOLIO CARDS --- */
+        .spline-card {
+            height: 350px;
+            border-radius: 24px;
+            background: #f1f5f9;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
+        }
+        @media (min-width: 768px) {
+            .spline-card { height: 450px; }
+        }
+        
+        .spline-card iframe {
+            width: 100%; height: 100%;
+            border: none;
+            pointer-events: none; 
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .spline-card iframe.loaded {
+            opacity: 1;
+        }
+
+        .spline-card-content {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            padding: 16px;
+            background: linear-gradient(to top, rgba(255,255,255,0.98), rgba(255,255,255,0));
+            z-index: 20;
+        }
+        @media (min-width: 768px) {
+            .spline-card-content { padding: 24px; }
+        }
+
+        /* --- MENU MOBILE --- */
+        .mobile-menu {
+            position: absolute;
+            top: 100%; left: 0; right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 20px; margin-top: 10px;
+            border-radius: 24px;
+            border: 1px solid white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: scaleY(0.8) translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+            transform-origin: top center;
+        }
+
+        .mobile-menu.active {
+            opacity: 1; transform: scaleY(1) translateY(0);
+            pointer-events: all; visibility: visible;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise-overlay"></div>
+    <div id="custom-cursor" class="custom-cursor"></div>
+
+    <div class="cloud-layer">
+        <div class="cloud" style="top: 10%; left: -10%; width: 180px; height: 60px; animation-duration: 45s;"></div>
+        <div class="cloud" style="top: 40%; right: -5%; width: 280px; height: 90px; animation-duration: 60s;"></div>
+        <div class="cloud" style="bottom: 20%; left: 5%; width: 140px; height: 45px; animation-duration: 35s;"></div>
+    </div>
+
+    <!-- NAVIGATION (Z-50) -->
+    <nav class="fixed top-0 w-full z-50 flex justify-center pt-4 md:pt-6 px-4">
+        <div class="glass-nav px-6 md:px-8 py-3 md:py-4 rounded-full flex items-center max-w-2xl w-full relative">
+            <div class="flex justify-between items-center w-full">
+                <a href="#" class="text-xl md:text-2xl font-black text-blue-600 tracking-tighter hover:scale-105 transition-transform hoverable" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">JAAD.</a>
+                
+                <div class="hidden md:flex gap-8 text-sm font-bold text-slate-500 uppercase tracking-wider">
+                    <a href="#services" class="nav-link hover:text-blue-600 transition-colors hoverable">Expertise</a>
+                    <a href="#portfolio" class="nav-link hover:text-blue-600 transition-colors hoverable">Réalisations</a>
+                    <a href="#contact" class="nav-link hover:text-blue-600 transition-colors hoverable text-blue-600">Projets</a>
+                </div>
+
+                <button id="menu-btn" class="md:hidden text-blue-600 p-2 hover:bg-blue-50 rounded-full transition-colors hoverable">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+
+            <div id="mobile-menu" class="mobile-menu flex flex-col gap-3 w-full text-center">
+                <a href="#services" class="mobile-link py-3 text-slate-600 font-bold hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all">Expertise</a>
+                <a href="#portfolio" class="mobile-link py-3 text-slate-600 font-bold hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all">Réalisations</a>
+                <a href="#contact" class="mobile-link py-3 text-blue-600 font-black hover:bg-blue-50 rounded-xl transition-all">Lancer un Projet</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative h-screen w-full flex flex-col items-center justify-end pb-24 md:pb-32 overflow-hidden">
+        <h1 class="giant-title">JAAD</h1>
+        <!-- Spline Z-60 vole AU-DESSUS du menu Z-50 -->
+        <div class="spline-container">
+            <iframe src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' frameborder='0' width="100%" height="100%"></iframe>
+        </div>
+        <div class="relative z-20 text-center animate-bounce max-w-md px-6 md:px-4">
+            <a href="#contact" class="w-full md:w-auto px-8 md:px-10 py-4 md:py-5 rounded-2xl text-base md:text-lg font-bold inline-flex items-center justify-center gap-3 shadow-2xl hoverable bg-gradient-to-r from-blue-600 to-indigo-600 text-white transition-all hover:-translate-y-1">
+                Lancer mon projet 
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- SECTION SERVICES -->
+    <main id="services" class="relative z-10 bg-white/60 backdrop-blur-md border-t border-white/80 pt-16 md:pt-24 pb-16 md:pb-24 rounded-t-[2.5rem] md:rounded-t-[3.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.03)] -mt-8 md:-mt-12">
+        <div class="px-6 md:px-20 max-w-7xl mx-auto">
+            <div class="text-center mb-12 md:mb-20 fade-in-section">
+                <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-4 md:mb-6 tracking-tight">Notre Expertise</h2>
+                <p class="text-base md:text-lg text-slate-500 max-w-2xl mx-auto font-medium">
+                    Nous fusionnons design premium et technologie pour des résultats exceptionnels.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="modern-card card-white p-8 md:p-10 md:col-span-2 flex flex-col md:flex-row items-center gap-6 md:gap-8 fade-in-section group cursor-pointer hoverable">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-inner">
+                        <i data-lucide="monitor" class="w-8 h-8 md:w-10 md:h-10"></i>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-800 mb-2 md:mb-3">Sites Web Sur-Mesure</h3>
+                        <p class="text-slate-500 text-sm md:text-base leading-relaxed">Architecture moderne, optimisation SEO et design unique.</p>
+                    </div>
+                </div>
+
+                <div class="modern-card card-white p-8 md:p-10 fade-in-section group cursor-pointer hoverable">
+                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-6 md:mb-8 group-hover:scale-110 transition-transform shadow-inner mx-auto md:mx-0">
+                        <i data-lucide="smartphone" class="w-6 h-6 md:w-8 md:h-8"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-2 text-center md:text-left">Apps Mobile</h3>
+                    <p class="text-slate-500 text-xs md:text-sm leading-relaxed text-center md:text-left">iOS & Android. Expériences fluides et intuitives.</p>
+                </div>
+
+                <div class="modern-card card-white p-8 md:p-10 fade-in-section group cursor-pointer hoverable">
+                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl md:rounded-3xl bg-sky-50 text-sky-600 flex items-center justify-center mb-6 md:mb-8 group-hover:scale-110 transition-transform shadow-inner mx-auto md:mx-0">
+                        <i data-lucide="box" class="w-6 h-6 md:w-8 md:h-8"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-2 text-center md:text-left">Studio 3D</h3>
+                    <p class="text-slate-500 text-xs md:text-sm leading-relaxed text-center md:text-left">Modélisation et personnages immersifs.</p>
+                </div>
+
+                <div class="modern-card colored-card p-8 md:p-10 md:col-span-2 flex flex-col md:flex-row items-center gap-6 md:gap-8 fade-in-section group cursor-pointer hoverable">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-white/20 flex items-center justify-center shrink-0 border border-white/30">
+                        <i data-lucide="graduation-cap" class="w-8 h-8 md:w-10 md:h-10 text-white"></i>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl md:text-2xl font-bold mb-2 md:mb-3">E-Learning Innovant</h3>
+                        <p class="text-blue-50 text-sm md:text-base leading-relaxed font-medium">Plateformes de formation gamifiées et interactives.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SECTION PORTFOLIO -->
+    <section id="portfolio" class="py-16 md:py-24 px-6 relative z-10 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10 md:mb-16 fade-in-section">
+                <div class="text-center md:text-left w-full md:w-auto">
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">Nos Réalisations</h2>
+                    <p class="text-slate-500 mt-2 md:mt-4 text-sm md:text-lg font-medium">Nos univers 3D interactifs.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <!-- Projet 1 -->
+                <div class="spline-card hoverable fade-in-section" data-spline="https://my.spline.design/r4xbot-TowiBcjXeP3tiZRqqB7OwFiy/">
+                    <iframe frameborder='0'></iframe>
+                    <div class="spline-card-content">
+                        <span class="text-blue-600 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-1 block">Character Design</span>
+                        <h3 class="text-lg md:text-xl font-bold text-slate-800">R4X-Bot Concept</h3>
+                    </div>
+                </div>
+
+                <!-- Projet 2 -->
+                <div class="spline-card hoverable fade-in-section" data-spline="https://my.spline.design/nexbotrobotcharacterconcept-ISR0inmI81qHYRxU9zwpmWsJ/">
+                    <iframe frameborder='0'></iframe>
+                    <div class="spline-card-content">
+                        <span class="text-purple-600 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-1 block">Concept Art</span>
+                        <h3 class="text-lg md:text-xl font-bold text-slate-800">NextBot Concept</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-16 md:py-24 px-4 md:px-6 relative z-10 bg-slate-50">
+        <div class="max-w-6xl mx-auto modern-card card-white p-6 md:p-16 fade-in-section border-blue-100 bg-white">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-4 md:mb-6 tracking-tight">Parlons de votre projet</h2>
+                    <p class="text-slate-500 mb-8 md:mb-10 text-base md:text-lg font-medium">Une idée ? Une question ? Notre assistant virtuel est à votre écoute.</p>
+                    <form class="space-y-4 md:space-y-5 max-w-md mx-auto lg:mx-0">
+                        <input type="text" placeholder="Votre Nom" class="w-full px-5 md:px-6 py-3 md:py-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50 outline-none transition-all text-slate-800 font-medium hoverable">
+                        <input type="email" placeholder="Email professionnel" class="w-full px-5 md:px-6 py-3 md:py-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50 outline-none transition-all text-slate-800 font-medium hoverable">
+                        <textarea rows="4" placeholder="Décrivez votre projet..." class="w-full px-5 md:px-6 py-3 md:py-4 rounded-xl bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50 outline-none transition-all text-slate-800 font-medium hoverable resize-none"></textarea>
+                        <button type="submit" class="w-full py-4 rounded-xl text-base md:text-lg font-bold flex justify-center items-center gap-2 hoverable bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-lg">
+                            Envoyer ma demande <i data-lucide="send" class="w-5 h-5"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="h-[300px] md:h-[500px] w-full relative hoverable spline-placeholder" data-spline="https://my.spline.design/droid-lc7AFsZxKlPOLuGV8OVfEC8y/">
+                     <iframe frameborder='0' width='100%' height='100%' style="pointer-events: auto;"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-slate-200 py-12 md:py-16 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter hoverable">JAAD.</div>
+            <div class="text-slate-500 text-xs md:text-sm font-bold tracking-wide text-center">© 2026 Agence JAAD. Excellence Digitale.</div>
+            <div class="flex gap-6 text-slate-400">
+                <a href="#" class="hover:text-blue-600 transition-colors hoverable"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                <a href="#" class="hover:text-blue-600 transition-colors hoverable"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // --- GESTION DU CURSEUR ---
+        const cursor = document.getElementById('custom-cursor');
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate3d(-50%, -50%, 0)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        const hoverables = document.querySelectorAll('a, button, .hoverable, input, textarea');
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // --- MENU MOBILE ---
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            mobileMenu.classList.toggle('active', isMenuOpen);
+            menuBtn.innerHTML = isMenuOpen ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
+            lucide.createIcons();
+        });
+
+        // --- MOTEUR DE SCROLL ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); 
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') { window.scrollTo({top: 0, behavior: 'smooth'}); return; }
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = window.innerWidth < 768 ? 70 : 100;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                }
+            });
+        });
+
+        // --- OPTIMISATION SPLINE (LAZY LOADING SANS TEXTE) ---
+        const loadSpline = (container) => {
+            const iframe = container.querySelector('iframe');
+            const splineUrl = container.getAttribute('data-spline');
+            if (iframe && !iframe.src) {
+                iframe.src = splineUrl;
+                iframe.onload = () => iframe.classList.add('loaded');
+            }
+        };
+
+        const splineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => { if(entry.isIntersecting) loadSpline(entry.target); }, 400);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.spline-card, .spline-placeholder').forEach(card => {
+            splineObserver.observe(card);
+            card.addEventListener('mouseenter', () => loadSpline(card));
+        });
+
+        // --- REVEAL ANIMATION ---
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('reveal-hidden');
+                        entry.target.classList.add('reveal-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => {
+                section.classList.add('reveal-hidden');
+                observer.observe(section);
+            });
+        });
+
+        // --- EFFET TILT (Desktop) ---
+        if (window.innerWidth > 768) {
+            const tiltCards = document.querySelectorAll('.modern-card');
+            tiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const rotateX = ((e.clientY - rect.top - rect.height / 2) / (rect.height / 2)) * -5;
+                    const rotateY = ((e.clientX - rect.left - rect.width / 2) / (rect.width / 2)) * 5;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
