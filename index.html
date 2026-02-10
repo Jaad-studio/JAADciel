@@ -78,7 +78,7 @@
         /* --- BOUTON NUAGE --- */
         .cloud-btn {
             position: relative; animation: floatButton 4s ease-in-out infinite;
-            background: var(--primary); box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.4), 0 0 15px 0px rgba(255, 255, 255, 0.3);
+            background: var(--primary); box-shadow: 0 10px 30px -10 rgba(37, 99, 235, 0.4), 0 0 15px 0px rgba(255, 255, 255, 0.3);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform;
         }
         .cloud-btn:hover {
@@ -108,32 +108,32 @@
         .modern-card:hover { transform: translate3d(0, -8px, 0); background: #ffffff; border-color: var(--card-border); box-shadow: 0 30px 60px -20px rgba(37, 99, 235, 0.1); }
         .colored-card { background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); color: white; border: none; }
 
-        /* TITRE PARALLAXE - CORRIGÉ POUR MOBILE */
+        /* TITRE PARALLAXE - SYNCHRONISÉ AU CENTRE */
         .giant-title {
             font-size: 28vw; font-weight: 900; line-height: 0.8; text-align: center;
             background: linear-gradient(180deg, #3b82f6 0%, #93c5fd 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             opacity: 0.12; position: absolute; 
-            top: 55%; left: 50%; /* Descendu sur mobile */
+            top: 58%; left: 50%;
             transform: translate(-50%, -50%); z-index: 1; pointer-events: none;
             will-change: transform;
         }
-        @media (min-width: 768px) { .giant-title { font-size: 24vw; top: 50%; } }
+        @media (min-width: 768px) { .giant-title { font-size: 24vw; top: 58%; } }
 
-        /* SPLINE HERO - CORRIGÉ POSITION ET TAILLE MOBILE */
+        /* SPLINE HERO - SYNCHRONISÉ AU CENTRE */
         #spline-hero-container {
             position: absolute; 
-            top: 55%; left: 50%; /* Descendu pour ne pas cacher le menu */
-            transform: translate(-50%, -50%) scale(1.6); /* Taille réajustée pour mobile */
+            top: 58%; left: 50%;
+            transform: translate(-50%, -50%) scale(3.5);
             width: 100%; height: 100%; z-index: 60; 
             pointer-events: none; display: flex; align-items: center; justify-content: center;
-            transition: z-index 0.3s step-end, top 0.3s ease;
+            transition: z-index 0.3s ease, top 0.3s ease, transform 0.3s ease;
         }
         
-        #spline-hero-container.behind-menu { z-index: 40 !important; }
+        #spline-hero-container.behind-menu { z-index: 10 !important; opacity: 0.2; }
 
         @media (min-width: 768px) {
-            #spline-hero-container { top: 50%; transform: translate(-50%, -50%) scale(1.4); }
+            #spline-hero-container { top: 58%; transform: translate(-50%, -50%) scale(1.8); }
         }
         #spline-hero-container iframe { width: 100%; height: 100%; pointer-events: none; }
 
@@ -181,8 +181,8 @@
 
     <!-- NUAGES -->
     <div class="cloud-layer">
-        <div class="cloud" style="top: 15%; left: -10%; width: 180px; height: 60px; animation-duration: 55s;"></div>
-        <div class="cloud" style="top: 45%; right: -5%; width: 250px; height: 90px; animation-duration: 70s;"></div>
+        <div class="cloud" style="top: 15%; left: -10%; width: 220px; height: 70px; animation-duration: 55s;"></div>
+        <div class="cloud" style="top: 45%; right: -5%; width: 350px; height: 110px; animation-duration: 70s;"></div>
     </div>
 
     <div class="noise-overlay"></div>
@@ -190,10 +190,9 @@
     <!-- NAVIGATION -->
     <nav class="fixed top-0 w-full z-50 flex justify-center pt-4 md:pt-6 px-4">
         <div class="glass-nav px-4 md:px-6 py-2 md:py-3 rounded-full flex items-center max-w-6xl w-full justify-between">
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-6">
                 <a href="#" class="text-xl md:text-2xl font-black text-blue-600 tracking-tighter" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">JAAD.</a>
                 
-                <!-- Desktop Switcher -->
                 <div class="hidden lg:flex lang-switcher-elite">
                     <button class="lang-elite-item active" onclick="switchLanguage('fr')">FR</button>
                     <button class="lang-elite-item" onclick="switchLanguage('en')">EN</button>
@@ -208,9 +207,8 @@
                 <a href="#contact" class="hover:text-blue-600 transition-colors text-blue-600" data-i18n="nav-contact">Contact</a>
             </div>
 
-            <div class="flex items-center gap-2">
-                <!-- Mobile Switcher (Visible quand le menu est fermé) -->
-                <div id="mobile-lang-switcher" class="lg:hidden flex lang-switcher-elite">
+            <div class="flex items-center gap-3">
+                <div class="lg:hidden flex lang-switcher-elite">
                     <button class="lang-elite-item active" onclick="switchLanguage('fr')">FR</button>
                     <button class="lang-elite-item" onclick="switchLanguage('en')">EN</button>
                     <button class="lang-elite-item" onclick="switchLanguage('ar')">AR</button>
@@ -226,14 +224,13 @@
         </div>
     </nav>
 
-    <!-- HERO -->
-    <header class="relative h-screen w-full flex flex-col items-center justify-end pb-24 md:pb-32 overflow-hidden">
+    <!-- HERO (Corrigé : Bouton descendu en dessous de JAAD) -->
+    <header class="relative h-screen w-full flex flex-col items-center justify-end pb-12 md:pb-16 overflow-hidden">
         <h1 id="parallax-title" class="giant-title">JAAD</h1>
         <div id="spline-hero-container">
-            <!-- Pas d'autoplay pour économiser les ressources -->
             <iframe src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' frameborder='0' onload="this.classList.add('loaded')"></iframe>
         </div>
-        <div class="relative z-20 text-center px-6 mb-10">
+        <div class="relative z-[70] text-center px-6">
             <div class="magnetic-wrap">
                 <a href="#contact" class="cloud-btn px-10 py-5 md:px-12 md:py-6 rounded-full text-base md:text-lg font-bold inline-flex items-center justify-center gap-4 text-white">
                     <span data-i18n="hero-btn">Lancer mon projet</span> <i data-lucide="chevron-right" class="w-5 h-5"></i>
@@ -319,9 +316,9 @@
                 <div>
                     <h2 class="text-4xl md:text-7xl font-black tracking-tighter mb-12 leading-none text-slate-900" data-i18n="cont-title">Parlons<br>Futur.</h2>
                     <form class="space-y-6 max-w-md" onsubmit="event.preventDefault();">
-                        <input type="text" placeholder="Nom" class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-medium" data-i18n-ph="ph-name">
-                        <input type="email" placeholder="Email" class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-medium" data-i18n-ph="ph-email">
-                        <textarea rows="4" placeholder="Votre projet..." class="w-full px-6 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all resize-none font-medium" data-i18n-ph="ph-msg"></textarea>
+                        <input type="text" placeholder="Nom" class="w-full px-8 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-medium" data-i18n-ph="ph-name">
+                        <input type="email" placeholder="Email" class="w-full px-8 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all font-medium" data-i18n-ph="ph-email">
+                        <textarea rows="4" placeholder="Votre projet..." class="w-full px-8 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-blue-600 focus:bg-white outline-none transition-all resize-none font-medium" data-i18n-ph="ph-msg"></textarea>
                         <button type="submit" class="cloud-btn w-full py-5 rounded-2xl text-white font-black text-xl shadow-2xl flex justify-center items-center gap-4 group">
                             <span data-i18n="cont-btn">Envoyer</span> <i data-lucide="send" class="w-6 h-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
                         </button>
@@ -376,10 +373,10 @@
             es: {
                 "nav-expertise": "Experiencia", "nav-realisations": "Proyectos", "nav-contact": "Contacto",
                 "hero-btn": "Iniciar mi proyecto", "exp-title": "Experiencia<br><span class='text-blue-600'>Digital.</span>",
-                "exp-subtitle": "El arte de la inmersión tecnológica", "srv1-title": "Diseño Web", "srv1-desc": "Interfaces de alta costura y arquitecturas modernas.",
-                "srv2-title": "Apps Móviles", "srv2-desc": "Experiencias táctiles fluidas para el mañana.",
+                "exp-subtitle": "El arte de la inmersión tecnológica", "srv1-title": "Diseño Web", "srv1-desc": "Interfaces de alta costura y arquitecturas modernes.",
+                "srv2-title": "Apps Móviles", "srv2-desc": "Experiencias táctiles fluides para el mañana.",
                 "srv3-title": "Estudio 3D", "srv3-desc": "Producción visual interactiva de alta fidelidad.",
-                "srv4-title": "E-Learning", "srv4-desc": "Gamificación y plataformas interactivas.",
+                "srv4-title": "E-Learning", "srv4-desc": "Gamification y plataformas interactivas.",
                 "port-title": "Proyectos.", "port1-label": "Bot de Mantenimiento", "port2-label": "Humanoide",
                 "cont-title": "Hablemos<br>Futuro.", "cont-btn": "Enviar", "ph-name": "Nombre", "ph-email": "Email", "ph-msg": "Tu proyecto..."
             },
@@ -410,7 +407,7 @@
             });
         }
 
-        // --- PRELOADER ---
+        // --- GESTION DU PRELOADER ---
         const preloader = document.getElementById('preloader');
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -435,7 +432,7 @@
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal-hidden').forEach(section => observer.observe(section));
 
-        // --- MENU MOBILE & FIX NAVIGATION ---
+        // --- NAVIGATION & MENU MOBILE ---
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const splineHeroContainer = document.getElementById('spline-hero-container');
