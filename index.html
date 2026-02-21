@@ -3,85 +3,498 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAAD | Diagnostic IA</title>
+    <title>JAAD | Agence Créative Web, 3D, IA & E-learning</title>
+    <meta name="description" content="JAAD Studio : Agence créative spécialisée en Web Design immersif, Studio 3D, Intelligence Artificielle et solutions E-learning.">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --primary: #2563eb; --primary-dark: #1d4ed8; --bg-main: #f9f9fb; --sky-blue: #60a5fa; }
-        body { font-family: 'Outfit', sans-serif; background-color: var(--bg-main); color: #1e293b; }
-        #preloader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%); transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1); }
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-glow: rgba(37, 99, 235, 0.4);
+            --bg-main: #f9f9fb; 
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --sky-blue: #60a5fa; 
+        }
+
+        [lang="ar"] { font-family: 'Noto Sans Arabic', sans-serif; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .noise::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.015;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
+            background: var(--primary);
+            z-index: 1001;
+        }
+
+        /* --- PRELOADER "FILL JAAD" MAJUSCULE --- */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
         .preloader-active { transform: translateY(-100%); }
-        .loader-logo-base { font-size: 6rem; font-weight: 900; color: white; font-style: italic; position: relative; text-transform: uppercase; }
-        .loader-logo-fill { position: absolute; top: 0; left: 0; color: var(--primary-dark); width: 0%; overflow: hidden; white-space: nowrap; transition: width 1s ease-in-out; }
-        #ai-chat-modal { position: fixed; bottom: 2rem; right: 2rem; width: 360px; background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
+
+        .loader-content { position: relative; text-align: center; }
+
+        .loader-logo-base {
+            font-family: 'Outfit', sans-serif;
+            font-size: 6rem;
+            font-weight: 900;
+            color: white; 
+            font-style: italic;
+            letter-spacing: -0.02em;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .loader-logo-fill {
+            position: absolute;
+            top: 0; left: 0;
+            font-family: 'Outfit', sans-serif;
+            font-size: 6rem;
+            font-weight: 900;
+            color: var(--primary-dark); 
+            font-style: italic;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            width: 0%;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: width 1s ease-in-out;
+        }
+
+        /* --- NAVIGATION --- */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05); 
+            transition: all 0.4s ease;
+        }
+        .nav-shrink { padding: 0.75rem 0 !important; }
+
+        /* --- ACTIONS FLOTTANTES --- */
+        .floating-btns {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 1500;
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .action-circle {
+            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; background: #0f172a; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+        }
+        .action-circle:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 15px 30px var(--primary-glow); }
+
+        /* --- BOUTONS (DESIGN RESTAURÉ ✨) --- */
+        .btn-premium {
+            padding: 1.2rem 2.8rem; border-radius: 100px; font-weight: 900; text-transform: uppercase; font-size: 11px;
+            letter-spacing: 0.15em; transition: all 0.4s ease; display: inline-flex; align-items: center; gap: 0.8rem;
+        }
+        .btn-primary { background: #0f172a; color: white; border: none; }
+        .btn-primary:hover { background: var(--primary); transform: scale(1.05); }
+        .btn-secondary { background: white; color: #0f172a; border: 2px solid rgba(0,0,0,0.1); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.05); }
+
+        /* --- CARDS BENTO --- */
+        .bento-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
+        @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(6, 1fr); } }
+        .bento-item {
+            background: var(--bg-card); border-radius: 40px; padding: 3rem; border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.5s ease; position: relative; overflow: hidden;
+        }
+        .bento-item:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .bento-blue { background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%) !important; color: white; border: none; }
+
+        .tag {
+            display: inline-block; padding: 0.4rem 1rem; background: rgba(37, 99, 235, 0.1);
+            border-radius: 100px; font-size: 10px; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.1em; margin-bottom: 1.5rem; color: var(--primary);
+        }
+
+        /* --- MARQUEE --- */
+        .marquee-wrapper { position: relative; overflow: hidden; padding: 3rem 0; white-space: nowrap; }
+        .marquee-content { display: flex; gap: 4rem; animation: marquee 30s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- REVEAL ANIM --- */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        /* --- METHOD --- */
+        .method-card { background: white; border-radius: 40px; padding: 3rem; position: relative; z-index: 10; border: 1px solid rgba(0,0,0,0.04); transition: all 0.4s ease; }
+        .method-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .giant-num { position: absolute; bottom: -2rem; right: -1rem; font-size: 14rem; font-weight: 900; line-height: 1; color: transparent; -webkit-text-stroke: 2px rgba(37, 99, 235, 0.05); z-index: 0; pointer-events: none; }
+        .phase-badge { background: #0f172a; color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.5rem; display: inline-block; }
+
+        /* --- FORM --- */
+        .form-step { display: none; transform: translateY(15px); transition: all 0.5s ease; }
+        .form-step.active { display: block; }
+        .progress-bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 100px; margin-bottom: 3rem; }
+        #form-progress-fill { width: 0%; height: 100%; background: var(--primary); transition: width 0.5s ease; }
+        .service-pill { padding: 0.8rem 1.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; }
+        .service-pill-dark { color: #0f172a; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
+        .service-pill.selected { background: var(--primary); border-color: var(--primary); color: white; }
+
+        /* --- AI CHAT MODAL --- */
+        #ai-chat-modal { position: fixed; bottom: 8rem; right: 2rem; width: 360px; max-width: calc(100vw - 4rem); background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.1); z-index: 1500; display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
+        #ai-chat-modal.active { display: flex; }
         .chat-messages { height: 350px; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #fafafa; }
-        .msg { padding: 0.8rem 1.2rem; border-radius: 18px; font-size: 13px; line-height: 1.5; }
-        .msg-user { align-self: flex-end; background: #2563eb; color: white; }
-        .msg-ai { align-self: flex-start; background: white; border: 1px solid #eee; }
-        .msg-error { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; align-self: center; width: 90%; font-size: 11px; }
+        .msg { padding: 0.8rem 1.2rem; border-radius: 18px; font-size: 13px; line-height: 1.5; max-width: 85%; }
+        .msg-user { align-self: flex-end; background: #2563eb; color: white; border-bottom-right-radius: 4px; }
+        .msg-ai { align-self: flex-start; background: white; color: #0f172a; border-bottom-left-radius: 4px; border: 1px solid #eee; }
+
+        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
+        #mobile-menu-overlay.active { display: flex; }
+
+        [dir="rtl"] .giant-num { right: auto; left: -1rem; }
+        [dir="rtl"] .floating-btns { right: auto; left: 2rem; }
     </style>
 </head>
-<body>
-    <div id="preloader"><div class="loader-content"><div class="loader-logo-base">JAAD.<div class="loader-logo-fill" id="loader-fill">JAAD.</div></div></div></div>
+<body class="noise">
 
+    <div id="scroll-progress"></div>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="loader-content">
+            <div class="loader-logo-base">JAAD.<div class="loader-logo-fill" id="loader-fill">JAAD.</div></div>
+        </div>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu-overlay">
+        <a href="#services" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-expertise">Expertise</a>
+        <a href="#process" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-methode">Méthode</a>
+        <a href="#portfolio" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-realisations">Réalisations</a>
+        <a href="#contact" class="text-4xl font-black text-blue-600 anchor-link" onclick="toggleMenu()" data-i18n="nav-contact-btn">Contact</a>
+        <button class="mt-12 text-slate-400 font-bold uppercase text-xs" onclick="toggleMenu()" data-i18n="nav-close">Fermer</button>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full z-[1000] flex justify-center pt-8 px-4">
+        <div id="navbar" class="glass-nav px-8 md:px-10 py-5 rounded-full flex items-center max-w-6xl w-full justify-between">
+            <a href="#top" class="text-2xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
+            <div class="hidden md:flex items-center gap-10 text-[10px] font-extrabold uppercase tracking-widest text-slate-500">
+                <a href="#services" class="hover:text-blue-600 anchor-link" data-i18n="nav-expertise">Expertise</a>
+                <a href="#process" class="hover:text-blue-600 anchor-link" data-i18n="nav-methode">Méthode</a>
+                <a href="#portfolio" class="hover:text-blue-600 anchor-link" data-i18n="nav-realisations">Réalisations</a>
+                <a href="#contact" class="bg-[#0f172a] text-white px-8 py-3 rounded-full hover:bg-blue-600 hover:scale-105 transition-all anchor-link" data-i18n="nav-contact-btn">Contact</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex bg-slate-100/50 p-1 rounded-full">
+                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white transition-all" onclick="switchLanguage('fr')">FR</button>
+                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white transition-all" onclick="switchLanguage('en')">EN</button>
+                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white transition-all" onclick="switchLanguage('ar')">AR</button>
+                </div>
+                <button class="md:hidden p-2 text-slate-900" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FLOATING ACTIONS -->
+    <div class="floating-btns">
+        <button onclick="toggleAiChat()" class="action-circle bg-blue-600"><i data-lucide="sparkles"></i></button>
+        <a href="https://wa.me/33600000000" target="_blank" class="action-circle bg-[#25d366]"><i data-lucide="message-circle"></i></a>
+    </div>
+
+    <!-- HERO -->
+    <header id="top" class="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
+            <iframe src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' frameborder='0' width='100%' height='100%' class="opacity-0 transition-opacity duration-1000" onload="this.style.opacity='1'"></iframe>
+        </div>
+        <div class="relative z-20 text-center px-6 mt-[20vh]">
+            <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active">
+                <!-- BOUTONS AVEC CLASSES RÉTABLIES ✨ -->
+                <a href="#contact" class="btn-premium btn-primary anchor-link">
+                    <span data-i18n="hero-btn">Parlons-en.</span> 
+                    <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
+                </a>
+                <a href="#portfolio" class="btn-premium btn-secondary anchor-link">
+                    <span data-i18n="hero-btn-secondary">Nos créations.</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SERVICES (BENTO GRID ✨) -->
+    <section id="services" class="py-32 px-6">
+        <div class="marquee-wrapper mb-20">
+            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
+                <span data-i18n="exp-title-marquee">On crée pour vous. E-learning. IA.</span>
+                <span data-i18n="exp-title-marquee">On crée pour vous. E-learning. IA.</span>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto bento-grid relative z-20">
+            <article class="md:col-span-3 bento-item reveal-up">
+                <span class="tag">01. Web</span>
+                <h3 class="text-3xl font-black mb-6 tracking-tighter text-blue-600" data-i18n="exp-web-h">Web Design Immersif</h3>
+                <p class="text-slate-600 font-medium leading-relaxed" data-i18n="exp-web-p">Des sites sur-mesure immersifs et un SEO aux petits oignons.</p>
+            </article>
+            <article class="md:col-span-3 bento-item reveal-up" style="transition-delay: 0.1s">
+                <span class="tag">02. 3D</span>
+                <h3 class="text-3xl font-black mb-6 tracking-tighter text-blue-600" data-i18n="exp-3d-h">Studio 3D.</h3>
+                <p class="text-slate-600 font-medium leading-relaxed" data-i18n="exp-3d-p">Du graphisme 3D haute qualité pour vos produits.</p>
+            </article>
+            <article class="md:col-span-2 bento-item reveal-up">
+                <span class="tag">03. Apps</span>
+                <h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="exp-app-h">Apps Mobile</h3>
+                <p class="text-slate-500 font-medium" data-i18n="exp-app-p">Développement natif et publication stores.</p>
+            </article>
+            <article class="md:col-span-2 bento-item bento-blue reveal-up">
+                <span class="tag" style="background:white; color:var(--primary)">04. IA</span>
+                <h3 class="text-2xl font-black mb-6 tracking-tighter" data-i18n="exp-ia-h">IA & Robot.</h3>
+                <p class="text-white opacity-90 font-medium" data-i18n="exp-ia-p">Chatbots intelligents et automatisation.</p>
+            </article>
+            <article class="md:col-span-2 bento-item reveal-up">
+                <span class="tag">05. Learning</span>
+                <h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="exp-learn-h">E-learning</h3>
+                <p class="text-slate-500 font-medium" data-i18n="exp-learn-p">Plateformes de formation interactives.</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- MÉTHODE (4 PHASES ✨) -->
+    <section id="process" class="py-32 px-6 bg-white/40">
+        <div class="marquee-wrapper mb-24">
+            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
+                <span data-i18n="proc-title-marquee">Notre Accompagnement. Méthode.</span>
+                <span data-i18n="proc-title-marquee">Notre Accompagnement. Méthode.</span>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto space-y-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
+                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 01</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="proc-1-h">Stratégie</h4><p data-i18n="proc-1-p">Analyse de vos besoins.</p><span class="giant-num">01</span></div></div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
+                <div class="hidden lg:flex lg:col-span-5"></div>
+                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 02</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="proc-2-h">Design</h4><p data-i18n="proc-2-p">Conception visuelle.</p><span class="giant-num">02</span></div></div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
+                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 03</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="proc-3-h">Publication</h4><p data-i18n="proc-3-p">Mise en ligne et SEO.</p><span class="giant-num">03</span></div></div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
+                <div class="hidden lg:flex lg:col-span-5"></div>
+                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 04</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="proc-4-h">Maintenance</h4><p data-i18n="proc-4-p">Suivi et mises à jour.</p><span class="giant-num">04</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="py-48 px-6">
+        <div class="marquee-wrapper mb-20">
+            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
+                <span data-i18n="nav-realisations-marquee">Nos Créations. Réalisations.</span>
+                <span data-i18n="nav-realisations-marquee">Nos Créations. Réalisations.</span>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="bento-item p-0 min-h-[550px] relative reveal-up">
+                <iframe src="https://my.spline.design/r4xbot-TowiBcjXeP3tiZRqqB7OwFiy/" width="100%" height="100%" class="loaded"></iframe>
+            </div>
+            <div class="bento-item p-0 min-h-[550px] relative reveal-up">
+                <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-ISR0inmI81qHYRxU9zwpmWsJ/" width="100%" height="100%" class="loaded"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT (6 ÉTAPES ✨) -->
+    <section id="contact" class="py-48 px-6 bg-[#0f172a]">
+        <div class="max-w-4xl mx-auto text-center mb-16">
+            <h2 class="text-5xl md:text-7xl font-black text-white mb-6" data-i18n="cont-h">Prêt à briller ?</h2>
+            <p class="text-slate-400 text-xl" data-i18n="cont-p">Laissez-nous vos coordonnées, on s'occupe du reste.</p>
+        </div>
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white/5 p-10 md:p-16 rounded-[48px] border border-white/10 relative overflow-hidden backdrop-blur-xl">
+                <div class="progress-bar-container"><div id="form-progress-fill"></div></div>
+                <form id="quest-form" class="space-y-10" action="https://formspree.io/f/hello@jaad.studio" method="POST">
+                    <div id="form-steps-container">
+                        <div class="form-step active" id="step-1">
+                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q1">Votre nom ?</label>
+                            <input type="text" name="name" id="q-name" placeholder="Nom complet" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-all">
+                        </div>
+                        <div class="form-step" id="step-2">
+                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q2">Votre email ?</label>
+                            <input type="email" name="email" id="q-email" placeholder="votre@email.com" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-all">
+                        </div>
+                        <div class="form-step" id="step-3">
+                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q3">Votre numéro ?</label>
+                            <div class="flex gap-4">
+                                <select name="country_code" class="bg-[#0f172a] text-white border-b-2 border-white/10 outline-none">
+                                    <option value="+33">🇫🇷 +33</option>
+                                    <option value="+212">🇲🇦 +212</option>
+                                </select>
+                                <input type="tel" name="phone" id="q-phone" placeholder="6 12 34 56 78" required class="flex-1 bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-all">
+                            </div>
+                        </div>
+                        <div class="form-step" id="step-4">
+                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q4">Quel service ?</label>
+                            <div class="flex flex-wrap gap-3">
+                                <button type="button" class="service-pill service-pill-dark" onclick="selectFormService(this, 'Web')">Web Design</button>
+                                <button type="button" class="service-pill service-pill-dark" onclick="selectFormService(this, '3D')">Studio 3D</button>
+                                <button type="button" class="service-pill service-pill-dark" onclick="selectFormService(this, 'IA')">IA Solutions</button>
+                                <button type="button" class="service-pill service-pill-dark" onclick="selectFormService(this, 'E-learning')">E-learning</button>
+                            </div>
+                            <input type="hidden" name="service" id="q-service">
+                        </div>
+                        <div class="form-step" id="step-5">
+                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q5">Votre projet</label>
+                            <textarea name="message" id="q-desc" placeholder="..." class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 h-32 resize-none"></textarea>
+                        </div>
+                        <div class="form-step" id="step-6">
+                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q6">Rappel par ?</label>
+                            <div class="flex gap-3">
+                                <button type="button" class="service-pill service-pill-dark" onclick="selectContactPref(this, 'WhatsApp')">WhatsApp</button>
+                                <button type="button" class="service-pill service-pill-dark" onclick="selectContactPref(this, 'Email')">Email</button>
+                            </div>
+                            <input type="hidden" name="pref" id="q-pref">
+                        </div>
+                    </div>
+                    <div id="form-nav" class="flex justify-between items-center pt-10">
+                        <button type="button" id="prev-btn" onclick="changeStep(-1)" class="opacity-0 pointer-events-none text-slate-400 font-bold uppercase text-xs">Retour</button>
+                        <button type="button" id="next-btn" onclick="changeStep(1)" class="btn-premium bg-white text-slate-900 border-none px-10">Suivant</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-16 bg-white border-t border-slate-100 text-center">
+        <a href="#top" class="text-3xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
+        <p class="text-slate-400 text-xs mt-6" data-i18n="footer-copyright">© 2026 JAAD Studio.</p>
+    </footer>
+
+    <!-- AI CHAT -->
     <div id="ai-chat-modal">
         <div class="bg-blue-600 p-5 text-white flex justify-between items-center font-black">
-            <span>JAAD AI - DIAGNOSTIC</span>
+            <span class="flex items-center gap-2 text-[11px] uppercase tracking-widest"><i data-lucide="sparkles"></i> JAAD AI</span>
+            <button onclick="toggleAiChat()"><i data-lucide="x"></i></button>
         </div>
         <div id="chat-messages" class="chat-messages">
-            <div class="msg msg-ai text-xs">Testez le chat pour voir l'erreur exacte.</div>
+            <div class="msg msg-ai text-xs">Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?</div>
         </div>
-        <div class="p-4 flex gap-2 border-t">
-            <input type="text" id="chat-input" class="flex-1 outline-none text-xs" placeholder="Tapez ici..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-            <button onclick="sendChatMessage()" class="bg-blue-600 text-white p-3 rounded-full"><i data-lucide="send" class="w-4 h-4"></i></button>
+        <div class="p-4 flex gap-2 border-t bg-white">
+            <input type="text" id="chat-input" class="flex-1 outline-none text-xs" placeholder="..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
+            <button onclick="sendChatMessage()" id="chat-send-btn" class="bg-blue-600 text-white p-3 rounded-full"><i data-lucide="send" class="w-4 h-4"></i></button>
         </div>
     </div>
 
     <script>
+        const translations = {
+            fr: { "nav-expertise": "Expertise", "nav-methode": "Méthode", "nav-realisations": "Réalisations", "nav-contact-btn": "Contact", "nav-close": "Fermer", "hero-btn": "Parlons-en.", "hero-btn-secondary": "Nos créations.", "footer-copyright": "© 2026 JAAD Studio." },
+            en: { "nav-expertise": "Expertise", "nav-methode": "Method", "nav-realisations": "Works", "nav-contact-btn": "Contact", "nav-close": "Close", "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.", "footer-copyright": "© 2026 JAAD Studio." },
+            ar: { "nav-expertise": "خبراتنا", "nav-methode": "منهجيتنا", "nav-realisations": "أعمالنا", "nav-contact-btn": "اتصل بنا", "nav-close": "إغلاق", "hero-btn": "لنبدأ العمل.", "hero-btn-secondary": "أعمالنا.", "footer-copyright": "© 2026 استوديو جاد." }
+        };
+
+        function switchLanguage(lang) {
+            document.documentElement.lang = lang; document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+            document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (translations[lang][key]) el.innerText = translations[lang][key]; });
+        }
+
+        function toggleMenu() { document.getElementById('mobile-menu-overlay').classList.toggle('active'); }
+        function toggleAiChat() { document.getElementById('ai-chat-modal').classList.toggle('active'); }
+
         window.addEventListener('load', () => {
             const fill = document.getElementById('loader-fill');
-            setTimeout(() => { fill.style.width = '100%'; }, 300);
-            setTimeout(() => { document.getElementById('preloader').classList.add('preloader-active'); }, 1800);
+            setTimeout(() => { if(fill) fill.style.width = '100%'; }, 300);
+            setTimeout(() => { 
+                document.getElementById('preloader').classList.add('preloader-active'); 
+                revealOnScroll(); 
+            }, 1800);
             lucide.createIcons();
         });
 
-        async function callAi(text) {
-            try {
-                const res = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ message: text })
-                });
-                
-                const data = await res.json();
-                
-                if (!res.ok) {
-                    return { error: true, message: `Erreur ${res.status}: ${data.error}`, details: data.details || data.debug };
-                }
-                return { error: false, text: data.text };
-            } catch (e) {
-                return { error: true, message: "Impossible de contacter /api/chat. Le dossier api est-il bien sur GitHub ?" };
-            }
+        // FORM LOGIC
+        let currentStep = 1;
+        function changeStep(n) {
+            const steps = document.querySelectorAll('.form-step');
+            if (n > 0 && currentStep === 6) { handleFormSubmit(); return; }
+            steps[currentStep-1].classList.remove('active');
+            currentStep += n;
+            steps[currentStep-1].classList.add('active');
+            document.getElementById('form-progress-fill').style.width = (currentStep/6)*100 + "%";
+            document.getElementById('prev-btn').style.opacity = (currentStep === 1) ? "0" : "1";
+            document.getElementById('prev-btn').style.pointerEvents = (currentStep === 1) ? "none" : "auto";
+            document.getElementById('next-btn').innerText = (currentStep === 6) ? "Envoyer" : "Suivant";
+        }
+        function selectFormService(el, val) { 
+            document.querySelectorAll('#step-4 .service-pill').forEach(b => b.classList.remove('selected')); 
+            el.classList.add('selected'); 
+            document.getElementById('q-service').value = val; 
+            setTimeout(() => changeStep(1), 300); 
+        }
+        function selectContactPref(el, val) { 
+            document.querySelectorAll('#step-6 .service-pill').forEach(b => b.classList.remove('selected')); 
+            el.classList.add('selected'); 
+            document.getElementById('q-pref').value = val; 
         }
 
-        async function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const box = document.getElementById('chat-messages');
-            if(!input.value.trim()) return;
-            const msg = input.value;
-            box.innerHTML += `<div class="msg msg-user">${msg}</div>`;
-            input.value = '';
-            
-            const response = await callAi(msg);
-            
-            if (response.error) {
-                box.innerHTML += `<div class="msg msg-error"><b>${response.message}</b><br>${JSON.stringify(response.details || '')}</div>`;
-            } else {
-                box.innerHTML += `<div class="msg msg-ai">${response.text}</div>`;
-            }
-            box.scrollTop = box.scrollHeight;
+        async function handleFormSubmit() {
+            const form = document.getElementById('quest-form');
+            try {
+                const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                if (response.ok) { alert("Message envoyé !"); location.reload(); }
+            } catch (e) { alert("Erreur d'envoi."); }
         }
+
+        // AI LOGIC
+        async function callAi(text) {
+            try {
+                const res = await fetch('/api/chat', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ message: text }) });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || "Erreur serveur");
+                return data.text;
+            } catch (e) { return `[JAAD AI] Oups ! ${e.message}.`; }
+        }
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input'); const box = document.getElementById('chat-messages'); if(!input.value.trim()) return;
+            const msg = input.value; box.innerHTML += `<div class="msg msg-user">${msg}</div>`; input.value = '';
+            box.innerHTML += `<div class="msg msg-ai italic" id="loading">...</div>`; box.scrollTop = box.scrollHeight;
+            const response = await callAi(msg); document.getElementById('loading').remove();
+            box.innerHTML += `<div class="msg msg-ai">${response}</div>`; box.scrollTop = box.scrollHeight;
+        }
+
+        function revealOnScroll() { 
+            const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }); }); 
+            document.querySelectorAll('.reveal-up').forEach(el => obs.observe(el)); 
+        }
+
+        document.querySelectorAll('.anchor-link').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href'); 
+                if (targetId && targetId.startsWith('#')) { 
+                    e.preventDefault(); 
+                    const target = document.querySelector(targetId); 
+                    if (target) { window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' }); } 
+                }
+            });
+        });
     </script>
 </body>
 </html>
