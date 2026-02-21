@@ -30,11 +30,10 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- PROTECTION DU SCROLL & POSITIONNEMENT ROBOT --- */
+        /* --- LOGIQUE DE SCROLL & POSITIONNEMENT --- */
         #hero-spline {
             pointer-events: none !important;
             user-select: none !important;
-            max-width: none !important;
         }
 
         .noise::before {
@@ -93,7 +92,7 @@
         @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(6, 1fr); } }
         .bento-item {
             background: var(--bg-card); border-radius: 40px; padding: 3rem; border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: all 0.5s ease; position: relative; overflow: hidden;
+            transition: all 0.5s ease; position: relative; overflow: hidden; cursor: pointer;
         }
         .bento-item:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
         .bento-blue { background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%) !important; color: white; border: none; }
@@ -122,11 +121,41 @@
         .service-pill { padding: 0.8rem 1.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; }
         .service-pill.selected { background: var(--primary); border-color: var(--primary); }
 
-        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
-        #mobile-menu-overlay.active { display: flex; }
+        /* --- MODAL SERVICE DESIGN MODERNE --- */
+        #service-modal {
+            position: fixed; inset: 0; z-index: 5000;
+            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(25px);
+            display: none; align-items: center; justify-content: center; padding: 1.5rem;
+            opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #service-modal.active { display: flex; opacity: 1; }
+        .modal-content {
+            background: white; width: 100%; max-width: 850px; max-height: 85vh;
+            border-radius: 50px; overflow-y: auto; padding: 4rem; position: relative;
+            transform: scale(0.9) translateY(30px); transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.2);
+        }
+        #service-modal.active .modal-content { transform: scale(1) translateY(0); }
+
+        /* --- AI CHAT --- */
+        #ai-chat-modal { 
+            position: fixed; bottom: 8rem; right: 2rem; width: 360px; max-width: calc(100vw - 4rem); 
+            background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.1); 
+            z-index: 6000; display: none; flex-direction: column; overflow: hidden; 
+            border: 1px solid rgba(0,0,0,0.05); 
+        }
+        #ai-chat-modal.active { display: flex; }
+        .chat-messages { height: 350px; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #fafafa; }
+        .msg { padding: 0.8rem 1.2rem; border-radius: 18px; font-size: 13px; line-height: 1.5; max-width: 85%; }
+        .msg-user { align-self: flex-end; background: #2563eb; color: white; border-bottom-right-radius: 4px; }
+        .msg-ai { align-self: flex-start; background: white; color: #0f172a; border-bottom-left-radius: 4px; border: 1px solid #eee; }
 
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
+        #mobile-menu-overlay.active { display: flex; }
     </style>
 </head>
 <body class="noise">
@@ -138,6 +167,23 @@
         <div class="loader-content text-center">
             <div class="loader-logo-base">JAAD.<div class="loader-logo-fill" id="loader-fill">JAAD.</div></div>
         </div>
+    </div>
+
+    <!-- MODAL SERVICE DETAILS -->
+    <div id="service-modal" onclick="closeServiceModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button onclick="toggleServiceModal()" class="absolute top-10 right-10 p-3 hover:bg-slate-50 rounded-full transition-all text-slate-300 hover:text-slate-900 border border-slate-100 hover:border-slate-200"><i data-lucide="x"></i></button>
+            <div id="modal-body-content"></div>
+        </div>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu-overlay">
+        <a href="#services" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-expertise">Expertise</a>
+        <a href="#process" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-methode">Méthode</a>
+        <a href="#portfolio" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-realisations">Réalisations</a>
+        <a href="#contact" class="text-4xl font-black text-blue-600 anchor-link" onclick="toggleMenu()" data-i18n="nav-contact-btn">Contact</a>
+        <button class="mt-12 text-slate-400 font-bold uppercase text-xs" onclick="toggleMenu()" data-i18n="nav-close">Fermer</button>
     </div>
 
     <!-- NAVIGATION -->
@@ -163,7 +209,7 @@
 
     <!-- FLOATING ACTIONS -->
     <div class="fixed bottom-8 right-8 z-[1500] flex flex-col gap-4">
-        <button onclick="toggleAiChat()" class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="sparkles"></i></button>
+        <button id="ai-chat-trigger" onclick="toggleAiChat()" class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="sparkles"></i></button>
         <a href="https://wa.me/33600000000" target="_blank" class="w-14 h-14 rounded-full bg-[#25d366] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="message-circle"></i></a>
     </div>
 
@@ -172,8 +218,8 @@
         <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
             
-            <!-- SPLINE : REGLAGE CHIRURGICAL (-46% pour le décaler vers la droite et le centrer parfaitement) -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-[46%] -translate-y-[45%] w-[155vw] md:w-full h-full flex items-center justify-center">
+            <!-- SPLINE : DÉCALAGE MOBILE (-42%) ET CENTRÉ BUREAU (-1/2) -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-[42%] md:-translate-x-1/2 -translate-y-[45%] w-[155vw] md:w-full h-full flex items-center justify-center">
                 <iframe id="hero-spline" 
                         src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
                         frameborder='0' width="100%" height="100%"
@@ -190,7 +236,7 @@
         </div>
     </header>
 
-    <!-- SERVICES -->
+    <!-- SERVICES (EXPERTISE) -->
     <section id="services" class="py-32 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -199,15 +245,40 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto bento-grid relative z-20">
-            <article class="md:col-span-3 bento-item reveal-up"><span class="tag">01. Web</span><h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-web-title">Web Design Immersif</h3><p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-web-desc">Sites immersifs et SEO performant.</p></article>
-            <article class="md:col-span-3 bento-item reveal-up" style="transition-delay: 0.1s"><span class="tag">02. 3D</span><h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-3d-title">Studio 3D.</h3><p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-3d-desc">Graphisme 3D haute qualité pour vos produits.</p></article>
-            <article class="md:col-span-2 bento-item reveal-up"><span class="tag">03. Apps</span><h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="serv-app-title">Apps Mobile</h3><p class="text-slate-500 font-medium" data-i18n="serv-app-desc">Développement natif et publication stores.</p></article>
-            <article class="md:col-span-2 bento-item bento-blue reveal-up"><span class="tag" style="background:white; color:var(--primary)">04. IA</span><h3 class="text-2xl font-black mb-6 tracking-tighter" data-i18n="serv-ia-title">IA & Robot.</h3><p class="text-white opacity-90 font-medium" data-i18n="serv-ia-desc">Chatbots intelligents et automatisation.</p></article>
-            <article class="md:col-span-2 bento-item reveal-up"><span class="tag">05. Learning</span><h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="serv-learn-title">E-learning</h3><p class="text-slate-500 font-medium" data-i18n="serv-learn-desc">Plateformes de formation interactives.</p></article>
+            <article class="md:col-span-3 bento-item reveal-up" onclick="openServiceDetail('web')">
+                <span class="tag">01. Web</span>
+                <h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-web-title">Web Design Immersif</h3>
+                <p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-web-desc">Sites immersifs et SEO performant.</p>
+                <div class="mt-8 text-blue-600 font-bold text-xs uppercase flex items-center gap-2">Voir plus <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+            </article>
+            <article class="md:col-span-3 bento-item reveal-up" style="transition-delay: 0.1s" onclick="openServiceDetail('studio3d')">
+                <span class="tag">02. 3D</span>
+                <h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-3d-title">Studio 3D.</h3>
+                <p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-3d-desc">Graphisme 3D haute qualité pour vos produits.</p>
+                <div class="mt-8 text-blue-600 font-bold text-xs uppercase flex items-center gap-2">Explorer <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+            </article>
+            <article class="md:col-span-2 bento-item reveal-up" onclick="openServiceDetail('apps')">
+                <span class="tag">03. Apps</span>
+                <h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="serv-app-title">Apps Mobile</h3>
+                <p class="text-slate-500 font-medium" data-i18n="serv-app-desc">Développement natif et publication stores.</p>
+                <div class="mt-4 text-blue-600 font-bold text-xs uppercase flex items-center gap-2">Découvrir <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+            </article>
+            <article class="md:col-span-2 bento-item bento-blue reveal-up" onclick="openServiceDetail('ia')">
+                <span class="tag" style="background:white; color:var(--primary)">04. IA</span>
+                <h3 class="text-2xl font-black mb-6 tracking-tighter" data-i18n="serv-ia-title">IA & Robot.</h3>
+                <p class="text-white opacity-90 font-medium" data-i18n="serv-ia-desc">Chatbots intelligents et automatisation.</p>
+                <div class="mt-4 text-white font-bold text-xs uppercase flex items-center gap-2">Innovations <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+            </article>
+            <article class="md:col-span-2 bento-item reveal-up" onclick="openServiceDetail('learning')">
+                <span class="tag">05. Learning</span>
+                <h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="serv-learn-title">E-learning</h3>
+                <p class="text-slate-500 font-medium" data-i18n="serv-learn-desc">Plateformes de formation interactives.</p>
+                <div class="mt-4 text-blue-600 font-bold text-xs uppercase flex items-center gap-2">Apprendre <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+            </article>
         </div>
     </section>
 
-    <!-- METHOD (DESIGN RÉTABLI) -->
+    <!-- METHOD -->
     <section id="process" class="py-32 px-6 bg-white/40">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -349,6 +420,103 @@
     </div>
 
     <script>
+        const serviceDetails = {
+            web: {
+                title: "Digital Expérience", tag: "Design & Performance",
+                desc: "Nous ne créons pas de simples sites web, nous concevons des voyages digitaux immersifs. JAAD Studio allie esthétique haut de gamme et performance SEO pour propulser votre marque.",
+                points: ["Architecture SEO optimisée", "Interfaces 3D interactives", "Vitesse de chargement éclair", "Design Mobile-First Premium"], cta: "Web"
+            },
+            studio3d: {
+                title: "Studio 3D Créatif", tag: "Visualisation 8K",
+                desc: "Donnez vie à vos concepts avec une fidélité visuelle inégalée. De la modélisation produit à l'animation publicitaire, nous créons des univers qui marquent les esprits.",
+                points: ["Rendus photoréalistes", "Animations cinématiques", "Assets pour Métavers", "Configurateurs produits"], cta: "3D"
+            },
+            apps: {
+                title: "Applications Mobiles", tag: "iOS & Android",
+                desc: "Des applications fluides conçues pour engager vos utilisateurs. Nous gérons tout le cycle de vie, du design UX à la publication sur les stores avec un suivi continu.",
+                points: ["Développement Natif", "Notifications Push IA", "Synchronisation Temps Réel", "Maintenance Évolutive"], cta: "Apps"
+            },
+            ia: {
+                title: "IA & Automatisation", tag: "Intelligence Future",
+                desc: "Boostez votre productivité avec l'IA. Nous développons des agents intelligents personnalisés et des systèmes d'automatisation métier pour libérer votre potentiel créatif.",
+                points: ["Agents conversationnels", "Automatisation de workflows", "Analyse prédictive", "Intégration API Gemini"], cta: "IA"
+            },
+            learning: {
+                title: "E-learning Immersif", tag: "Education 2.0",
+                desc: "Transformez l'apprentissage en expérience ludique. Nous créons des plateformes de formation sur-mesure utilisant la gamification et la 3D pour un engagement maximal.",
+                points: ["Plateformes LMS Custom", "Gamification pédagogique", "Suivi analytics détaillé", "Contenus interactifs 3D"], cta: "Learning"
+            }
+        };
+
+        function openServiceDetail(key) {
+            const data = serviceDetails[key];
+            const content = `
+                <div class="reveal-up active">
+                    <span class="tag bg-blue-600 text-white border-none mb-8 px-5 py-2">${data.tag}</span>
+                    <h2 class="text-5xl font-black text-slate-900 mb-8 tracking-tighter">${data.title}</h2>
+                    <p class="text-slate-500 text-xl leading-relaxed mb-12 max-w-2xl">${data.desc}</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
+                        ${data.points.map(p => `
+                            <div class="group flex items-center gap-4 p-5 bg-slate-50 rounded-3xl border border-slate-100 transition-all hover:bg-white hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/10">
+                                <div class="w-10 h-10 bg-blue-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5"></i></div>
+                                <span class="font-bold text-slate-700 text-sm tracking-tight">${p}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <button onclick="contactForService('${data.cta}')" class="btn-premium btn-primary group px-10 py-5 justify-center">
+                            Démarrer mon projet 
+                            <i data-lucide="zap" class="w-5 h-5 fill-current group-hover:animate-pulse"></i>
+                        </button>
+                        <button onclick="toggleServiceModal()" class="btn-premium btn-secondary px-10 py-5 justify-center hover:bg-slate-50">
+                            Fermer
+                        </button>
+                    </div>
+                </div>`;
+            document.getElementById('modal-body-content').innerHTML = content;
+            toggleServiceModal();
+            lucide.createIcons();
+        }
+
+        function toggleServiceModal() { 
+            const m = document.getElementById('service-modal');
+            m.classList.toggle('active');
+            document.body.style.overflow = m.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeServiceModal(e) { if(e.target.id === 'service-modal') toggleServiceModal(); }
+
+        // CORRECTION DÉFINITIVE DU BOUTON "DÉMARRER MON PROJET"
+        function contactForService(serviceName) {
+            // 1. On ferme la modale
+            const m = document.getElementById('service-modal');
+            m.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // 2. On attend la fin de l'animation de fermeture
+            setTimeout(() => {
+                // 3. On scroll vers le contact
+                const target = document.querySelector('#contact');
+                if (target) {
+                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                    
+                    // 4. On pré-sélectionne le service dans le formulaire
+                    const pills = document.querySelectorAll('.service-pill');
+                    pills.forEach(p => {
+                        if(p.innerText.toLowerCase().includes(serviceName.toLowerCase())) {
+                            // On retire les autres sélections
+                            document.querySelectorAll('.service-pill').forEach(b => b.classList.remove('selected'));
+                            // On sélectionne la bonne
+                            p.classList.add('selected');
+                            document.getElementById('q-service').value = serviceName;
+                        }
+                    });
+                }
+            }, 300);
+        }
+
         const translations = {
             fr: { 
                 "nav-expertise": "Expertise", "nav-methode": "Méthode", "nav-realisations": "Réalisations", "nav-contact-btn": "Contact", "nav-close": "Fermer",
@@ -383,7 +551,7 @@
                 "method-2-title": "Design", "method-2-desc": "Visual conception and AI.",
                 "method-3-title": "Publishing", "method-3-desc": "Going live and technical SEO.",
                 "method-4-title": "Maintenance", "method-4-desc": "Continuous support and updates.",
-                "port-title-marquee": "Our works. Web. 3D. AI. Robots.",
+                "port-title-marquee": "Our works. Web. 3D. IA. Robots.",
                 "form-name": "Your name?", "form-email": "Your email?", "form-phone": "Your phone?", "form-service": "Which service?", "form-desc": "Description", "form-pref": "Contact via?",
                 "form-btn-next": "Next", "form-btn-prev": "Back", "form-btn-send": "Send", "form-btn-back": "Back to site",
                 "form-err-service": "Select a service.", "form-err-pref": "Select a contact."
@@ -393,8 +561,6 @@
                 "hero-btn": "لنبدأ العمل.", "hero-btn-secondary": "أعمالنا.",
                 "exp-title-marquee": "نبتكر من أجلك. التعليم الإلكتروني. الذكاء الاصطناعي.",
                 "serv-web-title": "تصميم ويب غامر", "serv-web-desc": "مواقع غامرة وتحسين محركات البحث.",
-                "serv-3d-title": "استوديو ثلاثي الأبعاد.", "serv-3d-desc": "رسومات ثلاثية الأبعاد عالية الجودة لمنتجاتك.",
-                "serv-app-title": "تطبيقات الجوال", "serv-app-desc": "تطوير التطبيقات ونشرها في المتاجر.",
                 "serv-ia-title": "الذكاء الاصطناعي والروبوت.", "serv-ia-desc": "روبوتات محادثة ذكية وأتمتة.",
                 "serv-learn-title": "التعليم الإلكتروني", "serv-learn-desc": "منصات تدريب تفاعلية.",
                 "method-title-marquee": "منهجيتنا. استراتيجية. تصميم. نشر.",
@@ -417,7 +583,11 @@
         }
 
         function toggleMenu() { document.getElementById('mobile-menu-overlay').classList.toggle('active'); }
-        function toggleAiChat() { document.getElementById('ai-chat-modal').classList.toggle('active'); }
+        
+        function toggleAiChat() { 
+            const chat = document.getElementById('ai-chat-modal');
+            chat.classList.toggle('active');
+        }
 
         window.addEventListener('load', () => {
             const fill = document.getElementById('loader-fill');
@@ -426,36 +596,34 @@
             lucide.createIcons();
         });
 
+        // FORM
         let currentStep = 1;
         function changeStep(n) {
-            const steps = document.querySelectorAll('.form-step');
-            const lang = document.documentElement.lang || 'fr';
-            if (n < 0 && currentStep <= 1) return;
+            const steps = document.querySelectorAll('.form-step'); const lang = document.documentElement.lang || 'fr';
             if (n > 0) {
-                const currentStepEl = steps[currentStep - 1];
-                const inputs = currentStepEl.querySelectorAll('input[required], textarea[required]');
-                for (let input of inputs) { if (!input.checkValidity()) { input.reportValidity(); return; } }
+                const cur = steps[currentStep-1]; const inputs = cur.querySelectorAll('input[required], textarea[required]');
+                for (let i of inputs) { if (!i.checkValidity()) { i.reportValidity(); return; } }
                 if (currentStep === 4 && !document.getElementById('q-service').value) { alert(translations[lang]["form-err-service"]); return; }
                 if (currentStep === 6 && !document.getElementById('q-pref').value) { alert(translations[lang]["form-err-pref"]); return; }
             }
             if (n > 0 && currentStep >= steps.length) { handleFormSubmit(); return; }
-            if (steps[currentStep - 1]) steps[currentStep - 1].classList.remove('active');
-            currentStep += n;
-            if (steps[currentStep - 1]) steps[currentStep - 1].classList.add('active');
+            steps[currentStep-1].classList.remove('active'); currentStep += n; steps[currentStep-1].classList.add('active');
             document.getElementById('form-progress-fill').style.width = (currentStep / steps.length) * 100 + "%";
-            const prevBtn = document.getElementById('prev-btn');
-            if (prevBtn) { prevBtn.style.opacity = (currentStep === 1) ? "0" : "1"; prevBtn.style.pointerEvents = (currentStep === 1) ? "none" : "auto"; }
-            const nextBtn = document.getElementById('next-btn');
-            if (nextBtn) nextBtn.innerText = (currentStep === steps.length) ? translations[lang]["form-btn-send"] : translations[lang]["form-btn-next"];
+            document.getElementById('prev-btn').style.opacity = (currentStep === 1) ? "0" : "1";
+            document.getElementById('prev-btn').style.pointerEvents = (currentStep === 1) ? "none" : "auto";
+            document.getElementById('next-btn').innerText = (currentStep === steps.length) ? translations[lang]["form-btn-send"] : translations[lang]["form-btn-next"];
         }
-        function selectFormService(el, val) { document.querySelectorAll('#step-4 button').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); document.getElementById('q-service').value = val; setTimeout(() => changeStep(1), 300); }
+        function selectFormService(el, val) { 
+            document.querySelectorAll('#step-4 button').forEach(b => b.classList.remove('selected')); 
+            el.classList.add('selected'); 
+            document.getElementById('q-service').value = val; 
+            setTimeout(() => changeStep(1), 300); 
+        }
         function selectContactPref(el, val) { document.querySelectorAll('#step-6 button').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); document.getElementById('q-pref').value = val; }
 
         async function handleFormSubmit() {
-            const form = document.getElementById('quest-form');
-            const btn = document.getElementById('next-btn');
-            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-5 h-5"></i>...';
-            btn.style.pointerEvents = 'none';
+            const form = document.getElementById('quest-form'); const btn = document.getElementById('next-btn');
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-5 h-5"></i>...'; btn.style.pointerEvents = 'none';
             try { 
                 const response = await fetch(form.getAttribute('action'), { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } }); 
                 if (response.ok) { document.getElementById('form-wrapper').style.display = 'none'; document.getElementById('form-success').classList.remove('hidden'); lucide.createIcons(); }
@@ -484,7 +652,7 @@
                     const contactData = JSON.parse(contactMatch[1]); const formData = new FormData();
                     formData.append('name', contactData.name); formData.append('email', contactData.email); formData.append('phone', contactData.phone); formData.append('service', contactData.service || 'IA Bot'); formData.append('message', "🤖 LEAD IA: " + contactData.message);
                     fetch('https://formspree.io/f/xjgeayjr', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
-                    responseText = responseText.replace(contactMatch[0], '') + "<br><br>✨ Vos informations ont été transmises !";
+                    responseText = responseText.replace(contactMatch[0], '') + "<br><br>✨ <b>Vos informations ont été transmises !</b>";
                 } catch(e) { console.error(e); }
             }
             chatHistory.push({ role: "model", parts: [{ text: responseText }] });
