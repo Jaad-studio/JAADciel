@@ -4,62 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO de base -->
+    <!-- SEO & Indexation -->
     <title>JAAD | Agence Créative Web, 3D, IA & E-learning</title>
-    <meta name="description" content="JAAD Studio : Agence créative spécialisée en Web Design immersif, Studio 3D, Intelligence Artificielle et solutions E-learning. Basée à Aix-en-Provence.">
-    <meta name="keywords" content="Agence Web, Web Design, Studio 3D, Intelligence Artificielle, E-learning, Aix-en-Provence, Création de sites, IA, Design Immersif">
+    <meta name="description" content="JAAD Studio : Agence créative spécialisée en Web Design immersif, Studio 3D, Intelligence Artificielle et solutions E-learning.">
+    <meta name="keywords" content="Agence Web, Web Design, Studio 3D, Intelligence Artificielle, E-learning, Aix-en-Provence, Création de sites, IA">
     <meta name="author" content="JAAD Studio">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jaad.studio/">
 
-    <!-- Open Graph / Facebook / LinkedIn -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jaad.studio/">
     <meta property="og:title" content="JAAD | Votre Agence Créative & IA">
-    <meta property="og:description" content="Transformez votre vision en réalité immersive. Experts en Web, 3D, IA et E-learning.">
+    <meta property="og:description" content="Design immersif et futur intelligent. Experts en solutions digitales innovantes.">
     <meta property="og:image" content="https://jaad.studio/og-image.jpg">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://jaad.studio/">
-    <meta property="twitter:title" content="JAAD | Votre Agence Créative & IA">
-    <meta property="twitter:description" content="Design immersif et futur intelligent. Experts en solutions digitales innovantes.">
-    <meta property="twitter:image" content="https://jaad.studio/og-image.jpg">
-
-    <!-- Données Structurées JSON-LD (Google Rich Snippets) -->
+    <!-- Données Structurées JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
       "name": "JAAD Studio",
       "image": "https://jaad.studio/logo.png",
-      "@id": "https://jaad.studio/",
       "url": "https://jaad.studio/",
       "telephone": "+33600000000",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "",
         "addressLocality": "Aix-en-Provence",
-        "postalCode": "13100",
         "addressCountry": "FR"
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 43.5297,
-        "longitude": 5.4474
-      },
-      "email": "hello@jaad.studio",
-      "sameAs": [
-        "https://www.instagram.com/jaad.studio",
-        "https://www.linkedin.com/company/jaad-studio"
-      ],
-      "service": [
-        "Web Design Immersif",
-        "Studio 3D",
-        "Intelligence Artificielle",
-        "E-learning",
-        "Apps Mobile"
-      ]
+      "email": "hello@jaad.studio"
     }
     </script>
 
@@ -73,17 +47,17 @@
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
             --primary-glow: rgba(37, 99, 235, 0.4);
-            --bg-dark-start: #020617;
-            --bg-dark-end: #0f172a;
-            --bg-light-start: #ffffff;
-            --bg-light-end: #f8fafc;
+            --bg-main: #f9f9fb; 
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
             --error: #ef4444;
         }
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: var(--bg-dark-start);
-            color: #0f172a;
+            background-color: var(--bg-main);
+            color: var(--text-main);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
@@ -94,14 +68,14 @@
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.03;
+            opacity: 0.015;
             pointer-events: none;
             z-index: 9999;
         }
 
         #scroll-progress {
             position: fixed; top: 0; left: 0; width: 0%; height: 4px;
-            background: linear-gradient(90deg, var(--primary), #60a5fa);
+            background: var(--primary);
             z-index: 1001;
         }
 
@@ -111,7 +85,7 @@
             pointer-events: none;
         }
         .loader-panel { 
-            flex: 1; height: 100%; background: #020617; 
+            flex: 1; height: 100%; background: #0f172a; 
             transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1); 
             pointer-events: auto;
         }
@@ -137,15 +111,15 @@
 
         /* --- NAVIGATION --- */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.7); 
+            background: rgba(255, 255, 255, 0.8); 
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(0, 0, 0, 0.05); 
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .nav-shrink {
             padding-top: 0.75rem !important;
             padding-bottom: 0.75rem !important;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
         }
 
         /* --- ACTIONS FLOTTANTES --- */
@@ -155,8 +129,8 @@
         }
         .action-circle {
             width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: none; cursor: pointer; background: #020617;
+            color: white; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: none; cursor: pointer; background: #0f172a;
         }
         .action-circle:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 20px 40px var(--primary-glow); }
 
@@ -167,38 +141,10 @@
             display: inline-flex; align-items: center; gap: 0.8rem; cursor: pointer;
             border: 2px solid transparent;
         }
-        .btn-primary { background: #020617; color: white; border-color: #020617; }
+        .btn-primary { background: #0f172a; color: white; border-color: #0f172a; }
         .btn-primary:hover { background: var(--primary); border-color: var(--primary); transform: scale(1.05); }
-        .btn-secondary { background: white; color: #020617; border: 2px solid rgba(0,0,0,0.1); }
+        .btn-secondary { background: white; color: #0f172a; border: 2px solid rgba(0,0,0,0.1); }
         .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.05); }
-
-        /* --- SECTIONS ET TRANSITIONS --- */
-        .section-dark { 
-            background: linear-gradient(180deg, var(--bg-dark-start) 0%, var(--bg-dark-end) 100%);
-            color: white; 
-            position: relative;
-        }
-        .section-light { 
-            background: linear-gradient(180deg, var(--bg-light-start) 0%, var(--bg-light-end) 100%);
-            color: #0f172a; 
-            position: relative;
-        }
-
-        .transition-top-white {
-            position: absolute; top: -15vh; left: 0; width: 100%; height: 15vh;
-            background: linear-gradient(to top, var(--bg-light-start), transparent);
-            pointer-events: none; z-index: 10;
-        }
-        .transition-bottom-white {
-            position: absolute; bottom: -15vh; left: 0; width: 100%; height: 15vh;
-            background: linear-gradient(to bottom, var(--bg-light-end), transparent);
-            pointer-events: none; z-index: 10;
-        }
-        .transition-dark-fade {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 20vh;
-            background: linear-gradient(to bottom, transparent, var(--bg-dark-start));
-            pointer-events: none;
-        }
 
         /* --- BENTO GRID --- */
         .bento-grid {
@@ -214,21 +160,21 @@
 
         .bento-item {
             position: relative;
-            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);
+            background: var(--bg-card); 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.03);
             border-radius: 40px; padding: 3rem; border: 1px solid rgba(0, 0, 0, 0.05);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             overflow: hidden;
         }
-        .section-dark .bento-item { background: rgba(255, 255, 255, 0.03); border-color: rgba(255, 255, 255, 0.05); }
-        .bento-item:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
-        .bento-blue { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%) !important; color: white; border: none; }
+        .bento-item:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
+        .bento-blue { background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%) !important; color: white; border: none; }
 
         .tag {
-            display: inline-block; padding: 0.5rem 1.2rem; background: rgba(0,0,0,0.05);
+            display: inline-block; padding: 0.5rem 1.2rem; background: rgba(37, 99, 235, 0.08);
             border-radius: 100px; font-size: 10px; font-weight: 800; text-transform: uppercase;
             letter-spacing: 0.1em; margin-bottom: 1.5rem;
+            color: var(--primary);
         }
-        .section-dark .tag { background: rgba(255,255,255,0.1); color: white; }
 
         /* --- MARQUEE --- */
         .marquee-wrapper { position: relative; overflow: hidden; padding: 3rem 0; white-space: nowrap; }
@@ -236,44 +182,89 @@
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- IFRAMES --- */
-        iframe { opacity: 0; transition: opacity 1.5s ease; filter: saturate(1.2); }
+        iframe { opacity: 0; transition: opacity 1.5s ease; filter: saturate(1.1); }
         iframe.loaded { opacity: 1 !important; }
 
         /* --- REVEAL ANIM --- */
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
 
-        /* --- QUESTIONNAIRE --- */
+        /* --- DESIGN ACCOMPAGNEMENT ✨ --- */
+        .method-card {
+            background: white;
+            border-radius: 40px;
+            padding: 3rem;
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.02);
+            transition: all 0.4s ease;
+        }
+        .method-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 40px 80px rgba(37, 99, 235, 0.06);
+        }
+        .giant-num {
+            position: absolute;
+            bottom: -2rem;
+            right: -1rem;
+            font-size: 14rem;
+            font-weight: 900;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(37, 99, 235, 0.05);
+            z-index: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+        .method-card:hover .giant-num {
+            -webkit-text-stroke: 2px rgba(37, 99, 235, 0.1);
+            transform: scale(1.1);
+        }
+        .phase-badge {
+            background: #0f172a;
+            color: white;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        /* --- FORMULAIRE --- */
         .form-step { display: none; opacity: 0; transform: translateY(15px); transition: all 0.5s ease; }
         .form-step.active { display: block; opacity: 1; transform: translateY(0); }
-        .progress-bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 100px; margin-bottom: 3rem; }
+        .progress-bar-container { width: 100%; height: 4px; background: rgba(0,0,0,0.05); border-radius: 100px; margin-bottom: 3rem; }
         #form-progress-fill { width: 0%; height: 100%; background: var(--primary); transition: width 0.5s ease; }
         
         .service-pill {
-            padding: 0.8rem 1.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.8rem 1.8rem; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05);
             border-radius: 100px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;
         }
-        .service-pill:hover, .service-pill.selected { background: var(--primary); border-color: var(--primary); transform: scale(1.05); }
+        .service-pill:hover, .service-pill.selected { background: var(--primary); border-color: var(--primary); color: white; transform: scale(1.05); }
 
         .input-error { border-color: var(--error) !important; color: var(--error) !important; }
         .error-hint { color: var(--error); font-size: 10px; font-weight: 800; text-transform: uppercase; margin-top: 0.5rem; display: none; }
 
         /* --- SELECT PAYS --- */
         .country-select-wrapper {
-            display: flex; align-items: center; border-bottom: 2px solid rgba(255, 255, 255, 0.1); transition: border-color 0.3s ease;
+            display: flex; align-items: center; border-bottom: 2px solid rgba(0, 0, 0, 0.1); transition: border-color 0.3s ease;
         }
         .country-select-wrapper:focus-within { border-color: var(--primary); }
-        #q-country-code { background: transparent; color: white; border: none; outline: none; font-weight: 700; padding: 1rem 0.5rem 1rem 0; cursor: pointer; font-size: 1.1rem; appearance: none; max-width: 120px; }
-        #q-country-code option { background: #020617; color: white; }
+        #q-country-code { background: transparent; color: var(--text-main); border: none; outline: none; font-weight: 700; padding: 1rem 0.5rem 1rem 0; cursor: pointer; font-size: 1.1rem; appearance: none; max-width: 120px; }
+        #q-country-code option { background: white; color: black; }
 
         /* --- AI CHAT MODAL --- */
         #ai-chat-modal {
             position: fixed; bottom: 8rem; right: 2rem; width: 360px; max-width: calc(100vw - 4rem);
-            background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.2);
+            background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.1);
             z-index: 1500; display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);
         }
         #ai-chat-modal.active { display: flex; }
-        .chat-messages { height: 350px; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #f8fafc; }
+        .chat-messages { height: 350px; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #fafafa; }
         .msg { padding: 0.8rem 1.2rem; border-radius: 18px; font-size: 13px; line-height: 1.5; max-width: 85%; }
         .msg-user { align-self: flex-end; background: #2563eb; color: white; border-bottom-right-radius: 4px; }
         .msg-ai { align-self: flex-start; background: white; color: #0f172a; border-bottom-left-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
@@ -297,6 +288,7 @@
     <!-- MOBILE MENU -->
     <div id="mobile-menu-overlay" aria-hidden="true">
         <a href="#services" class="nav-link text-4xl font-black text-slate-900 hover:text-blue-600 transition-colors">Expertise</a>
+        <a href="#process" class="nav-link text-4xl font-black text-slate-900 hover:text-blue-600 transition-colors">Méthode</a>
         <a href="#portfolio" class="nav-link text-4xl font-black text-slate-900 hover:text-blue-600 transition-colors">Réalisations</a>
         <a href="#testimonials" class="nav-link text-4xl font-black text-slate-900 hover:text-blue-600 transition-colors">Avis</a>
         <a href="#contact" class="nav-link text-4xl font-black text-blue-600">Contact</a>
@@ -309,9 +301,10 @@
             <a href="#top" class="nav-link text-2xl font-black text-blue-600 tracking-tighter" aria-label="Accueil JAAD">JAAD<span class="text-slate-900">.</span></a>
             <div class="hidden md:flex items-center gap-10 text-[10px] font-extrabold text-slate-500 uppercase tracking-[0.2em]">
                 <a href="#services" class="nav-link hover:text-blue-600 transition-colors">Expertise</a>
+                <a href="#process" class="nav-link hover:text-blue-600 transition-colors">Méthode</a>
                 <a href="#portfolio" class="nav-link hover:text-blue-600 transition-colors">Réalisations</a>
                 <a href="#testimonials" class="nav-link hover:text-blue-600 transition-colors">Avis</a>
-                <a href="#contact" class="nav-link bg-slate-900 text-white px-8 py-3 rounded-full hover:bg-blue-600 hover:scale-105 transition-all">Contact</a>
+                <a href="#contact" class="nav-link bg-[#0f172a] text-white px-8 py-3 rounded-full hover:bg-blue-600 hover:scale-105 transition-all">Contact</a>
             </div>
             <div class="flex items-center gap-3">
                 <div class="flex bg-slate-100/50 p-1 rounded-full items-center">
@@ -330,12 +323,12 @@
         <a href="https://wa.me/33600000000" target="_blank" class="action-circle" style="background:#25d366" aria-label="Contact WhatsApp"><i data-lucide="message-circle" class="w-6 h-6 text-white" aria-hidden="true"></i></a>
     </div>
 
-    <!-- HERO -->
-    <header id="top" class="relative h-[110dvh] w-full flex items-center justify-center overflow-hidden section-dark">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#020617]/40 z-10"></div>
-            <iframe src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' frameborder='0' width='100%' height='100%' onload="this.classList.add('loaded')" style="pointer-events: none;" title="Animation 3D Background" loading="lazy"></iframe>
-            <div class="transition-dark-fade"></div>
+    <!-- HERO (RÉTABLISSEMENT DE L'ANIMATION DU DÉBUT ✨) -->
+    <header id="top" class="relative h-[110dvh] w-full flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0 bg-[#0f172a]">
+            <!-- Masque pour fusionner avec le fond gris lors du scroll -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#f9f9fb] z-10"></div>
+            <iframe src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' frameborder='0' width='100%' height='100%' onload="this.classList.add('loaded')" style="pointer-events: none;" title="Animation Baymax Spline 3D"></iframe>
         </div>
         <div class="relative z-20 text-center px-6 mt-[35vh]">
             <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active">
@@ -345,11 +338,10 @@
         </div>
     </header>
 
-    <!-- EXPERTISE -->
-    <section id="services" class="py-32 px-6 section-light">
-        <div class="transition-top-white"></div>
-        <div class="marquee-wrapper mb-20" aria-hidden="true">
-            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-900 opacity-5">
+    <!-- EXPERTISE / SERVICES -->
+    <section id="services" class="py-32 px-6">
+        <div class="marquee-wrapper mb-20">
+            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
                 <span data-i18n="exp-title">On crée pour vous. E-learning.</span>
                 <span data-i18n="exp-title">On crée pour vous. E-learning.</span>
                 <span data-i18n="exp-title">On crée pour vous. E-learning.</span>
@@ -359,22 +351,22 @@
             <div class="bento-grid">
                 <article class="md:col-span-3 bento-item reveal-up">
                     <span class="tag" data-i18n="exp-web-tag">01. Web</span>
-                    <h3 class="text-3xl md:text-4xl font-black mb-6 tracking-tighter" data-i18n="exp-web-title">Web Design.</h3>
-                    <p class="text-slate-500 font-medium leading-relaxed" data-i18n="exp-web-desc">Des sites sur-mesure immersifs et un SEO aux petits oignons pour dominer le marché.</p>
+                    <h3 class="text-3xl md:text-4xl font-black mb-6 tracking-tighter text-blue-600" data-i18n="exp-web-title">Web Design.</h3>
+                    <p class="text-slate-600 font-medium leading-relaxed" data-i18n="exp-web-desc">Des sites sur-mesure immersifs et un SEO aux petits oignons pour dominer le marché.</p>
                 </article>
                 <article class="md:col-span-3 bento-item reveal-up" style="transition-delay: 0.1s">
                     <span class="tag" data-i18n="exp-3d-tag">02. 3D</span>
-                    <h3 class="text-3xl md:text-4xl font-black mb-6 tracking-tighter" data-i18n="exp-3d-title">Studio 3D.</h3>
-                    <p class="text-slate-500 font-medium leading-relaxed" data-i18n="exp-3d-desc">Du graphisme 3D haute qualité pour vos produits et projets immobiliers.</p>
+                    <h3 class="text-3xl md:text-4xl font-black mb-6 tracking-tighter text-blue-600" data-i18n="exp-3d-title">Studio 3D.</h3>
+                    <p class="text-slate-600 font-medium leading-relaxed" data-i18n="exp-3d-desc">Du graphisme 3D haute qualité pour vos produits et projets immobiliers.</p>
                 </article>
                 <article class="md:col-span-2 bento-item reveal-up" style="transition-delay: 0.2s">
                     <span class="tag" data-i18n="exp-apps-tag">03. Apps</span>
-                    <h3 class="text-2xl md:text-3xl font-black mb-6 tracking-tighter" data-i18n="exp-apps-title">Apps Mobile.</h3>
+                    <h3 class="text-2xl md:text-3xl font-black mb-6 tracking-tighter text-blue-600" data-i18n="exp-apps-title">Apps Mobile.</h3>
                     <p class="text-slate-500 font-medium leading-relaxed" data-i18n="exp-apps-desc">Développement natif et publication sur les stores.</p>
                 </article>
                 <article class="md:col-span-2 bento-item reveal-up" style="transition-delay: 0.3s">
                     <span class="tag" data-i18n="exp-elearning-tag">04. Learning</span>
-                    <h3 class="text-2xl md:text-3xl font-black mb-6 tracking-tighter" data-i18n="exp-elearning-title">E-learning.</h3>
+                    <h3 class="text-2xl md:text-3xl font-black mb-6 tracking-tighter text-blue-600" data-i18n="exp-elearning-title">E-learning.</h3>
                     <p class="text-slate-500 font-medium leading-relaxed" data-i18n="exp-elearning-desc">Plateformes de formation interactives et pédagogie numérique.</p>
                 </article>
                 <article class="md:col-span-2 bento-item bento-blue reveal-up">
@@ -384,73 +376,159 @@
                 </article>
             </div>
         </div>
-        <div class="transition-bottom-white"></div>
     </section>
 
-    <!-- PORTFOLIO -->
-    <section id="portfolio" class="py-48 px-6 section-dark">
-        <div class="max-w-7xl mx-auto bento-grid relative z-20">
-            <div class="md:col-span-3 bento-item reveal-up" style="padding:0; min-height:550px;">
-                <iframe src="https://my.spline.design/r4xbot-TowiBcjXeP3tiZRqqB7OwFiy/" width="100%" height="100%" class="loaded" style="pointer-events: none;" title="Projet Portfolio 1" loading="lazy"></iframe>
-                <div class="absolute bottom-10 left-10 z-10">
-                    <span class="tag" style="background: var(--primary); color: white;">Bot Evolution</span>
-                    <h4 class="text-3xl font-black text-white">R4X Concept</h4>
+    <!-- ACCOMPAGNEMENT / MÉTHODE PREMIUM ✨ -->
+    <section id="process" class="py-32 px-6 overflow-hidden">
+        <div class="marquee-wrapper mb-24">
+            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
+                <span data-i18n="proc-title">Notre Accompagnement de A à Z. Méthode.</span>
+                <span data-i18n="proc-title">Notre Accompagnement de A à Z. Méthode.</span>
+                <span data-i18n="proc-title">Notre Accompagnement de A à Z. Méthode.</span>
+            </div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto space-y-16">
+            <!-- Etape 1 -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal-up">
+                <div class="md:col-span-7">
+                    <div class="method-card">
+                        <span class="phase-badge">Phase 01</span>
+                        <h4 class="text-3xl font-black mb-4 text-blue-600 relative z-10" data-i18n="proc-1-h">Stratégie & Immersion</h4>
+                        <p class="text-slate-600 text-lg font-medium leading-relaxed relative z-10" data-i18n="proc-1-p">Nous commençons par immerger notre équipe dans votre univers. Analyse de vos besoins et définition précise des objectifs de conversion.</p>
+                        <span class="giant-num">01</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex md:col-span-5 justify-center">
+                    <div class="w-1 h-32 bg-gradient-to-b from-blue-600 to-transparent rounded-full opacity-20"></div>
                 </div>
             </div>
-            <div class="md:col-span-3 bento-item reveal-up" style="padding:0; min-height:550px; transition-delay: 0.2s;">
-                <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-ISR0inmI81qHYRxU9zwpmWsJ/" width="100%" height="100%" class="loaded" style="pointer-events: none;" title="Projet Portfolio 2" loading="lazy"></iframe>
-                <div class="absolute bottom-10 left-10 z-10">
-                    <span class="tag" style="background: var(--primary); color: white;">Humanoid AI</span>
-                    <h4 class="text-3xl font-black text-white">NexBot Core</h4>
+
+            <!-- Etape 2 -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal-up">
+                <div class="hidden md:flex md:col-span-5 justify-center">
+                    <div class="w-1 h-32 bg-gradient-to-b from-transparent via-blue-600 to-transparent rounded-full opacity-20"></div>
+                </div>
+                <div class="md:col-span-7">
+                    <div class="method-card">
+                        <span class="phase-badge">Phase 02</span>
+                        <h4 class="text-3xl font-black mb-4 text-blue-600 relative z-10" data-i18n="proc-2-h">Conception Créative</h4>
+                        <p class="text-slate-600 text-lg font-medium leading-relaxed relative z-10" data-i18n="proc-2-p">L'étape créative. Création de wireframes et design d'interfaces haute-fidélité pour valider l'expérience utilisateur avant le code.</p>
+                        <span class="giant-num">02</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Etape 3 -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal-up">
+                <div class="md:col-span-7">
+                    <div class="method-card">
+                        <span class="phase-badge">Phase 03</span>
+                        <h4 class="text-3xl font-black mb-4 text-blue-600 relative z-10" data-i18n="proc-3-h">Développement & IA</h4>
+                        <p class="text-slate-600 text-lg font-medium leading-relaxed relative z-10" data-i18n="proc-3-p">Intégration technique pointue, animations 3D et tests rigoureux. Nous donnons vie au projet avec les meilleures technologies.</p>
+                        <span class="giant-num">03</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex md:col-span-5 justify-center">
+                    <div class="w-1 h-32 bg-gradient-to-b from-transparent via-blue-600 to-transparent rounded-full opacity-20"></div>
+                </div>
+            </div>
+
+            <!-- Etape 4 -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center reveal-up">
+                <div class="hidden md:flex md:col-span-5 justify-center">
+                    <div class="w-1 h-32 bg-gradient-to-b from-transparent to-blue-600 rounded-full opacity-20"></div>
+                </div>
+                <div class="md:col-span-7">
+                    <div class="method-card">
+                        <span class="phase-badge">Phase 04</span>
+                        <h4 class="text-3xl font-black mb-4 text-blue-600 relative z-10" data-i18n="proc-4-h">Lancement & Suivi</h4>
+                        <p class="text-slate-600 text-lg font-medium leading-relaxed relative z-10" data-i18n="proc-4-p">Mise en ligne, maintenance évolutive et support continu. Nous restons à vos côtés pour faire grandir votre présence digitale.</p>
+                        <span class="giant-num">04</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TESTIMONIALS -->
-    <section id="testimonials" class="py-32 px-6 section-light overflow-hidden">
-        <div class="transition-top-white"></div>
+    <!-- PORTFOLIO / RÉALISATIONS -->
+    <section id="portfolio" class="py-48 px-6">
+        <div class="marquee-wrapper mb-20">
+            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
+                <span data-i18n="nav-realisations">Nos Créations. Réalisations.</span>
+                <span data-i18n="nav-realisations">Nos Créations. Réalisations.</span>
+                <span data-i18n="nav-realisations">Nos Créations. Réalisations.</span>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto bento-grid relative z-20">
+            <div class="md:col-span-3 bento-item reveal-up" style="padding:0; min-height:550px;">
+                <iframe src="https://my.spline.design/r4xbot-TowiBcjXeP3tiZRqqB7OwFiy/" width="100%" height="100%" onload="this.classList.add('loaded')" style="pointer-events: none;" title="Projet R4X Bot"></iframe>
+                <div class="absolute bottom-10 left-10 z-10">
+                    <span class="tag" style="background: var(--primary); color: white;">Bot Evolution</span>
+                    <h4 class="text-3xl font-black text-blue-600">R4X Concept</h4>
+                </div>
+            </div>
+            <div class="md:col-span-3 bento-item reveal-up" style="padding:0; min-height:550px; transition-delay: 0.2s;">
+                <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-ISR0inmI81qHYRxU9zwpmWsJ/" width="100%" height="100%" onload="this.classList.add('loaded')" style="pointer-events: none;" title="Projet NexBot"></iframe>
+                <div class="absolute bottom-10 left-10 z-10">
+                    <span class="tag" style="background: var(--primary); color: white;">Humanoid AI</span>
+                    <h4 class="text-3xl font-black text-blue-600">NexBot Core</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS / AVIS -->
+    <section id="testimonials" class="py-32 px-6">
+        <div class="marquee-wrapper mb-20">
+            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
+                <span data-i18n="testi-title">Ils nous font confiance. Avis.</span>
+                <span data-i18n="testi-title">Ils nous font confiance. Avis.</span>
+                <span data-i18n="testi-title">Ils nous font confiance. Avis.</span>
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto relative z-20">
-            <header class="text-center mb-20 reveal-up">
-                <h2 class="text-5xl md:text-7xl font-black tracking-tighter mb-4" data-i18n="testi-title">Ils nous font confiance.</h2>
-                <p class="text-slate-400 font-medium" data-i18n="testi-desc">La satisfaction client est notre moteur de création.</p>
-            </header>
             <div class="bento-grid">
                 <blockquote class="md:col-span-2 bento-item reveal-up">
                     <div class="flex text-amber-400 mb-4" aria-hidden="true"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                    <p class="text-lg font-bold italic mb-6 leading-relaxed text-slate-700" data-i18n="testi-1-txt">"JAAD a transformé notre vision en une réalité immersive. Le site 3D a doublé notre taux de conversion."</p>
+                    <p class="text-lg font-bold italic mb-6 leading-relaxed text-slate-800" data-i18n="testi-1-txt">"JAAD a transformé notre vision en une réalité immersive. Le site 3D a doublé notre taux de conversion."</p>
                     <cite class="flex items-center gap-4 not-italic">
                         <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-black text-blue-600 text-xs">SC</div>
-                        <div><p class="font-black text-sm">Sarah Cohen</p><p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">CEO, VisionTech</p></div>
+                        <div><p class="font-black text-sm text-black">Sarah Cohen</p><p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">CEO, VisionTech</p></div>
                     </cite>
                 </blockquote>
                 <blockquote class="md:col-span-2 bento-item reveal-up" style="transition-delay: 0.1s">
                     <div class="flex text-amber-400 mb-4" aria-hidden="true"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                    <p class="text-lg font-bold italic mb-6 leading-relaxed text-slate-700" data-i18n="testi-2-txt">"Une équipe réactive et ultra-créative. L'intégration de l'IA dans notre workflow a tout changé."</p>
+                    <p class="text-lg font-bold italic mb-6 leading-relaxed text-slate-800" data-i18n="testi-2-txt">"Une équipe réactive et ultra-créative. L'intégration de l'IA dans notre workflow a tout changé."</p>
                     <cite class="flex items-center gap-4 not-italic">
-                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center font-black text-slate-600 text-xs">ML</div>
-                        <div><p class="font-black text-sm">Marc Lefebvre</p><p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Directeur Innovation, ArchiLux</p></div>
+                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-black text-slate-700 text-xs">ML</div>
+                        <div><p class="font-black text-sm text-black">Marc Lefebvre</p><p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Dir. Innovation, ArchiLux</p></div>
                     </cite>
                 </blockquote>
                 <blockquote class="md:col-span-2 bento-item reveal-up" style="transition-delay: 0.2s">
                     <div class="flex text-amber-400 mb-4" aria-hidden="true"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                    <p class="text-lg font-bold italic mb-6 leading-relaxed text-slate-700" data-i18n="testi-3-txt">"Enfin une agence qui comprend les enjeux de demain. Le design de notre app est tout simplement sublime."</p>
+                    <p class="text-lg font-bold italic mb-6 leading-relaxed text-slate-800" data-i18n="testi-3-txt">"Enfin une agence qui comprend les enjeux de demain. Le design de notre app est tout simplement sublime."</p>
                     <cite class="flex items-center gap-4 not-italic">
-                        <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center font-black text-amber-600 text-xs">KA</div>
-                        <div><p class="font-black text-sm">Karim Al-Fayed</p><p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Fondateur, Oasis Digital</p></div>
+                        <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center font-black text-amber-700 text-xs">KA</div>
+                        <div><p class="font-black text-sm text-black">Karim Al-Fayed</p><p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Fondateur, Oasis Digital</p></div>
                     </cite>
                 </blockquote>
             </div>
         </div>
-        <div class="transition-bottom-white"></div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="py-48 px-6 section-light">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+    <!-- CONTACT / CONTACTEZ-NOUS -->
+    <section id="contact" class="py-48 px-6">
+        <div class="marquee-wrapper mb-20">
+            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
+                <span data-i18n="cont-title">Contactez-nous. Contact.</span>
+                <span data-i18n="cont-title">Contactez-nous. Contact.</span>
+                <span data-i18n="cont-title">Contactez-nous. Contact.</span>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
             <div>
-                <h2 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9]" data-i18n="cont-title">Parlons-en.</h2>
-                <p class="text-slate-400 text-xl font-medium max-w-sm mb-12" data-i18n="cont-desc">Répondez à quelques questions pour qualifier votre projet.</p>
+                <p class="text-slate-600 text-xl font-medium max-w-sm mb-12" data-i18n="cont-desc">Répondez à quelques questions pour qualifier votre projet.</p>
                 <div class="space-y-6">
                     <div class="flex items-center gap-4 text-sm font-bold text-blue-600">
                         <i data-lucide="map-pin" class="w-5 h-5" aria-hidden="true"></i> <span data-i18n="cont-location">Aix-en-Provence & International</span>
@@ -460,8 +538,8 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full bg-slate-900 border border-slate-800 p-10 md:p-14 rounded-[48px] shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[100px] rounded-full" aria-hidden="true"></div>
+            <div class="w-full bg-[#0f172a] border border-white/5 p-10 md:p-14 rounded-[48px] shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 blur-[100px] rounded-full" aria-hidden="true"></div>
                 <div class="progress-bar-container relative z-10"><div id="form-progress-fill"></div></div>
                 <form id="quest-form" class="space-y-8 relative z-10" onsubmit="event.preventDefault();">
                     <div class="form-step active" id="step-1">
@@ -521,11 +599,11 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-24 bg-white border-t border-slate-100 px-6" role="contentinfo">
+    <footer class="py-24 bg-white border-t border-slate-200 px-6" role="contentinfo">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
             <a href="#top" class="text-3xl font-black text-blue-600 tracking-tighter">JAAD<span class="text-slate-900">.</span></a>
-            <p class="text-slate-400 font-medium">Agence créative spécialisée en Web, 3D et Intelligence Artificielle.</p>
-            <div class="flex gap-6 text-slate-400">
+            <p class="text-slate-500 font-medium">Agence créative spécialisée en Web, 3D et Intelligence Artificielle.</p>
+            <div class="flex gap-6 text-slate-500">
                 <a href="#" class="hover:text-blue-600" aria-label="Instagram"><i data-lucide="instagram" aria-hidden="true"></i></a>
                 <a href="#" class="hover:text-blue-600" aria-label="LinkedIn"><i data-lucide="linkedin" aria-hidden="true"></i></a>
             </div>
@@ -548,22 +626,15 @@
     </div>
 
     <script>
-        /* --- CLÉ API GEMINI --- 
-           Insérez votre clé entre les guillemets ci-dessous. 
-           Laissez vide dans l'environnement de test (Canvas). */
+        // --- CONFIGURATION IA (BLINDÉE ✨) ---
         const apiKey = "AIzaSyBaJCBzdlj9qgKdYWnidzDJLEzof9kpN9s"; 
+        const MODEL_NAME = "gemini-1.5-flash"; // Modèle le plus stable pour la prod
 
         // --- LISTE DES PAYS ---
         const countriesList = [
             { n: "France", c: "+33", f: "🇫🇷" }, { n: "Belgique", c: "+32", f: "🇧🇪" }, { n: "Suisse", c: "+41", f: "🇨🇭" },
-            { n: "Canada", c: "+1", f: "🇨🇦" }, { n: "États-Unis", c: "+1", f: "🇺🇸" }, { n: "Royaume-Uni", c: "+44", f: "🇬🇧" },
-            { n: "Maroc", c: "+212", f: "🇲🇦" }, { n: "Algérie", c: "+213", f: "🇩🇿" }, { n: "Tunisie", c: "+216", f: "🇹🇳" },
-            { n: "Émirats Arabes Unis", c: "+971", f: "🇦🇪" }, { n: "Luxembourg", c: "+352", f: "🇱🇺" },
-            { n: "Sénégal", c: "+221", f: "🇸🇳" }, { n: "Espagne", c: "+34", f: "🇪🇸" }, { n: "Italie", c: "+39", f: "🇮🇹" },
-            { n: "Allemagne", c: "+49", f: "🇩🇪" }, { n: "Portugal", c: "+351", f: "🇵🇹" }, { n: "Côte d'Ivoire", c: "+225", f: "🇨🇮" },
-            { n: "Cameroun", c: "+237", f: "🇨🇲" }, { n: "Madagascar", c: "+261", f: "🇲🇬" }, { n: "Liban", c: "+961", f: "🇱🇧" },
-            { n: "Arabie Saoudite", c: "+966", f: "🇸🇦" }, { n: "Qatar", c: "+974", f: "🇶🇦" }, { n: "Turquie", c: "+90", f: "🇹🇷" },
-            { n: "Australie", c: "+61", f: "🇦🇺" }, { n: "Brésil", c: "+55", f: "🇧🇷" }, { n: "Mexique", c: "+52", f: "🇲🇽" }, { n: "Japon", c: "+81", f: "🇯🇵" }
+            { n: "Canada", c: "+1", f: "🇨🇦" }, { n: "Maroc", c: "+212", f: "🇲🇦" }, { n: "Algérie", c: "+213", f: "🇩🇿" },
+            { n: "Sénégal", c: "+221", f: "🇸🇳" }, { n: "Côte d'Ivoire", c: "+225", f: "🇨🇮" }, { n: "Tunisie", c: "+216", f: "🇹🇳" }
         ];
 
         function populateCountries() {
@@ -578,7 +649,6 @@
             });
         }
 
-        // --- PRELOADER ---
         window.addEventListener('load', () => {
             populateCountries();
             setTimeout(() => {
@@ -599,13 +669,17 @@
             const activeStep = document.getElementById(`step-${currentStep}`);
             if (activeStep) activeStep.classList.add('active');
             const progress = (currentStep / totalSteps) * 100;
-            document.getElementById('form-progress-fill').style.width = `${progress}%`;
+            const progressEl = document.getElementById('form-progress-fill');
+            if(progressEl) progressEl.style.width = `${progress}%`;
+            
             const prevBtn = document.getElementById('prev-btn');
             const nextBtnText = document.getElementById('next-btn-text');
             if (currentStep === 1) prevBtn.classList.add('opacity-0', 'pointer-events-none');
             else prevBtn.classList.remove('opacity-0', 'pointer-events-none');
-            nextBtnText.innerText = currentStep === totalSteps ? translations[currentLang]["cont-btn"] : translations[currentLang]["form-next"];
-            document.getElementById('form-nav').style.display = currentStep > totalSteps ? 'none' : 'flex';
+            
+            if(nextBtnText) nextBtnText.innerText = currentStep === totalSteps ? translations[currentLang]["cont-btn"] : translations[currentLang]["form-next"];
+            const nav = document.getElementById('form-nav');
+            if(nav) nav.style.display = currentStep > totalSteps ? 'none' : 'flex';
         }
 
         function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
@@ -658,7 +732,7 @@
             updateFormUI(); 
         }
 
-        // --- GEMINI API & CHAT ---
+        // --- GEMINI AI CHAT (FIXÉ ✨) ---
         function toggleAiChat() { document.getElementById('ai-chat-modal').classList.toggle('active'); }
 
         async function sendChatMessage() {
@@ -668,59 +742,96 @@
             chatBox.innerHTML += `<div class="msg msg-user">${msg}</div>`;
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
+
+            const loadingId = 'ai-loading-' + Date.now();
+            chatBox.innerHTML += `<div class="msg msg-ai" id="${loadingId}">JAAD AI réfléchit...</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
             try {
-                const response = await callGemini(msg, "Tu es JAAD AI, l'assistant créatif d'une agence digitale experte en Web Design, 3D, IA et E-learning.");
-                chatBox.innerHTML += `<div class="msg msg-ai">${response}</div>`;
+                if (!apiKey) throw new Error("Missing Key");
+                const response = await callGemini(msg, "Tu es JAAD AI, l'assistant expert d'une agence digitale (Web Design, 3D, IA, E-learning). Réponds de façon concise et professionnelle.");
+                document.getElementById(loadingId).innerText = response;
             } catch (e) {
-                chatBox.innerHTML += `<div class="msg msg-ai text-red-500">Service momentanément indisponible.</div>`;
+                let errorMsg = "Désolé, une erreur technique est survenue.";
+                if (e.message === "Missing Key") errorMsg = "Clé API non configurée. Veuillez l'ajouter dans le code source (index.html).";
+                else if (e.message === "API Error") errorMsg = "L'API a renvoyé une erreur. Vérifiez la validité de votre clé.";
+                document.getElementById(loadingId).innerHTML = `<span class="text-red-500">${errorMsg}</span>`;
             }
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
         async function callGemini(p, s) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
             const r = await fetch(url, { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ contents: [{ parts: [{ text: p }] }], systemInstruction: { parts: [{ text: s }] } }) 
+                body: JSON.stringify({ 
+                    contents: [{ parts: [{ text: p }] }], 
+                    system_instruction: { parts: [{ text: s }] } // Syntaxe v1beta exacte
+                }) 
             });
+
+            if(!r.ok) {
+                const errorData = await r.json();
+                console.error("Gemini API Error:", errorData);
+                throw new Error("API Error");
+            }
+
             const d = await r.json(); 
-            return d.candidates?.[0]?.content?.parts?.[0]?.text || "Désolé, je rencontre une difficulté technique.";
+            return d.candidates?.[0]?.content?.parts?.[0]?.text || "Je n'ai pas pu générer de réponse.";
         }
 
         // --- TRADUCTIONS ---
         const translations = {
             fr: {
-                "nav-logo": "JAAD", "nav-expertise": "Expertise", "nav-realisations": "Réalisations", "nav-contact-btn": "Contact",
+                "nav-logo": "JAAD", "nav-expertise": "Expertise", "nav-realisations": "Nos Créations", "nav-contact-btn": "Contact",
                 "hero-btn": "Parlons-en.", "hero-btn-secondary": "Nos créations.", "exp-title": "On crée pour vous. E-learning.",
-                "cont-title": "Parlons-en.", "cont-desc": "Répondez à quelques questions pour qualifier votre projet.",
+                "proc-title": "Notre Accompagnement de A à Z. Méthode.",
+                "proc-1-h": "Stratégie & Immersion", "proc-1-p": "Nous commençons par immerger notre équipe dans votre univers. Analyse de vos besoins et définition précise des objectifs de conversion.",
+                "proc-2-h": "Conception Créative", "proc-2-p": "L'étape créative. Création de wireframes et design d'interfaces haute-fidélité pour valider l'expérience utilisateur avant le code.",
+                "proc-3-h": "Développement & IA", "proc-3-p": "Intégration technique pointue, animations 3D et tests rigoureux. Nous donnons vie au projet avec les meilleures technologies.",
+                "proc-4-h": "Lancement & Suivi", "proc-4-p": "Mise en ligne, maintenance évolutive et support continu. Nous restons à vos côtés pour faire grandir votre présence digitale.",
+                "cont-title": "Contactez-nous.", "cont-desc": "Répondez à quelques questions pour qualifier votre projet.",
                 "cont-location": "Aix-en-Provence & International", "cont-ph-name": "Votre nom", "cont-ph-email": "Email", "cont-ph-msg": "Détails de votre projet...", "cont-btn": "Envoyer",
                 "form-next": "Suivant", "form-prev": "Retour", "step-1-label": "Comment vous appelez-vous ?", "step-2-label": "Quel est votre email ?", "step-3-label": "Sur quoi pouvons-nous vous aider ?",
                 "step-4-label": "Décrivez-nous votre projet...", "step-5-label": "Comment souhaitez-vous être rappelé ?", "step-phone-label": "Et votre numéro de téléphone ?",
                 "err-email": "Email invalide", "err-phone": "Numéro invalide",
                 "srv-web": "Web", "srv-apps": "Apps", "srv-3d": "3D", "srv-ia": "IA", "srv-elearning": "E-learning",
+                "testi-title": "Ils nous font confiance. Avis.",
                 "form-success-title": "C'est envoyé !", "form-success-desc": "Transmis à hello@jaad.studio. Réponse sous 24h."
             },
             en: {
-                "nav-logo": "JAAD", "nav-expertise": "Expertise", "nav-realisations": "Works", "nav-contact-btn": "Contact",
+                "nav-logo": "JAAD", "nav-expertise": "Expertise", "nav-realisations": "Our Creations", "nav-contact-btn": "Contact",
                 "hero-btn": "Let's talk.", "hero-btn-secondary": "Works.", "exp-title": "We build for you. E-learning.",
-                "cont-title": "Let's talk.", "cont-desc": "Answer a few questions to qualify your project.",
+                "proc-title": "A to Z Support. Our Process.",
+                "proc-1-h": "Strategy & Immersion", "proc-1-p": "We start by immersing our team in your world. Analyzing your needs and defining conversion goals.",
+                "proc-2-h": "Creative Design", "proc-2-p": "The creative stage. Wireframing and high-fidelity UI design to validate the experience before coding.",
+                "proc-3-h": "Development & AI", "proc-3-p": "Sharp technical integration, 3D animations, and rigorous testing. We bring the project to life with top tech.",
+                "proc-4-h": "Launch & Support", "proc-4-p": "Going live, iterative maintenance, and continuous support. We stand by you to grow your digital presence.",
+                "cont-title": "Contact Us.", "cont-desc": "Answer a few questions to qualify your project.",
                 "cont-location": "Aix-en-Provence & International", "cont-ph-name": "Your name", "cont-ph-email": "Email", "cont-ph-msg": "Project details...", "cont-btn": "Submit",
                 "form-next": "Next", "form-prev": "Back", "step-1-label": "What is your name?", "step-2-label": "What is your email?", "step-3-label": "What do you need help with?",
                 "step-4-label": "Tell us more about your project...", "step-5-label": "How would you like to be reached?", "step-phone-label": "And your phone number?",
                 "err-email": "Invalid email", "err-phone": "Invalid phone number",
                 "srv-web": "Web", "srv-apps": "Apps", "srv-3d": "3D", "srv-ia": "AI", "srv-elearning": "E-learning",
+                "testi-title": "They trust us. Reviews.",
                 "form-success-title": "Sent successfully!", "form-success-desc": "Sent to hello@jaad.studio. Expect a reply within 24h."
             },
             ar: {
-                "nav-logo": "جاد", "nav-expertise": "خبراتنا", "nav-realisations": "أعمالنا", "nav-contact-btn": "تواصل معنا",
+                "nav-logo": "جاد", "nav-expertise": "خبراتنا", "nav-realisations": "إبداعاتنا", "nav-contact-btn": "تواصل معنا",
                 "hero-btn": "لنتحدث.", "hero-btn-secondary": "إبداعاتنا.", "exp-title": "نصمم لأجلك. التعليم الإلكتروني.",
-                "cont-title": "لنتحدث.", "cont-desc": "أجب على بعض الأسئلة لتأهيل مشروعك.",
+                "proc-title": "دعم شامل من الألف إلى الياء. طريقتنا.",
+                "proc-1-h": "الإستراتيجية والانغماس", "proc-1-p": "نبدأ بغمر فريقنا في عالمك. تحليل احتياجاتك وتحديد أهداف التحويل بدقة.",
+                "proc-2-h": "التصميم الإبداعي", "proc-2-p": "المرحلة الإبداعية. إنشاء النماذج وتصميم واجهات عالية الجودة للتحقق من تجربة المستخدم قبل البرمجة.",
+                "proc-3-h": "التطوير والذكاء الاصطناعي", "proc-3-p": "تكامل تقني دقيق، رسوم متحركة ثلاثية الأبعاد واختبارات صارمة. نعيد الحياة للمشروع بأفضل التقنيات.",
+                "proc-4-h": "الإطلاق والمتابعة", "proc-4-p": "الإطلاق، الصيانة التطورية والدعم المستمر. نبقى بجانبك لتنمية تواجدك الرقمي.",
+                "cont-title": "اتصل بنا.", "cont-desc": "أجب على certains الأسئلة لتأهيل مشروعك.",
                 "cont-location": "إيكس أون بروفانس وعالمي", "cont-ph-name": "الاسم", "cont-ph-email": "الايميل", "cont-ph-msg": "تفاصيل مشروعك...", "cont-btn": "إرسال",
                 "form-next": "التالي", "form-prev": "السابق", "step-1-label": "ما هو اسمك؟", "step-2-label": "ما هو بريدك الإلكتروني؟", "step-3-label": "بماذا يمكننا مساعدتك؟",
                 "step-4-label": "صف لنا مشروعك...", "step-5-label": "كيف نتمكن من التواصل معك؟", "step-phone-label": "وما هو رقم هاتفك؟",
                 "err-email": "بريد إلكتروني غير صالح", "err-phone": "رقم غير صالح",
                 "srv-web": "ويب", "srv-apps": "تطبيقات", "srv-3d": "ثلاثي الأبعاد", "srv-ia": "ذكاء اصطناعي", "srv-elearning": "التعليم الإلكتروني",
+                "testi-title": "عملاؤنا يثقون بنا. آراء.",
                 "form-success-title": "تم الإرسال!", "form-success-desc": "تم الإرسال إلى hello@jaad.studio. الرد خلال 24 ساعة."
             }
         };
@@ -743,6 +854,7 @@
             updateFormUI();
         }
 
+        // --- UTILS ---
         function toggleMenu() { document.getElementById('mobile-menu-overlay').classList.toggle('active'); }
         function revealOnScroll() { 
             const obs = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 }); 
@@ -757,7 +869,6 @@
             document.getElementById("scroll-progress").style.width = (winScroll / height) * 100 + "%";
         });
 
-        // --- NAVIGATION SMOOTH SCROLL (FIX) ---
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
@@ -767,10 +878,7 @@
                     const targetElement = document.getElementById(targetId === 'top' ? 'top' : targetId);
                     if (targetElement) {
                         document.getElementById('mobile-menu-overlay').classList.remove('active');
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
+                        window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' });
                     }
                 }
             });
