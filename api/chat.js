@@ -1,5 +1,6 @@
 /**
- * Version corrigée pour éviter l'erreur 404 de Google Gemini
+ * Ce code est le "cerveau" serveur.
+ * À mettre dans le dossier "api", dans le fichier "chat.js".
  */
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -13,7 +14,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Clé API absente des réglages Vercel." });
   }
 
-  // Utilisation de l'API v1 stable et du modèle flash 1.5
+  // URL stable (v1) de l'API Google Gemini
   const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
   try {
@@ -22,7 +23,7 @@ export default async function handler(req, res) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: [{ 
-          parts: [{ text: `Tu es JAAD AI, l'assistant expert de l'agence JAAD Studio (Web Design, 3D, IA, E-learning). Réponds de façon pro et courte. Client : ${message}` }] 
+          parts: [{ text: `Tu es JAAD AI, l'assistant expert de l'agence JAAD Studio. Réponds de façon pro et courte. Client : ${message}` }] 
         }]
       })
     });
@@ -31,7 +32,7 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       return res.status(response.status).json({ 
-        error: data.error?.message || "Erreur de communication avec Google" 
+        error: data.error?.message || "Erreur Google Gemini" 
       });
     }
 
