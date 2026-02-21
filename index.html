@@ -30,10 +30,11 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- LOGIQUE DE SCROLL & IFRAME --- */
+        /* --- PROTECTION DU SCROLL & POSITIONNEMENT ROBOT --- */
         #hero-spline {
-            pointer-events: none !important; /* Désactive les gestes sur la 3D pour libérer le scroll */
+            pointer-events: none !important;
             user-select: none !important;
+            max-width: none !important;
         }
 
         .noise::before {
@@ -108,7 +109,7 @@
         .marquee-content { display: flex; gap: 4rem; animation: marquee 30s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- METHOD DESIGN FIX --- */
+        /* --- METHOD DESIGN --- */
         .method-card { background: white; border-radius: 40px; padding: 3rem; position: relative; z-index: 10; border: 1px solid rgba(0,0,0,0.04); transition: all 0.4s ease; }
         .method-card:hover { transform: translateY(-10px); border-color: var(--primary); }
         .giant-num { position: absolute; bottom: -2rem; right: -1rem; font-size: 14rem; font-weight: 900; line-height: 1; color: transparent; -webkit-text-stroke: 2px rgba(37, 99, 235, 0.05); z-index: 0; pointer-events: none; }
@@ -118,24 +119,14 @@
         .form-step { display: none; }
         .form-step.active { display: block; animation: fadeIn 0.5s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .progress-bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 100px; margin-bottom: 3rem; }
-        #form-progress-fill { width: 0%; height: 100%; background: var(--primary); transition: width 0.5s ease; }
         .service-pill { padding: 0.8rem 1.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; }
         .service-pill.selected { background: var(--primary); border-color: var(--primary); }
 
-        /* --- CHAT --- */
-        #ai-chat-modal { position: fixed; bottom: 8rem; right: 2rem; width: 360px; max-width: calc(100vw - 4rem); background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.1); z-index: 1500; display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
-        #ai-chat-modal.active { display: flex; }
-        .chat-messages { height: 350px; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #fafafa; }
-        .msg { padding: 0.8rem 1.2rem; border-radius: 18px; font-size: 13px; line-height: 1.5; max-width: 85%; }
-        .msg-user { align-self: flex-end; background: #2563eb; color: white; border-bottom-right-radius: 4px; }
-        .msg-ai { align-self: flex-start; background: white; color: #0f172a; border-bottom-left-radius: 4px; border: 1px solid #eee; }
+        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
+        #mobile-menu-overlay.active { display: flex; }
 
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
-
-        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
-        #mobile-menu-overlay.active { display: flex; }
     </style>
 </head>
 <body class="noise">
@@ -149,16 +140,7 @@
         </div>
     </div>
 
-    <!-- MOBILE MENU -->
-    <div id="mobile-menu-overlay">
-        <a href="#services" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-expertise">Expertise</a>
-        <a href="#process" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-methode">Méthode</a>
-        <a href="#portfolio" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-realisations">Réalisations</a>
-        <a href="#contact" class="text-4xl font-black text-blue-600 anchor-link" onclick="toggleMenu()" data-i18n="nav-contact-btn">Contact</a>
-        <button class="mt-12 text-slate-400 font-bold uppercase text-xs" onclick="toggleMenu()" data-i18n="nav-close">Fermer</button>
-    </div>
-
-    <!-- NAV -->
+    <!-- NAVIGATION -->
     <nav class="fixed top-0 w-full z-[1000] flex justify-center pt-8 px-4">
         <div id="navbar" class="glass-nav px-8 md:px-10 py-5 rounded-full flex items-center max-w-6xl w-full justify-between shadow-sm">
             <a href="#top" class="text-2xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
@@ -170,9 +152,9 @@
             </div>
             <div class="flex items-center gap-3">
                 <div class="flex bg-slate-100/50 p-1 rounded-full">
-                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white" onclick="switchLanguage('fr')">FR</button>
-                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white" onclick="switchLanguage('en')">EN</button>
-                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white" onclick="switchLanguage('ar')">AR</button>
+                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white transition-all" onclick="switchLanguage('fr')">FR</button>
+                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white transition-all" onclick="switchLanguage('en')">EN</button>
+                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white transition-all" onclick="switchLanguage('ar')">AR</button>
                 </div>
                 <button class="md:hidden p-2 text-slate-900" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
             </div>
@@ -187,12 +169,11 @@
 
     <!-- HERO -->
     <header id="top" class="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
-        <!-- BACKGROUND LAYER (z-0) -->
         <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
             
-            <!-- SPLINE : TAILLE 145% + CENTRAGE ABSOLU (LE JUSTE MILIEU) -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[145vw] md:w-full h-full flex items-center justify-center">
+            <!-- SPLINE : REGLAGE CHIRURGICAL (-46% pour le décaler vers la droite et le centrer parfaitement) -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-[46%] -translate-y-[45%] w-[155vw] md:w-full h-full flex items-center justify-center">
                 <iframe id="hero-spline" 
                         src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
                         frameborder='0' width="100%" height="100%"
@@ -201,7 +182,6 @@
             </div>
         </div>
 
-        <!-- CONTENT LAYER (z-20) -->
         <div class="relative z-20 text-center px-6 mt-[35dvh] pointer-events-none">
             <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active pointer-events-auto">
                 <a href="#contact" class="btn-premium btn-primary anchor-link"><span data-i18n="hero-btn">Parlons-en.</span> <i data-lucide="zap" class="w-4 h-4 fill-current"></i></a>
@@ -210,7 +190,7 @@
         </div>
     </header>
 
-    <!-- SERVICES (EXPERTISE) -->
+    <!-- SERVICES -->
     <section id="services" class="py-32 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -227,7 +207,7 @@
         </div>
     </section>
 
-    <!-- METHOD (RÉTABLI DANS SON BON DESIGN) -->
+    <!-- METHOD (DESIGN RÉTABLI) -->
     <section id="process" class="py-32 px-6 bg-white/40">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -281,7 +261,7 @@
         </div>
     </section>
 
-    <!-- RÉALISATIONS -->
+    <!-- PORTFOLIO -->
     <section id="portfolio" class="py-48 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -309,7 +289,7 @@
                         <i data-lucide="check" class="text-white w-12 h-12"></i>
                     </div>
                     <h3 class="text-4xl font-black text-white mb-4">Message envoyé !</h3>
-                    <p class="text-slate-400 text-lg">Merci de nous avoir contactés. L'équipe JAAD Studio vous répondra très rapidement.</p>
+                    <p class="text-slate-400 text-lg">L'équipe JAAD Studio vous répondra très rapidement.</p>
                     <button type="button" onclick="resetForm()" class="mt-10 btn-premium btn-primary bg-white text-slate-900" data-i18n="form-btn-back">Retour au site</button>
                 </div>
 
@@ -376,6 +356,7 @@
                 "exp-title-marquee": "On crée pour vous. E-learning. IA.",
                 "serv-web-title": "Web Design Immersif", "serv-web-desc": "Sites immersifs et SEO performant.",
                 "serv-3d-title": "Studio 3D.", "serv-3d-desc": "Graphisme 3D haute qualité pour vos produits.",
+                "serv-app-title": "Apps Mobile", "serv-app-desc": "Développement natif et publication stores.",
                 "serv-ia-title": "IA & Robot.", "serv-ia-desc": "Chatbots intelligents et automatisation.",
                 "serv-learn-title": "E-learning", "serv-learn-desc": "Plateformes de formation interactives.",
                 "method-title-marquee": "Notre méthode. Stratégie. Design. Publication.",
@@ -393,6 +374,8 @@
                 "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.",
                 "exp-title-marquee": "We create for you. E-learning. AI.",
                 "serv-web-title": "Immersive Web Design", "serv-web-desc": "Immersive sites and high-performance SEO.",
+                "serv-3d-title": "3D Studio.", "serv-3d-desc": "High quality 3D graphics for your products.",
+                "serv-app-title": "Mobile Apps", "serv-app-desc": "Native development and store publishing.",
                 "serv-ia-title": "AI & Robot.", "serv-ia-desc": "Smart chatbots and automation.",
                 "serv-learn-title": "E-learning", "serv-learn-desc": "Interactive training platforms.",
                 "method-title-marquee": "Our method. Strategy. Design. Publishing.",
@@ -410,6 +393,8 @@
                 "hero-btn": "لنبدأ العمل.", "hero-btn-secondary": "أعمالنا.",
                 "exp-title-marquee": "نبتكر من أجلك. التعليم الإلكتروني. الذكاء الاصطناعي.",
                 "serv-web-title": "تصميم ويب غامر", "serv-web-desc": "مواقع غامرة وتحسين محركات البحث.",
+                "serv-3d-title": "استوديو ثلاثي الأبعاد.", "serv-3d-desc": "رسومات ثلاثية الأبعاد عالية الجودة لمنتجاتك.",
+                "serv-app-title": "تطبيقات الجوال", "serv-app-desc": "تطوير التطبيقات ونشرها في المتاجر.",
                 "serv-ia-title": "الذكاء الاصطناعي والروبوت.", "serv-ia-desc": "روبوتات محادثة ذكية وأتمتة.",
                 "serv-learn-title": "التعليم الإلكتروني", "serv-learn-desc": "منصات تدريب تفاعلية.",
                 "method-title-marquee": "منهجيتنا. استراتيجية. تصميم. نشر.",
@@ -441,7 +426,6 @@
             lucide.createIcons();
         });
 
-        // FORM
         let currentStep = 1;
         function changeStep(n) {
             const steps = document.querySelectorAll('.form-step');
@@ -498,9 +482,9 @@
             if (contactMatch) {
                 try {
                     const contactData = JSON.parse(contactMatch[1]); const formData = new FormData();
-                    formData.append('name', contactData.name); formData.append('email', contactData.email); formData.append('phone', contactData.phone); formData.append('message', "🤖 LEAD IA: " + contactData.message);
+                    formData.append('name', contactData.name); formData.append('email', contactData.email); formData.append('phone', contactData.phone); formData.append('service', contactData.service || 'IA Bot'); formData.append('message', "🤖 LEAD IA: " + contactData.message);
                     fetch('https://formspree.io/f/xjgeayjr', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
-                    responseText = responseText.replace(contactMatch[0], '') + "<br><br>✨ <b>Vos informations ont été transmises !</b>";
+                    responseText = responseText.replace(contactMatch[0], '') + "<br><br>✨ Vos informations ont été transmises !";
                 } catch(e) { console.error(e); }
             }
             chatHistory.push({ role: "model", parts: [{ text: responseText }] });
