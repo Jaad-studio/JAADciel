@@ -4,6 +4,6 @@
   "description": "Configuration pour l'activation de l'API JAAD AI sur Vercel",
   "main": "index.html",
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   }
 }
