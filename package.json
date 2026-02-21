@@ -1,7 +1,8 @@
 {
   "name": "jaad-studio",
   "version": "1.0.0",
-  "description": "Configuration pour l'activation de l'API JAAD AI sur Vercel",
+  "type": "module",
+  "description": "Configuration finale pour JAAD Studio",
   "main": "index.html",
   "engines": {
     "node": "24.x"
