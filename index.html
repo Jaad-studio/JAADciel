@@ -30,9 +30,9 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- LIBÉRATION DU SCROLL (INVISIBLE POUR LE TOUCHER) --- */
-        #hero-spline-container, #hero-spline {
-            pointer-events: none !important;
+        /* --- LOGIQUE DE SCROLL & IFRAME --- */
+        #hero-spline {
+            pointer-events: none !important; /* Désactive les gestes sur la 3D pour libérer le scroll */
             user-select: none !important;
         }
 
@@ -41,15 +41,12 @@
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.015;
-            pointer-events: none;
-            z-index: 9999;
+            opacity: 0.015; pointer-events: none; z-index: 9999;
         }
 
         #scroll-progress {
             position: fixed; top: 0; left: 0; width: 0%; height: 4px;
-            background: var(--primary);
-            z-index: 1001;
+            background: var(--primary); z-index: 1001;
         }
 
         /* --- PRELOADER --- */
@@ -59,21 +56,19 @@
             background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);
             transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
         }
-
         .preloader-active { transform: translateY(-100%); pointer-events: none; }
 
         .loader-logo-base {
             font-family: 'Outfit', sans-serif; 
-            font-size: clamp(2rem, 10vw, 5rem); 
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.2); font-style: italic; letter-spacing: -0.02em;
+            font-size: clamp(2.5rem, 12vw, 5rem); 
+            font-weight: 900; color: rgba(255, 255, 255, 0.2); 
+            font-style: italic; letter-spacing: -0.02em;
             position: relative; text-transform: uppercase;
         }
-
         .loader-logo-fill {
-            position: absolute; top: 0; left: 0;
-            color: #ffffff; width: 0%; overflow: hidden;
-            white-space: nowrap; transition: width 0.5s ease-in-out;
+            position: absolute; top: 0; left: 0; color: #ffffff; 
+            width: 0%; overflow: hidden; white-space: nowrap; 
+            transition: width 0.5s ease-in-out;
         }
 
         /* --- NAV --- */
@@ -113,15 +108,20 @@
         .marquee-content { display: flex; gap: 4rem; animation: marquee 30s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+        /* --- METHOD DESIGN FIX --- */
+        .method-card { background: white; border-radius: 40px; padding: 3rem; position: relative; z-index: 10; border: 1px solid rgba(0,0,0,0.04); transition: all 0.4s ease; }
+        .method-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .giant-num { position: absolute; bottom: -2rem; right: -1rem; font-size: 14rem; font-weight: 900; line-height: 1; color: transparent; -webkit-text-stroke: 2px rgba(37, 99, 235, 0.05); z-index: 0; pointer-events: none; }
+        .phase-badge { background: #0f172a; color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.5rem; display: inline-block; }
+
         /* --- FORM --- */
         .form-step { display: none; }
         .form-step.active { display: block; animation: fadeIn 0.5s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .progress-bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 100px; margin-bottom: 3rem; }
+        #form-progress-fill { width: 0%; height: 100%; background: var(--primary); transition: width 0.5s ease; }
         .service-pill { padding: 0.8rem 1.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; }
         .service-pill.selected { background: var(--primary); border-color: var(--primary); }
-
-        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
-        #mobile-menu-overlay.active { display: flex; }
 
         /* --- CHAT --- */
         #ai-chat-modal { position: fixed; bottom: 8rem; right: 2rem; width: 360px; max-width: calc(100vw - 4rem); background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.1); z-index: 1500; display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
@@ -133,6 +133,9 @@
 
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
+        #mobile-menu-overlay.active { display: flex; }
     </style>
 </head>
 <body class="noise">
@@ -146,9 +149,18 @@
         </div>
     </div>
 
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu-overlay">
+        <a href="#services" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-expertise">Expertise</a>
+        <a href="#process" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-methode">Méthode</a>
+        <a href="#portfolio" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-realisations">Réalisations</a>
+        <a href="#contact" class="text-4xl font-black text-blue-600 anchor-link" onclick="toggleMenu()" data-i18n="nav-contact-btn">Contact</a>
+        <button class="mt-12 text-slate-400 font-bold uppercase text-xs" onclick="toggleMenu()" data-i18n="nav-close">Fermer</button>
+    </div>
+
     <!-- NAV -->
     <nav class="fixed top-0 w-full z-[1000] flex justify-center pt-8 px-4">
-        <div id="navbar" class="glass-nav px-6 md:px-10 py-5 rounded-full flex items-center max-w-6xl w-full justify-between shadow-sm">
+        <div id="navbar" class="glass-nav px-8 md:px-10 py-5 rounded-full flex items-center max-w-6xl w-full justify-between shadow-sm">
             <a href="#top" class="text-2xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
             <div class="hidden md:flex items-center gap-10 text-[10px] font-extrabold uppercase tracking-widest text-slate-500">
                 <a href="#services" class="hover:text-blue-600 anchor-link" data-i18n="nav-expertise">Expertise</a>
@@ -158,9 +170,9 @@
             </div>
             <div class="flex items-center gap-3">
                 <div class="flex bg-slate-100/50 p-1 rounded-full">
-                    <button class="px-3 py-1.5 rounded-full text-[9px] font-black hover:bg-white" onclick="switchLanguage('fr')">FR</button>
-                    <button class="px-3 py-1.5 rounded-full text-[9px] font-black hover:bg-white" onclick="switchLanguage('en')">EN</button>
-                    <button class="px-3 py-1.5 rounded-full text-[9px] font-black hover:bg-white" onclick="switchLanguage('ar')">AR</button>
+                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white" onclick="switchLanguage('fr')">FR</button>
+                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white" onclick="switchLanguage('en')">EN</button>
+                    <button class="px-4 py-1.5 rounded-full text-[9px] font-black hover:bg-white" onclick="switchLanguage('ar')">AR</button>
                 </div>
                 <button class="md:hidden p-2 text-slate-900" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
             </div>
@@ -173,24 +185,23 @@
         <a href="https://wa.me/33600000000" target="_blank" class="w-14 h-14 rounded-full bg-[#25d366] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="message-circle"></i></a>
     </div>
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <header id="top" class="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
-        <!-- Z-0 BACKGROUND LAYER -->
+        <!-- BACKGROUND LAYER (z-0) -->
         <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
             
-            <!-- CONTENEUR DE FORCE : 100% largeur pour centrer le robot sans décalage -->
-            <div id="hero-spline-container" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-full h-full">
+            <!-- SPLINE : TAILLE 145% + CENTRAGE ABSOLU (LE JUSTE MILIEU) -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[145vw] md:w-full h-full flex items-center justify-center">
                 <iframe id="hero-spline" 
                         src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
-                        frameborder='0' 
-                        width="100%" height="100%"
+                        frameborder='0' width="100%" height="100%"
                         class="opacity-0 transition-opacity duration-1000" 
                         onload="this.style.opacity='1'"></iframe>
             </div>
         </div>
 
-        <!-- CONTENT LAYER (Z-20) : Toujours cliquable -->
+        <!-- CONTENT LAYER (z-20) -->
         <div class="relative z-20 text-center px-6 mt-[35dvh] pointer-events-none">
             <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active pointer-events-auto">
                 <a href="#contact" class="btn-premium btn-primary anchor-link"><span data-i18n="hero-btn">Parlons-en.</span> <i data-lucide="zap" class="w-4 h-4 fill-current"></i></a>
@@ -199,7 +210,7 @@
         </div>
     </header>
 
-    <!-- SERVICES (MARQUEE) -->
+    <!-- SERVICES (EXPERTISE) -->
     <section id="services" class="py-32 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -216,7 +227,7 @@
         </div>
     </section>
 
-    <!-- METHOD (MARQUEE) -->
+    <!-- METHOD (RÉTABLI DANS SON BON DESIGN) -->
     <section id="process" class="py-32 px-6 bg-white/40">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -226,23 +237,51 @@
         </div>
         <div class="max-w-6xl mx-auto space-y-16">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
-                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 01</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-1-title">Stratégie</h4><p data-i18n="method-1-desc">Analyse de vos besoins et objectifs.</p><span class="giant-num">01</span></div></div>
+                <div class="lg:col-span-7">
+                    <div class="method-card">
+                        <span class="phase-badge">Phase 01</span>
+                        <h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-1-title">Stratégie</h4>
+                        <p class="text-slate-600 font-medium" data-i18n="method-1-desc">Analyse de vos besoins et objectifs.</p>
+                        <span class="giant-num">01</span>
+                    </div>
+                </div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
                 <div class="hidden lg:flex lg:col-span-5"></div>
-                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 02</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-2-title">Design</h4><p data-i18n="method-2-desc">Conception visuelle et IA.</p><span class="giant-num">02</span></div></div>
+                <div class="lg:col-span-7">
+                    <div class="method-card">
+                        <span class="phase-badge">Phase 02</span>
+                        <h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-2-title">Design</h4>
+                        <p class="text-slate-600 font-medium" data-i18n="method-2-desc">Conception visuelle et IA.</p>
+                        <span class="giant-num">02</span>
+                    </div>
+                </div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
-                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 03</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-3-title">Publication</h4><p data-i18n="method-3-desc">Mise en ligne et SEO technique.</p><span class="giant-num">03</span></div></div>
+                <div class="lg:col-span-7">
+                    <div class="method-card">
+                        <span class="phase-badge">Phase 03</span>
+                        <h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-3-title">Publication</h4>
+                        <p class="text-slate-600 font-medium" data-i18n="method-3-desc">Mise en ligne et SEO technique.</p>
+                        <span class="giant-num">03</span>
+                    </div>
+                </div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
                 <div class="hidden lg:flex lg:col-span-5"></div>
-                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 04</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-4-title">Maintenance</h4><p data-i18n="method-4-desc">Support continu et évolutions.</p><span class="giant-num">04</span></div></div>
+                <div class="lg:col-span-7">
+                    <div class="method-card">
+                        <span class="phase-badge">Phase 04</span>
+                        <h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-4-title">Maintenance</h4>
+                        <p class="text-slate-600 font-medium" data-i18n="method-4-desc">Support continu et évolutions.</p>
+                        <span class="giant-num">04</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- PORTFOLIO (MARQUEE) -->
+    <!-- RÉALISATIONS -->
     <section id="portfolio" class="py-48 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -278,9 +317,9 @@
                     <div class="progress-bar-container"><div id="form-progress-fill"></div></div>
                     <form id="quest-form" class="space-y-10" action="https://formspree.io/f/xjgeayjr" method="POST">
                         <div id="form-steps-container">
-                            <div class="form-step active" id="step-1"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-name">Votre nom ?</label><input type="text" name="name" placeholder="Nom complet" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
-                            <div class="form-step" id="step-2"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-email">Votre email ?</label><input type="email" name="email" placeholder="votre@email.com" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
-                            <div class="form-step" id="step-3"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-phone">Votre numéro ?</label><input type="tel" name="phone" placeholder="06 00..." required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
+                            <div class="form-step active" id="step-1"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-name">Votre nom ?</label><input type="text" name="name" id="q-name" placeholder="Nom complet" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
+                            <div class="form-step" id="step-2"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-email">Votre email ?</label><input type="email" name="email" id="q-email" placeholder="votre@email.com" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
+                            <div class="form-step" id="step-3"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-phone">Votre numéro ?</label><input type="tel" name="phone" id="q-phone" placeholder="06 00..." required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
                             <div class="form-step" id="step-4">
                                 <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-service">Quel service ?</label>
                                 <div class="flex flex-wrap gap-3">
@@ -290,7 +329,7 @@
                                 </div>
                                 <input type="hidden" name="service" id="q-service">
                             </div>
-                            <div class="form-step" id="step-5"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-desc">Description</label><textarea name="message" placeholder="..." required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 h-32 resize-none transition-colors"></textarea></div>
+                            <div class="form-step" id="step-5"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-desc">Description</label><textarea name="message" id="q-desc" placeholder="..." required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 h-32 resize-none transition-colors"></textarea></div>
                             <div class="form-step" id="step-6">
                                 <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-pref">Contact par ?</label>
                                 <div class="flex gap-3">
@@ -301,8 +340,8 @@
                             </div>
                         </div>
                         <div id="form-nav" class="flex justify-between items-center pt-10">
-                            <button type="button" id="prev-btn" onclick="changeStep(-1)" class="opacity-0 pointer-events-none text-slate-400 font-bold uppercase text-xs" data-i18n="form-btn-prev">Retour</button>
-                            <button type="button" id="next-btn" onclick="changeStep(1)" class="btn-premium bg-white text-slate-900 px-10" data-i18n="form-btn-next">Suivant</button>
+                            <button type="button" id="prev-btn" onclick="changeStep(-1)" class="opacity-0 pointer-events-none text-slate-400 font-bold uppercase text-xs transition-opacity" data-i18n="form-btn-prev">Retour</button>
+                            <button type="button" id="next-btn" onclick="changeStep(1)" class="btn-premium bg-white text-slate-900 border-none px-10" data-i18n="form-btn-next">Suivant</button>
                         </div>
                     </form>
                 </div>
@@ -325,7 +364,7 @@
         <div id="chat-messages" class="chat-messages"><div class="msg msg-ai text-xs">Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?</div></div>
         <div class="p-4 flex gap-2 border-t bg-white">
             <input type="text" id="chat-input" class="flex-1 outline-none text-xs" placeholder="..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-            <button onclick="sendChatMessage()" class="bg-blue-600 text-white p-3 rounded-full"><i data-lucide="send" class="w-4 h-4"></i></button>
+            <button onclick="sendChatMessage()" id="chat-send-btn" class="bg-blue-600 text-white p-3 rounded-full"><i data-lucide="send" class="w-4 h-4"></i></button>
         </div>
     </div>
 
@@ -337,7 +376,6 @@
                 "exp-title-marquee": "On crée pour vous. E-learning. IA.",
                 "serv-web-title": "Web Design Immersif", "serv-web-desc": "Sites immersifs et SEO performant.",
                 "serv-3d-title": "Studio 3D.", "serv-3d-desc": "Graphisme 3D haute qualité pour vos produits.",
-                "serv-app-title": "Apps Mobile", "serv-app-desc": "Développement natif et publication stores.",
                 "serv-ia-title": "IA & Robot.", "serv-ia-desc": "Chatbots intelligents et automatisation.",
                 "serv-learn-title": "E-learning", "serv-learn-desc": "Plateformes de formation interactives.",
                 "method-title-marquee": "Notre méthode. Stratégie. Design. Publication.",
@@ -355,8 +393,6 @@
                 "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.",
                 "exp-title-marquee": "We create for you. E-learning. AI.",
                 "serv-web-title": "Immersive Web Design", "serv-web-desc": "Immersive sites and high-performance SEO.",
-                "serv-3d-title": "3D Studio.", "serv-3d-desc": "High quality 3D graphics for your products.",
-                "serv-app-title": "Mobile Apps", "serv-app-desc": "Native development and store publishing.",
                 "serv-ia-title": "AI & Robot.", "serv-ia-desc": "Smart chatbots and automation.",
                 "serv-learn-title": "E-learning", "serv-learn-desc": "Interactive training platforms.",
                 "method-title-marquee": "Our method. Strategy. Design. Publishing.",
@@ -374,8 +410,6 @@
                 "hero-btn": "لنبدأ العمل.", "hero-btn-secondary": "أعمالنا.",
                 "exp-title-marquee": "نبتكر من أجلك. التعليم الإلكتروني. الذكاء الاصطناعي.",
                 "serv-web-title": "تصميم ويب غامر", "serv-web-desc": "مواقع غامرة وتحسين محركات البحث.",
-                "serv-3d-title": "استوديو ثلاثي الأبعاد.", "serv-3d-desc": "رسومات ثلاثية الأبعاد عالية الجودة لمنتجاتك.",
-                "serv-app-title": "تطبيقات الجوال", "serv-app-desc": "تطوير التطبيقات ونشرها في المتاجر.",
                 "serv-ia-title": "الذكاء الاصطناعي والروبوت.", "serv-ia-desc": "روبوتات محادثة ذكية وأتمتة.",
                 "serv-learn-title": "التعليم الإلكتروني", "serv-learn-desc": "منصات تدريب تفاعلية.",
                 "method-title-marquee": "منهجيتنا. استراتيجية. تصميم. نشر.",
@@ -407,27 +441,29 @@
             lucide.createIcons();
         });
 
+        // FORM
         let currentStep = 1;
         function changeStep(n) {
             const steps = document.querySelectorAll('.form-step');
             const lang = document.documentElement.lang || 'fr';
+            if (n < 0 && currentStep <= 1) return;
             if (n > 0) {
-                const cur = steps[currentStep-1];
-                const inputs = cur.querySelectorAll('input[required], textarea[required]');
-                for (let i of inputs) { if (!i.checkValidity()) { i.reportValidity(); return; } }
+                const currentStepEl = steps[currentStep - 1];
+                const inputs = currentStepEl.querySelectorAll('input[required], textarea[required]');
+                for (let input of inputs) { if (!input.checkValidity()) { input.reportValidity(); return; } }
                 if (currentStep === 4 && !document.getElementById('q-service').value) { alert(translations[lang]["form-err-service"]); return; }
                 if (currentStep === 6 && !document.getElementById('q-pref').value) { alert(translations[lang]["form-err-pref"]); return; }
             }
             if (n > 0 && currentStep >= steps.length) { handleFormSubmit(); return; }
-            steps[currentStep-1].classList.remove('active');
+            if (steps[currentStep - 1]) steps[currentStep - 1].classList.remove('active');
             currentStep += n;
-            steps[currentStep-1].classList.add('active');
+            if (steps[currentStep - 1]) steps[currentStep - 1].classList.add('active');
             document.getElementById('form-progress-fill').style.width = (currentStep / steps.length) * 100 + "%";
-            document.getElementById('prev-btn').style.opacity = (currentStep === 1) ? "0" : "1";
-            document.getElementById('prev-btn').style.pointerEvents = (currentStep === 1) ? "none" : "auto";
-            document.getElementById('next-btn').innerText = (currentStep === steps.length) ? translations[lang]["form-btn-send"] : translations[lang]["form-btn-next"];
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) { prevBtn.style.opacity = (currentStep === 1) ? "0" : "1"; prevBtn.style.pointerEvents = (currentStep === 1) ? "none" : "auto"; }
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) nextBtn.innerText = (currentStep === steps.length) ? translations[lang]["form-btn-send"] : translations[lang]["form-btn-next"];
         }
-
         function selectFormService(el, val) { document.querySelectorAll('#step-4 button').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); document.getElementById('q-service').value = val; setTimeout(() => changeStep(1), 300); }
         function selectContactPref(el, val) { document.querySelectorAll('#step-6 button').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); document.getElementById('q-pref').value = val; }
 
@@ -449,8 +485,8 @@
         async function callAi(history) {
             try {
                 const res = await fetch('/api/chat', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ history: history }) });
-                const data = await res.json(); if (!res.ok) throw new Error(data.error || "Erreur"); return data.text;
-            } catch (e) { return `Erreur: ${e.message}`; }
+                const data = await res.json(); if (!res.ok) throw new Error(data.error || "Erreur serveur"); return data.text;
+            } catch (e) { return `[JAAD AI] Oups ! ${e.message}`; }
         }
         async function sendChatMessage() {
             const input = document.getElementById('chat-input'); const box = document.getElementById('chat-messages'); if(!input.value.trim()) return;
@@ -461,10 +497,10 @@
             const contactMatch = responseText.match(/<CONTACT_DATA>([\s\S]*?)<\/CONTACT_DATA>/);
             if (contactMatch) {
                 try {
-                    const d = JSON.parse(contactMatch[1]); const fd = new FormData();
-                    fd.append('name', d.name); fd.append('email', d.email); fd.append('phone', d.phone); fd.append('message', "🤖 IA LEAD: " + d.message);
-                    fetch('https://formspree.io/f/xjgeayjr', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
-                    responseText = responseText.replace(contactMatch[0], '') + "<br><br>✨ Vos informations ont été transmises !";
+                    const contactData = JSON.parse(contactMatch[1]); const formData = new FormData();
+                    formData.append('name', contactData.name); formData.append('email', contactData.email); formData.append('phone', contactData.phone); formData.append('message', "🤖 LEAD IA: " + contactData.message);
+                    fetch('https://formspree.io/f/xjgeayjr', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+                    responseText = responseText.replace(contactMatch[0], '') + "<br><br>✨ <b>Vos informations ont été transmises !</b>";
                 } catch(e) { console.error(e); }
             }
             chatHistory.push({ role: "model", parts: [{ text: responseText }] });
