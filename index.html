@@ -30,8 +30,8 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- FORCE LE SCROLL --- */
-        #hero-spline {
+        /* --- SOLUTION ULTIME POUR LE SCROLL --- */
+        .no-interaction {
             pointer-events: none !important;
             user-select: none !important;
         }
@@ -120,6 +120,9 @@
         .service-pill { padding: 0.8rem 1.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; }
         .service-pill.selected { background: var(--primary); border-color: var(--primary); }
 
+        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
+        #mobile-menu-overlay.active { display: flex; }
+
         /* --- CHAT --- */
         #ai-chat-modal { position: fixed; bottom: 8rem; right: 2rem; width: 360px; max-width: calc(100vw - 4rem); background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.1); z-index: 1500; display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
         #ai-chat-modal.active { display: flex; }
@@ -130,9 +133,6 @@
 
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
-
-        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
-        #mobile-menu-overlay.active { display: flex; }
     </style>
 </head>
 <body class="noise">
@@ -144,6 +144,15 @@
         <div class="loader-content text-center">
             <div class="loader-logo-base">JAAD.<div class="loader-logo-fill" id="loader-fill">JAAD.</div></div>
         </div>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu-overlay">
+        <a href="#services" class="text-4xl font-black text-slate-900" onclick="toggleMenu()" data-i18n="nav-expertise">Expertise</a>
+        <a href="#process" class="text-4xl font-black text-slate-900" onclick="toggleMenu()" data-i18n="nav-methode">Méthode</a>
+        <a href="#portfolio" class="text-4xl font-black text-slate-900" onclick="toggleMenu()" data-i18n="nav-realisations">Réalisations</a>
+        <a href="#contact" class="text-4xl font-black text-blue-600" onclick="toggleMenu()" data-i18n="nav-contact-btn">Contact</a>
+        <button class="mt-12 text-slate-400 font-bold uppercase text-xs" onclick="toggleMenu()" data-i18n="nav-close">Fermer</button>
     </div>
 
     <!-- NAV -->
@@ -176,11 +185,11 @@
     <!-- HERO -->
     <header id="top" class="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
         <!-- BACKGROUND LAYER -->
-        <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);">
+        <div class="absolute inset-0 z-0 no-interaction" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
             
-            <!-- SPLINE : TAILLE REDUITE (110vw) ET CENTRAGE AUTOMATIQUE PARFAIT -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[110vw] md:w-full h-full max-w-none">
+            <!-- SPLINE : LARGEUR 140% POUR LIRE LE J, ET CENTRAGE AUTO ABSOLU DU ROBOT -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[140vw] md:w-full h-full max-w-none">
                 <iframe id="hero-spline" 
                         src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
                         frameborder='0' 
@@ -216,7 +225,7 @@
         </div>
     </section>
 
-    <!-- METHOD -->
+    <!-- METHOD (MARQUEE ADDED) -->
     <section id="process" class="py-32 px-6 bg-white/40">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -242,7 +251,7 @@
         </div>
     </section>
 
-    <!-- PORTFOLIO -->
+    <!-- PORTFOLIO (MARQUEE ADDED) -->
     <section id="portfolio" class="py-48 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -316,7 +325,7 @@
         <p class="text-slate-400 text-xs mt-6">© 2026 JAAD Studio.</p>
     </footer>
 
-    <!-- AI CHAT MODAL -->
+    <!-- AI CHAT -->
     <div id="ai-chat-modal">
         <div class="bg-blue-600 p-5 text-white flex justify-between items-center font-black">
             <span class="flex items-center gap-2 text-[11px] uppercase tracking-widest"><i data-lucide="sparkles"></i> JAAD AI</span>
