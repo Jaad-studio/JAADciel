@@ -47,81 +47,53 @@
             z-index: 1001;
         }
 
-        /* --- PRELOADER "FILL JAAD" MAJUSCULE --- */
+        /* --- PRELOADER JAAD MAJUSCULE --- */
         #preloader {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; inset: 0; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
             background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);
-            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
         .preloader-active { transform: translateY(-100%); }
 
-        .loader-content { position: relative; text-align: center; }
-
         .loader-logo-base {
-            font-family: 'Outfit', sans-serif;
-            font-size: 6rem;
-            font-weight: 900;
-            color: white; 
-            font-style: italic;
-            letter-spacing: -0.02em;
-            position: relative;
-            text-transform: uppercase;
+            font-family: 'Outfit', sans-serif; font-size: 6rem; font-weight: 900;
+            color: rgba(255, 255, 255, 0.2); font-style: italic; letter-spacing: -0.02em;
+            position: relative; text-transform: uppercase;
         }
 
         .loader-logo-fill {
-            position: absolute;
-            top: 0; left: 0;
-            font-family: 'Outfit', sans-serif;
-            font-size: 6rem;
-            font-weight: 900;
-            color: var(--primary-dark); 
-            font-style: italic;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            width: 0%;
-            overflow: hidden;
-            white-space: nowrap;
-            transition: width 1s ease-in-out;
+            position: absolute; top: 0; left: 0;
+            color: #ffffff; width: 0%; overflow: hidden;
+            white-space: nowrap; transition: width 0.4s ease-in-out;
         }
 
-        /* --- NAVIGATION --- */
+        /* Fix Chrome Autofill (Empêche le bug du texte bleu sur bleu dans le formulaire) */
+        input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus {
+            -webkit-text-fill-color: white;
+            -webkit-box-shadow: 0 0 0px 1000px #0f172a inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        /* --- NAV --- */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.8); 
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.05); 
-            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05); transition: all 0.4s ease;
         }
         .nav-shrink { padding: 0.75rem 0 !important; }
 
-        /* --- ACTIONS FLOTTANTES --- */
-        .floating-btns {
-            position: fixed; bottom: 2rem; right: 2rem; z-index: 1500;
-            display: flex; flex-direction: column; gap: 1rem;
-        }
-        .action-circle {
-            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; background: #0f172a; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: none;
-        }
-        .action-circle:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 15px 30px var(--primary-glow); }
-
-        /* --- BOUTONS (DESIGN RESTAURÉ ✨) --- */
+        /* --- BUTTONS --- */
         .btn-premium {
             padding: 1.2rem 2.8rem; border-radius: 100px; font-weight: 900; text-transform: uppercase; font-size: 11px;
             letter-spacing: 0.15em; transition: all 0.4s ease; display: inline-flex; align-items: center; gap: 0.8rem;
         }
-        .btn-primary { background: #0f172a; color: white; border: none; }
+        .btn-primary { background: #0f172a; color: white; }
         .btn-primary:hover { background: var(--primary); transform: scale(1.05); }
         .btn-secondary { background: white; color: #0f172a; border: 2px solid rgba(0,0,0,0.1); }
         .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.05); }
 
-        /* --- CARDS BENTO --- */
+        /* --- BENTO --- */
         .bento-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
         @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(6, 1fr); } }
         .bento-item {
@@ -142,10 +114,6 @@
         .marquee-content { display: flex; gap: 4rem; animation: marquee 30s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- REVEAL ANIM --- */
-        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal-up.active { opacity: 1; transform: translateY(0); }
-
         /* --- METHOD --- */
         .method-card { background: white; border-radius: 40px; padding: 3rem; position: relative; z-index: 10; border: 1px solid rgba(0,0,0,0.04); transition: all 0.4s ease; }
         .method-card:hover { transform: translateY(-10px); border-color: var(--primary); }
@@ -158,10 +126,9 @@
         .progress-bar-container { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 100px; margin-bottom: 3rem; }
         #form-progress-fill { width: 0%; height: 100%; background: var(--primary); transition: width 0.5s ease; }
         .service-pill { padding: 0.8rem 1.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; }
-        .service-pill-dark { color: #0f172a; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); }
-        .service-pill.selected { background: var(--primary); border-color: var(--primary); color: white; }
+        .service-pill.selected { background: var(--primary); border-color: var(--primary); }
 
-        /* --- AI CHAT MODAL --- */
+        /* --- CHAT --- */
         #ai-chat-modal { position: fixed; bottom: 8rem; right: 2rem; width: 360px; max-width: calc(100vw - 4rem); background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.1); z-index: 1500; display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
         #ai-chat-modal.active { display: flex; }
         .chat-messages { height: 350px; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #fafafa; }
@@ -169,11 +136,11 @@
         .msg-user { align-self: flex-end; background: #2563eb; color: white; border-bottom-right-radius: 4px; }
         .msg-ai { align-self: flex-start; background: white; color: #0f172a; border-bottom-left-radius: 4px; border: 1px solid #eee; }
 
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
         #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
         #mobile-menu-overlay.active { display: flex; }
-
-        [dir="rtl"] .giant-num { right: auto; left: -1rem; }
-        [dir="rtl"] .floating-btns { right: auto; left: 2rem; }
     </style>
 </head>
 <body class="noise">
@@ -196,7 +163,7 @@
         <button class="mt-12 text-slate-400 font-bold uppercase text-xs" onclick="toggleMenu()" data-i18n="nav-close">Fermer</button>
     </div>
 
-    <!-- NAVIGATION -->
+    <!-- NAV -->
     <nav class="fixed top-0 w-full z-[1000] flex justify-center pt-8 px-4">
         <div id="navbar" class="glass-nav px-8 md:px-10 py-5 rounded-full flex items-center max-w-6xl w-full justify-between">
             <a href="#top" class="text-2xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
@@ -218,9 +185,9 @@
     </nav>
 
     <!-- FLOATING ACTIONS -->
-    <div class="floating-btns">
-        <button onclick="toggleAiChat()" class="action-circle bg-blue-600"><i data-lucide="sparkles"></i></button>
-        <a href="https://wa.me/33600000000" target="_blank" class="action-circle bg-[#25d366]"><i data-lucide="message-circle"></i></a>
+    <div class="fixed bottom-8 right-8 z-[1500] flex flex-col gap-4">
+        <button onclick="toggleAiChat()" class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="sparkles"></i></button>
+        <a href="https://wa.me/33600000000" target="_blank" class="w-14 h-14 rounded-full bg-[#25d366] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="message-circle"></i></a>
     </div>
 
     <!-- HERO -->
@@ -231,19 +198,13 @@
         </div>
         <div class="relative z-20 text-center px-6 mt-[20vh]">
             <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active">
-                <!-- BOUTONS AVEC CLASSES RÉTABLIES ✨ -->
-                <a href="#contact" class="btn-premium btn-primary anchor-link">
-                    <span data-i18n="hero-btn">Parlons-en.</span> 
-                    <i data-lucide="zap" class="w-4 h-4 fill-current"></i>
-                </a>
-                <a href="#portfolio" class="btn-premium btn-secondary anchor-link">
-                    <span data-i18n="hero-btn-secondary">Nos créations.</span>
-                </a>
+                <a href="#contact" class="btn-premium btn-primary anchor-link"><span data-i18n="hero-btn">Parlons-en.</span> <i data-lucide="zap" class="w-4 h-4 fill-current"></i></a>
+                <a href="#portfolio" class="btn-premium btn-secondary anchor-link"><span data-i18n="hero-btn-secondary">Nos créations.</span></a>
             </div>
         </div>
     </header>
 
-    <!-- SERVICES (BENTO GRID ✨) -->
+    <!-- SERVICES -->
     <section id="services" class="py-32 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -252,68 +213,36 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto bento-grid relative z-20">
-            <article class="md:col-span-3 bento-item reveal-up">
-                <span class="tag">01. Web</span>
-                <h3 class="text-3xl font-black mb-6 tracking-tighter text-blue-600" data-i18n="exp-web-h">Web Design Immersif</h3>
-                <p class="text-slate-600 font-medium leading-relaxed" data-i18n="exp-web-p">Des sites sur-mesure immersifs et un SEO aux petits oignons.</p>
-            </article>
-            <article class="md:col-span-3 bento-item reveal-up" style="transition-delay: 0.1s">
-                <span class="tag">02. 3D</span>
-                <h3 class="text-3xl font-black mb-6 tracking-tighter text-blue-600" data-i18n="exp-3d-h">Studio 3D.</h3>
-                <p class="text-slate-600 font-medium leading-relaxed" data-i18n="exp-3d-p">Du graphisme 3D haute qualité pour vos produits.</p>
-            </article>
-            <article class="md:col-span-2 bento-item reveal-up">
-                <span class="tag">03. Apps</span>
-                <h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="exp-app-h">Apps Mobile</h3>
-                <p class="text-slate-500 font-medium" data-i18n="exp-app-p">Développement natif et publication stores.</p>
-            </article>
-            <article class="md:col-span-2 bento-item bento-blue reveal-up">
-                <span class="tag" style="background:white; color:var(--primary)">04. IA</span>
-                <h3 class="text-2xl font-black mb-6 tracking-tighter" data-i18n="exp-ia-h">IA & Robot.</h3>
-                <p class="text-white opacity-90 font-medium" data-i18n="exp-ia-p">Chatbots intelligents et automatisation.</p>
-            </article>
-            <article class="md:col-span-2 bento-item reveal-up">
-                <span class="tag">05. Learning</span>
-                <h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="exp-learn-h">E-learning</h3>
-                <p class="text-slate-500 font-medium" data-i18n="exp-learn-p">Plateformes de formation interactives.</p>
-            </article>
+            <article class="md:col-span-3 bento-item reveal-up"><span class="tag">01. Web</span><h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-web-title">Web Design Immersif</h3><p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-web-desc">Sites immersifs et SEO performant.</p></article>
+            <article class="md:col-span-3 bento-item reveal-up" style="transition-delay: 0.1s"><span class="tag">02. 3D</span><h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-3d-title">Studio 3D.</h3><p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-3d-desc">Graphisme 3D haute qualité pour vos produits.</p></article>
+            <article class="md:col-span-2 bento-item reveal-up"><span class="tag">03. Apps</span><h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="serv-app-title">Apps Mobile</h3><p class="text-slate-500 font-medium" data-i18n="serv-app-desc">Développement natif et publication stores.</p></article>
+            <article class="md:col-span-2 bento-item bento-blue reveal-up"><span class="tag" style="background:white; color:var(--primary)">04. IA</span><h3 class="text-2xl font-black mb-6 tracking-tighter" data-i18n="serv-ia-title">IA & Robot.</h3><p class="text-white opacity-90 font-medium" data-i18n="serv-ia-desc">Chatbots intelligents et automatisation.</p></article>
+            <article class="md:col-span-2 bento-item reveal-up"><span class="tag">05. Learning</span><h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="serv-learn-title">E-learning</h3><p class="text-slate-500 font-medium" data-i18n="serv-learn-desc">Plateformes de formation interactives.</p></article>
         </div>
     </section>
 
-    <!-- MÉTHODE (4 PHASES ✨) -->
+    <!-- METHOD -->
     <section id="process" class="py-32 px-6 bg-white/40">
-        <div class="marquee-wrapper mb-24">
-            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
-                <span data-i18n="proc-title-marquee">Notre Accompagnement. Méthode.</span>
-                <span data-i18n="proc-title-marquee">Notre Accompagnement. Méthode.</span>
-            </div>
-        </div>
         <div class="max-w-6xl mx-auto space-y-16">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
-                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 01</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="proc-1-h">Stratégie</h4><p data-i18n="proc-1-p">Analyse de vos besoins.</p><span class="giant-num">01</span></div></div>
+                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 01</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-1-title">Stratégie</h4><p data-i18n="method-1-desc">Analyse de vos besoins et objectifs.</p><span class="giant-num">01</span></div></div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
                 <div class="hidden lg:flex lg:col-span-5"></div>
-                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 02</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="proc-2-h">Design</h4><p data-i18n="proc-2-p">Conception visuelle.</p><span class="giant-num">02</span></div></div>
+                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 02</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-2-title">Design</h4><p data-i18n="method-2-desc">Conception visuelle et IA.</p><span class="giant-num">02</span></div></div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
-                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 03</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="proc-3-h">Publication</h4><p data-i18n="proc-3-p">Mise en ligne et SEO.</p><span class="giant-num">03</span></div></div>
+                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 03</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-3-title">Publication</h4><p data-i18n="method-3-desc">Mise en ligne et SEO technique.</p><span class="giant-num">03</span></div></div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
                 <div class="hidden lg:flex lg:col-span-5"></div>
-                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 04</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="proc-4-h">Maintenance</h4><p data-i18n="proc-4-p">Suivi et mises à jour.</p><span class="giant-num">04</span></div></div>
+                <div class="lg:col-span-7"><div class="method-card"><span class="phase-badge">Phase 04</span><h4 class="text-3xl font-black mb-4 text-blue-600" data-i18n="method-4-title">Maintenance</h4><p data-i18n="method-4-desc">Support continu et évolutions.</p><span class="giant-num">04</span></div></div>
             </div>
         </div>
     </section>
 
     <!-- PORTFOLIO -->
     <section id="portfolio" class="py-48 px-6">
-        <div class="marquee-wrapper mb-20">
-            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
-                <span data-i18n="nav-realisations-marquee">Nos Créations. Réalisations.</span>
-                <span data-i18n="nav-realisations-marquee">Nos Créations. Réalisations.</span>
-            </div>
-        </div>
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
             <div class="bento-item p-0 min-h-[550px] relative reveal-up">
                 <iframe src="https://my.spline.design/r4xbot-TowiBcjXeP3tiZRqqB7OwFiy/" width="100%" height="100%" class="loaded"></iframe>
@@ -324,81 +253,85 @@
         </div>
     </section>
 
-    <!-- CONTACT (6 ÉTAPES ✨) -->
+    <!-- CONTACT (FORM 6 STEPS) -->
     <section id="contact" class="py-48 px-6 bg-[#0f172a]">
-        <div class="max-w-4xl mx-auto text-center mb-16">
-            <h2 class="text-5xl md:text-7xl font-black text-white mb-6" data-i18n="cont-h">Prêt à briller ?</h2>
-            <p class="text-slate-400 text-xl" data-i18n="cont-p">Laissez-nous vos coordonnées, on s'occupe du reste.</p>
-        </div>
         <div class="max-w-3xl mx-auto">
-            <div class="bg-white/5 p-10 md:p-16 rounded-[48px] border border-white/10 relative overflow-hidden backdrop-blur-xl">
-                <div class="progress-bar-container"><div id="form-progress-fill"></div></div>
-                <form id="quest-form" class="space-y-10" action="https://formspree.io/f/hello@jaad.studio" method="POST">
-                    <div id="form-steps-container">
-                        <div class="form-step active" id="step-1">
-                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q1">Votre nom ?</label>
-                            <input type="text" name="name" id="q-name" placeholder="Nom complet" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-all">
-                        </div>
-                        <div class="form-step" id="step-2">
-                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q2">Votre email ?</label>
-                            <input type="email" name="email" id="q-email" placeholder="votre@email.com" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-all">
-                        </div>
-                        <div class="form-step" id="step-3">
-                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q3">Votre numéro ?</label>
-                            <div class="flex gap-4">
-                                <select name="country_code" class="bg-[#0f172a] text-white border-b-2 border-white/10 outline-none">
-                                    <option value="+33">🇫🇷 +33</option>
-                                    <option value="+212">🇲🇦 +212</option>
-                                </select>
-                                <input type="tel" name="phone" id="q-phone" placeholder="6 12 34 56 78" required class="flex-1 bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-all">
-                            </div>
-                        </div>
-                        <div class="form-step" id="step-4">
-                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q4">Quel service ?</label>
-                            <div class="flex flex-wrap gap-3">
-                                <button type="button" class="service-pill service-pill-dark" onclick="selectFormService(this, 'Web')">Web Design</button>
-                                <button type="button" class="service-pill service-pill-dark" onclick="selectFormService(this, '3D')">Studio 3D</button>
-                                <button type="button" class="service-pill service-pill-dark" onclick="selectFormService(this, 'IA')">IA Solutions</button>
-                                <button type="button" class="service-pill service-pill-dark" onclick="selectFormService(this, 'E-learning')">E-learning</button>
-                            </div>
-                            <input type="hidden" name="service" id="q-service">
-                        </div>
-                        <div class="form-step" id="step-5">
-                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q5">Votre projet</label>
-                            <textarea name="message" id="q-desc" placeholder="..." class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 h-32 resize-none"></textarea>
-                        </div>
-                        <div class="form-step" id="step-6">
-                            <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-q6">Rappel par ?</label>
-                            <div class="flex gap-3">
-                                <button type="button" class="service-pill service-pill-dark" onclick="selectContactPref(this, 'WhatsApp')">WhatsApp</button>
-                                <button type="button" class="service-pill service-pill-dark" onclick="selectContactPref(this, 'Email')">Email</button>
-                            </div>
-                            <input type="hidden" name="pref" id="q-pref">
-                        </div>
+            <div class="bg-white/5 p-10 md:p-16 rounded-[48px] border border-white/10 relative overflow-hidden backdrop-blur-xl min-h-[500px] flex flex-col justify-center">
+                
+                <!-- SUCCESS MESSAGE (Caché par défaut) -->
+                <div id="form-success" class="hidden text-center py-10 reveal-up">
+                    <div class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                        <i data-lucide="check" class="text-white w-12 h-12"></i>
                     </div>
-                    <div id="form-nav" class="flex justify-between items-center pt-10">
-                        <button type="button" id="prev-btn" onclick="changeStep(-1)" class="opacity-0 pointer-events-none text-slate-400 font-bold uppercase text-xs">Retour</button>
-                        <button type="button" id="next-btn" onclick="changeStep(1)" class="btn-premium bg-white text-slate-900 border-none px-10">Suivant</button>
-                    </div>
-                </form>
+                    <h3 class="text-4xl font-black text-white mb-4">Message envoyé !</h3>
+                    <p class="text-slate-400 text-lg">Merci de nous avoir contactés. L'équipe JAAD Studio vous répondra très rapidement.</p>
+                    <button type="button" onclick="resetForm()" class="mt-10 btn-premium btn-primary bg-white text-slate-900" data-i18n="form-btn-back">Retour au site</button>
+                </div>
+
+                <!-- LE FORMULAIRE -->
+                <div id="form-wrapper">
+                    <div class="progress-bar-container"><div id="form-progress-fill"></div></div>
+                    <!-- Formulaire connecté à Formspree -->
+                    <form id="quest-form" class="space-y-10" action="https://formspree.io/f/xjgeayjr" method="POST">
+                        <div id="form-steps-container">
+                            <div class="form-step active" id="step-1">
+                                <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-name">Votre nom ?</label>
+                                <input type="text" name="name" id="q-name" placeholder="Nom complet" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors">
+                            </div>
+                            <div class="form-step" id="step-2">
+                                <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-email">Votre email ?</label>
+                                <input type="email" name="email" id="q-email" placeholder="votre@email.com" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors">
+                            </div>
+                            <div class="form-step" id="step-3">
+                                <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-phone">Votre numéro ?</label>
+                                <input type="tel" name="phone" id="q-phone" placeholder="06 00..." required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors">
+                            </div>
+                            <div class="form-step" id="step-4">
+                                <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-service">Quel service ?</label>
+                                <div class="flex flex-wrap gap-3">
+                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'Web')">Web Design</button>
+                                    <button type="button" class="service-pill" onclick="selectFormService(this, '3D')">Studio 3D</button>
+                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'IA')">IA Solutions</button>
+                                </div>
+                                <input type="hidden" name="service" id="q-service">
+                            </div>
+                            <div class="form-step" id="step-5">
+                                <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-desc">Description</label>
+                                <textarea name="message" id="q-desc" placeholder="..." class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 h-32 resize-none transition-colors"></textarea>
+                            </div>
+                            <div class="form-step" id="step-6">
+                                <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-pref">Contact par ?</label>
+                                <div class="flex gap-3">
+                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'WhatsApp')">WhatsApp</button>
+                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'Email')">Email</button>
+                                </div>
+                                <input type="hidden" name="pref" id="q-pref">
+                            </div>
+                        </div>
+                        
+                        <div id="form-nav" class="flex justify-between items-center pt-10">
+                            <button type="button" id="prev-btn" onclick="changeStep(-1)" class="opacity-0 pointer-events-none text-slate-400 font-bold uppercase text-xs transition-opacity" data-i18n="form-btn-prev">Retour</button>
+                            <button type="button" id="next-btn" onclick="changeStep(1)" class="btn-premium bg-white text-slate-900 border-none px-10" data-i18n="form-btn-next">Suivant</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="py-16 bg-white border-t border-slate-100 text-center">
         <a href="#top" class="text-3xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
-        <p class="text-slate-400 text-xs mt-6" data-i18n="footer-copyright">© 2026 JAAD Studio.</p>
+        <p class="text-slate-400 text-xs mt-6">© 2026 JAAD Studio.</p>
     </footer>
 
-    <!-- AI CHAT -->
+    <!-- AI CHAT MODAL -->
     <div id="ai-chat-modal">
         <div class="bg-blue-600 p-5 text-white flex justify-between items-center font-black">
             <span class="flex items-center gap-2 text-[11px] uppercase tracking-widest"><i data-lucide="sparkles"></i> JAAD AI</span>
             <button onclick="toggleAiChat()"><i data-lucide="x"></i></button>
         </div>
-        <div id="chat-messages" class="chat-messages">
-            <div class="msg msg-ai text-xs">Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?</div>
-        </div>
+        <div id="chat-messages" class="chat-messages"><div class="msg msg-ai text-xs">Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?</div></div>
         <div class="p-4 flex gap-2 border-t bg-white">
             <input type="text" id="chat-input" class="flex-1 outline-none text-xs" placeholder="..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
             <button onclick="sendChatMessage()" id="chat-send-btn" class="bg-blue-600 text-white p-3 rounded-full"><i data-lucide="send" class="w-4 h-4"></i></button>
@@ -407,14 +340,63 @@
 
     <script>
         const translations = {
-            fr: { "nav-expertise": "Expertise", "nav-methode": "Méthode", "nav-realisations": "Réalisations", "nav-contact-btn": "Contact", "nav-close": "Fermer", "hero-btn": "Parlons-en.", "hero-btn-secondary": "Nos créations.", "footer-copyright": "© 2026 JAAD Studio." },
-            en: { "nav-expertise": "Expertise", "nav-methode": "Method", "nav-realisations": "Works", "nav-contact-btn": "Contact", "nav-close": "Close", "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.", "footer-copyright": "© 2026 JAAD Studio." },
-            ar: { "nav-expertise": "خبراتنا", "nav-methode": "منهجيتنا", "nav-realisations": "أعمالنا", "nav-contact-btn": "اتصل بنا", "nav-close": "إغلاق", "hero-btn": "لنبدأ العمل.", "hero-btn-secondary": "أعمالنا.", "footer-copyright": "© 2026 استوديو جاد." }
+            fr: { 
+                "nav-expertise": "Expertise", "nav-methode": "Méthode", "nav-realisations": "Réalisations", "nav-contact-btn": "Contact", "nav-close": "Fermer",
+                "hero-btn": "Parlons-en.", "hero-btn-secondary": "Nos créations.",
+                "exp-title-marquee": "On crée pour vous. E-learning. IA.",
+                "serv-web-title": "Web Design Immersif", "serv-web-desc": "Sites immersifs et SEO performant.",
+                "serv-3d-title": "Studio 3D.", "serv-3d-desc": "Graphisme 3D haute qualité pour vos produits.",
+                "serv-app-title": "Apps Mobile", "serv-app-desc": "Développement natif et publication stores.",
+                "serv-ia-title": "IA & Robot.", "serv-ia-desc": "Chatbots intelligents et automatisation.",
+                "serv-learn-title": "E-learning", "serv-learn-desc": "Plateformes de formation interactives.",
+                "method-1-title": "Stratégie", "method-1-desc": "Analyse de vos besoins et objectifs.",
+                "method-2-title": "Design", "method-2-desc": "Conception visuelle et IA.",
+                "method-3-title": "Publication", "method-3-desc": "Mise en ligne et SEO technique.",
+                "method-4-title": "Maintenance", "method-4-desc": "Support continu et évolutions.",
+                "form-name": "Votre nom ?", "form-email": "Votre email ?", "form-phone": "Votre numéro ?", "form-service": "Quel service ?", "form-desc": "Description", "form-pref": "Contact par ?",
+                "form-btn-next": "Suivant", "form-btn-prev": "Retour", "form-btn-send": "Envoyer", "form-btn-back": "Retour au site"
+            },
+            en: { 
+                "nav-expertise": "Expertise", "nav-methode": "Method", "nav-realisations": "Works", "nav-contact-btn": "Contact", "nav-close": "Close",
+                "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.",
+                "exp-title-marquee": "We create for you. E-learning. AI.",
+                "serv-web-title": "Immersive Web Design", "serv-web-desc": "Immersive sites and high-performance SEO.",
+                "serv-3d-title": "3D Studio.", "serv-3d-desc": "High quality 3D graphics for your products.",
+                "serv-app-title": "Mobile Apps", "serv-app-desc": "Native development and store publishing.",
+                "serv-ia-title": "AI & Robot.", "serv-ia-desc": "Smart chatbots and automation.",
+                "serv-learn-title": "E-learning", "serv-learn-desc": "Interactive training platforms.",
+                "method-1-title": "Strategy", "method-1-desc": "Analysis of your needs and goals.",
+                "method-2-title": "Design", "method-2-desc": "Visual conception and AI.",
+                "method-3-title": "Publishing", "method-3-desc": "Going live and technical SEO.",
+                "method-4-title": "Maintenance", "method-4-desc": "Continuous support and updates.",
+                "form-name": "Your name?", "form-email": "Your email?", "form-phone": "Your phone?", "form-service": "Which service?", "form-desc": "Description", "form-pref": "Contact via?",
+                "form-btn-next": "Next", "form-btn-prev": "Back", "form-btn-send": "Send", "form-btn-back": "Back to site"
+            },
+            ar: { 
+                "nav-expertise": "خبراتنا", "nav-methode": "منهجيتنا", "nav-realisations": "أعمالنا", "nav-contact-btn": "اتصل بنا", "nav-close": "إغلاق",
+                "hero-btn": "لنبدأ العمل.", "hero-btn-secondary": "أعمالنا.",
+                "exp-title-marquee": "نبتكر من أجلك. التعليم الإلكتروني. الذكاء الاصطناعي.",
+                "serv-web-title": "تصميم ويب غامر", "serv-web-desc": "مواقع غامرة وتحسين محركات البحث.",
+                "serv-3d-title": "استوديو ثلاثي الأبعاد.", "serv-3d-desc": "رسومات ثلاثية الأبعاد عالية الجودة لمنتجاتك.",
+                "serv-app-title": "تطبيقات الجوال", "serv-app-desc": "تطوير التطبيقات ونشرها في المتاجر.",
+                "serv-ia-title": "الذكاء الاصطناعي والروبوت.", "serv-ia-desc": "روبوتات محادثة ذكية وأتمتة.",
+                "serv-learn-title": "التعليم الإلكتروني", "serv-learn-desc": "منصات تدريب تفاعلية.",
+                "method-1-title": "الاستراتيجية", "method-1-desc": "تحليل احتياجاتك وأهدافك.",
+                "method-2-title": "التصميم", "method-2-desc": "التصور المرئي والذكاء الاصطناعي.",
+                "method-3-title": "النشر", "method-3-desc": "الإطلاق وتحسين محركات البحث.",
+                "method-4-title": "الصيانة", "method-4-desc": "دعم مستمر وتحديثات.",
+                "form-name": "اسمك؟", "form-email": "بريدك الإلكتروني؟", "form-phone": "رقم هاتفك؟", "form-service": "أي خدمة؟", "form-desc": "الوصف", "form-pref": "التواصل عبر؟",
+                "form-btn-next": "التالي", "form-btn-prev": "رجوع", "form-btn-send": "إرسال", "form-btn-back": "العودة للموقع"
+            }
         };
 
         function switchLanguage(lang) {
             document.documentElement.lang = lang; document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
             document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (translations[lang][key]) el.innerText = translations[lang][key]; });
+            
+            // Mise à jour du bouton du formulaire selon la langue choisie
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) nextBtn.innerText = (currentStep === 6) ? translations[lang]["form-btn-send"] : translations[lang]["form-btn-next"];
         }
 
         function toggleMenu() { document.getElementById('mobile-menu-overlay').classList.toggle('active'); }
@@ -422,62 +404,211 @@
 
         window.addEventListener('load', () => {
             const fill = document.getElementById('loader-fill');
-            setTimeout(() => { if(fill) fill.style.width = '100%'; }, 300);
-            setTimeout(() => { 
-                document.getElementById('preloader').classList.add('preloader-active'); 
-                revealOnScroll(); 
-            }, 1800);
+            // Le texte se remplit très vite (100ms après le chargement)
+            setTimeout(() => { if(fill) fill.style.width = '100%'; }, 100);
+            // Le rideau se lève très vite (800ms au lieu de 1800ms)
+            setTimeout(() => { document.getElementById('preloader').classList.add('preloader-active'); revealOnScroll(); }, 800);
             lucide.createIcons();
         });
 
-        // FORM LOGIC
+        // FORM
         let currentStep = 1;
         function changeStep(n) {
             const steps = document.querySelectorAll('.form-step');
-            if (n > 0 && currentStep === 6) { handleFormSubmit(); return; }
-            steps[currentStep-1].classList.remove('active');
+            
+            // Empêche de reculer avant l'étape 1
+            if (n < 0 && currentStep <= 1) return;
+            
+            // Si on est à la dernière étape et qu'on avance, on soumet le formulaire
+            if (n > 0 && currentStep >= steps.length) { 
+                handleFormSubmit(); 
+                return; 
+            }
+            
+            // Retire la classe 'active' seulement si l'élément existe
+            if (steps[currentStep - 1]) {
+                steps[currentStep - 1].classList.remove('active');
+            }
+            
             currentStep += n;
-            steps[currentStep-1].classList.add('active');
-            document.getElementById('form-progress-fill').style.width = (currentStep/6)*100 + "%";
-            document.getElementById('prev-btn').style.opacity = (currentStep === 1) ? "0" : "1";
-            document.getElementById('prev-btn').style.pointerEvents = (currentStep === 1) ? "none" : "auto";
-            document.getElementById('next-btn').innerText = (currentStep === 6) ? "Envoyer" : "Suivant";
+            
+            // Ajoute la classe 'active' à la nouvelle étape
+            if (steps[currentStep - 1]) {
+                steps[currentStep - 1].classList.add('active');
+            }
+            
+            document.getElementById('form-progress-fill').style.width = (currentStep / steps.length) * 100 + "%";
+            
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) {
+                prevBtn.style.opacity = (currentStep === 1) ? "0" : "1";
+                prevBtn.style.pointerEvents = (currentStep === 1) ? "none" : "auto";
+            }
+            
+            const lang = document.documentElement.lang || 'fr';
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                nextBtn.innerText = (currentStep === steps.length) ? translations[lang]["form-btn-send"] : translations[lang]["form-btn-next"];
+            }
         }
         function selectFormService(el, val) { 
-            document.querySelectorAll('#step-4 .service-pill').forEach(b => b.classList.remove('selected')); 
-            el.classList.add('selected'); 
-            document.getElementById('q-service').value = val; 
-            setTimeout(() => changeStep(1), 300); 
+            document.querySelectorAll('#step-4 button').forEach(b => b.classList.remove('selected')); 
+            el.classList.add('selected'); document.getElementById('q-service').value = val; setTimeout(() => changeStep(1), 300); 
         }
         function selectContactPref(el, val) { 
-            document.querySelectorAll('#step-6 .service-pill').forEach(b => b.classList.remove('selected')); 
-            el.classList.add('selected'); 
-            document.getElementById('q-pref').value = val; 
+            document.querySelectorAll('#step-6 button').forEach(b => b.classList.remove('selected')); 
+            el.classList.add('selected'); document.getElementById('q-pref').value = val; 
         }
 
         async function handleFormSubmit() {
             const form = document.getElementById('quest-form');
-            try {
-                const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-                if (response.ok) { alert("Message envoyé !"); location.reload(); }
-            } catch (e) { alert("Erreur d'envoi."); }
+            const actionUrl = form.getAttribute('action');
+            const btn = document.getElementById('next-btn');
+            
+            // Animation de chargement sur le bouton
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-5 h-5"></i> Envoi...';
+            btn.style.pointerEvents = 'none';
+
+            try { 
+                const response = await fetch(actionUrl, { 
+                    method: 'POST', 
+                    body: new FormData(form), 
+                    headers: { 'Accept': 'application/json' } 
+                }); 
+
+                if (response.ok) { 
+                    // ON CACHE LE FORMULAIRE ET ON AFFICHE LE BEAU MESSAGE DE SUCCÈS
+                    document.getElementById('form-wrapper').style.display = 'none';
+                    const successDiv = document.getElementById('form-success');
+                    successDiv.classList.remove('hidden');
+                    // Ré-initialiser les icônes lucide pour le checkmark
+                    lucide.createIcons();
+                    // Lancer l'animation d'apparition
+                    setTimeout(() => successDiv.classList.add('active'), 50);
+                } else {
+                    alert("❌ Formspree a refusé l'envoi. Avez-vous mis le bon lien ID (ex: /f/xabcd) ?");
+                    btn.innerText = 'Réessayer';
+                    btn.style.pointerEvents = 'auto';
+                }
+            } catch (e) { 
+                alert("❌ Erreur réseau. Vérifiez votre connexion."); 
+                btn.innerText = 'Réessayer';
+                btn.style.pointerEvents = 'auto';
+            }
         }
 
-        // AI LOGIC
-        async function callAi(text) {
+        function resetForm() {
+            // Masquer le message de succès
+            const successDiv = document.getElementById('form-success');
+            successDiv.classList.remove('active');
+            
+            setTimeout(() => {
+                successDiv.classList.add('hidden');
+                
+                // Réafficher le formulaire
+                document.getElementById('form-wrapper').style.display = 'block';
+                
+                // Réinitialiser les champs de texte
+                document.getElementById('quest-form').reset();
+                
+                // Retirer la sélection visuelle des boutons (Web, 3D, IA, Email, etc.)
+                document.querySelectorAll('.service-pill').forEach(b => b.classList.remove('selected'));
+                document.getElementById('q-service').value = '';
+                document.getElementById('q-pref').value = '';
+                
+                // Remettre le formulaire à l'étape 1
+                currentStep = 1;
+                const steps = document.querySelectorAll('.form-step');
+                steps.forEach(s => s.classList.remove('active'));
+                if (steps[0]) steps[0].classList.add('active');
+                
+                // Réinitialiser la barre de progression bleue
+                document.getElementById('form-progress-fill').style.width = (1 / steps.length) * 100 + "%";
+                
+                // Réinitialiser les boutons Précédent/Suivant
+                const prevBtn = document.getElementById('prev-btn');
+                if (prevBtn) {
+                    prevBtn.style.opacity = "0";
+                    prevBtn.style.pointerEvents = "none";
+                }
+                
+                const lang = document.documentElement.lang || 'fr';
+                const nextBtn = document.getElementById('next-btn');
+                if (nextBtn) {
+                    nextBtn.innerText = translations[lang]["form-btn-next"];
+                    nextBtn.style.pointerEvents = 'auto'; // Réactiver le clic
+                }
+            }, 300); // Petite pause pour l'animation visuelle
+        }
+
+        // AI CHAT (MÉMOIRE ET AUTOMATISATION)
+        let chatHistory = []; // La mémoire de la conversation
+
+        async function callAi(history) {
             try {
-                const res = await fetch('/api/chat', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ message: text }) });
-                const data = await res.json();
+                const res = await fetch('/api/chat', { 
+                    method: 'POST', 
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify({ history: history }) // On envoie toute la mémoire
+                });
+                const data = await res.json(); 
                 if (!res.ok) throw new Error(data.error || "Erreur serveur");
                 return data.text;
-            } catch (e) { return `[JAAD AI] Oups ! ${e.message}.`; }
+            } catch (e) { return `[JAAD AI] Oups ! ${e.message}`; }
         }
+
         async function sendChatMessage() {
-            const input = document.getElementById('chat-input'); const box = document.getElementById('chat-messages'); if(!input.value.trim()) return;
-            const msg = input.value; box.innerHTML += `<div class="msg msg-user">${msg}</div>`; input.value = '';
-            box.innerHTML += `<div class="msg msg-ai italic" id="loading">...</div>`; box.scrollTop = box.scrollHeight;
-            const response = await callAi(msg); document.getElementById('loading').remove();
-            box.innerHTML += `<div class="msg msg-ai">${response}</div>`; box.scrollTop = box.scrollHeight;
+            const input = document.getElementById('chat-input'); 
+            const box = document.getElementById('chat-messages'); 
+            if(!input.value.trim()) return;
+            
+            const msg = input.value; 
+            box.innerHTML += `<div class="msg msg-user">${msg}</div>`; 
+            input.value = '';
+            
+            // On sauvegarde le message du client dans la mémoire
+            chatHistory.push({ role: "user", parts: [{ text: msg }] });
+
+            box.innerHTML += `<div class="msg msg-ai italic" id="loading">...</div>`; 
+            box.scrollTop = box.scrollHeight;
+            
+            let responseText = await callAi(chatHistory); 
+            document.getElementById('loading').remove();
+
+            // INTERCEPTION DU SIGNAL SECRET DE L'IA
+            const contactMatch = responseText.match(/<CONTACT_DATA>([\s\S]*?)<\/CONTACT_DATA>/);
+            
+            if (contactMatch) {
+                try {
+                    // On transforme le texte de l'IA en vraies données
+                    const contactData = JSON.parse(contactMatch[1]);
+                    
+                    // On prépare l'envoi vers Formspree en arrière-plan
+                    const formData = new FormData();
+                    formData.append('name', contactData.name);
+                    formData.append('email', contactData.email);
+                    formData.append('phone', contactData.phone);
+                    formData.append('service', contactData.service || 'IA Bot');
+                    formData.append('message', "🤖 LEAD GÉNÉRÉ PAR L'IA :\n" + contactData.message);
+
+                    // Envoi silencieux du mail vers ton lien sécurisé Formspree !
+                    fetch('https://formspree.io/f/xjgeayjr', {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    // On efface le bloc secret de la réponse et on rajoute un beau message de confirmation
+                    responseText = responseText.replace(contactMatch[0], '') + "<br><br>✨ <b>Parfait ! Vos informations ont bien été transmises à notre équipe. Nous vous recontactons très vite !</b>";
+                } catch(e) { console.error("Erreur de parsing", e); }
+            }
+
+            // On sauvegarde la réponse de l'IA dans la mémoire (avec le code secret s'il y en a un, pour que l'IA sache ce qu'elle a fait)
+            chatHistory.push({ role: "model", parts: [{ text: responseText }] });
+
+            // On affiche le message (en transformant les retours à la ligne pour faire propre)
+            box.innerHTML += `<div class="msg msg-ai">${responseText.replace(/\n/g, '<br>')}</div>`; 
+            box.scrollTop = box.scrollHeight;
         }
 
         function revealOnScroll() { 
