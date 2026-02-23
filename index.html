@@ -8,8 +8,44 @@
     
     <link rel="icon" href="logo.png" type="image/png">
     
+    <!-- DONNÉES STRUCTURÉES SEO POUR LA FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Pourquoi intégrer la 3D sur mon site internet ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La 3D offre une expérience immersive qui capte l'attention, augmente le temps passé sur votre site et améliore considérablement vos taux de conversion. C'est un atout SEO majeur pour se démarquer."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Comment l'IA peut-elle optimiser mon entreprise ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nous développons des chatbots intelligents et automatisons vos processus. Cela permet d'offrir un support client 24/7 et d'accélérer votre croissance."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Quels sont les délais pour un projet web sur-mesure ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Un site premium avec intégration 3D et SEO prend généralement entre 4 à 8 semaines, selon la complexité et les fonctionnalités requises."
+        }
+      }]
+    }
+    </script>
+    
+    <!-- OPTIMISATION DE LA VITESSE : PRECONNECT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://my.spline.design">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -158,18 +194,60 @@
 
         #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
         #mobile-menu-overlay.active { display: flex; }
+
+        /* --- FAQ --- */
+        .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .faq-answer-inner { overflow: hidden; }
+        .faq-item.active .faq-answer { grid-template-rows: 1fr; }
+        
+        .faq-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.02);
+        }
+        .faq-card:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(37, 99, 235, 0.2);
+            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.08);
+            transform: translateY(-4px);
+        }
+        .faq-card.active {
+            background: #ffffff;
+            border-color: rgba(37, 99, 235, 0.4);
+            box-shadow: 0 30px 60px -15px rgba(37, 99, 235, 0.15);
+        }
+        .faq-icon {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: #f1f5f9; color: #0f172a;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .faq-card:hover .faq-icon {
+            background: var(--primary); color: white;
+            transform: scale(1.05);
+        }
+        .faq-card.active .faq-icon {
+            background: var(--primary); color: white;
+            transform: rotate(135deg) scale(1.1);
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+        }
     </style>
 </head>
 <body class="noise">
 
     <div id="scroll-progress"></div>
 
+    <!-- PRELOADER -->
     <div id="preloader">
         <div class="loader-content text-center">
             <div class="loader-logo-base">JAAD.<div class="loader-logo-fill" id="loader-fill">JAAD.</div></div>
         </div>
     </div>
 
+    <!-- MODAL SERVICE DETAILS -->
     <div id="service-modal" onclick="closeServiceModal(event)">
         <div class="modal-content shadow-2xl" onclick="event.stopPropagation()">
             <button onclick="toggleServiceModal()" class="absolute top-10 right-10 p-3 hover:bg-slate-50 rounded-full transition-all text-slate-300 hover:text-slate-900 border border-slate-100 hover:border-slate-200"><i data-lucide="x"></i></button>
@@ -177,6 +255,7 @@
         </div>
     </div>
 
+    <!-- MOBILE MENU -->
     <div id="mobile-menu-overlay">
         <a href="#services" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-expertise">Expertise</a>
         <a href="#process" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-methode">Méthode</a>
@@ -185,6 +264,7 @@
         <button class="mt-12 text-slate-400 font-bold uppercase text-xs" onclick="toggleMenu()" data-i18n="nav-close">Fermer</button>
     </div>
 
+    <!-- NAVIGATION -->
     <nav class="fixed top-0 w-full z-[1000] flex justify-center pt-8 px-4">
         <div id="navbar" class="glass-nav px-8 md:px-10 py-5 rounded-full flex items-center max-w-6xl w-full justify-between shadow-sm">
             <a href="#top" class="text-2xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
@@ -205,15 +285,18 @@
         </div>
     </nav>
 
+    <!-- FLOATING ACTIONS -->
     <div class="fixed bottom-8 right-8 z-[1500] flex flex-col gap-4">
         <button id="ai-chat-trigger" onclick="toggleAiChat()" class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="sparkles"></i></button>
         <a href="https://wa.me/33788408004" target="_blank" class="w-14 h-14 rounded-full bg-[#25d366] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="message-circle"></i></a>
     </div>
 
+    <!-- HERO -->
     <header id="top" class="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
             
+            <!-- SPLINE : CENTRAGE MATHEMATIQUE PARFAIT (-1/2) SUR MOBILE ET BUREAU -->
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[140vw] md:w-full h-full flex items-center justify-center">
                 <iframe id="hero-spline" 
                         src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
@@ -231,6 +314,7 @@
         </div>
     </header>
 
+    <!-- SERVICES (EXPERTISE) -->
     <section id="services" class="py-32 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -243,35 +327,36 @@
                 <span class="tag">01. Web</span>
                 <h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-web-title">Web Design Immersif</h3>
                 <p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-web-desc">Sites immersifs et SEO performant.</p>
-                <div class="mt-8 text-blue-600 font-bold text-xs uppercase flex items-center gap-2">Voir plus <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                <div class="mt-8 text-blue-600 font-bold text-xs uppercase flex items-center gap-2"><span data-i18n="serv-cta-web">Voir plus</span> <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
             </article>
             <article class="md:col-span-3 bento-item reveal-up" style="transition-delay: 0.1s" onclick="openServiceDetail('studio3d')">
                 <span class="tag">02. 3D</span>
                 <h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-3d-title">Studio 3D.</h3>
                 <p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-3d-desc">Graphisme 3D haute qualité pour vos produits.</p>
-                <div class="mt-8 text-blue-600 font-bold text-xs uppercase flex items-center gap-2">Explorer <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                <div class="mt-8 text-blue-600 font-bold text-xs uppercase flex items-center gap-2"><span data-i18n="serv-cta-3d">Explorer</span> <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
             </article>
             <article class="md:col-span-2 bento-item reveal-up" onclick="openServiceDetail('apps')">
                 <span class="tag">03. Apps</span>
                 <h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="serv-app-title">Apps Mobile</h3>
                 <p class="text-slate-500 font-medium" data-i18n="serv-app-desc">Développement natif et publication stores.</p>
-                <div class="mt-4 text-blue-600 font-bold text-xs uppercase flex items-center gap-2">Découvrir <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                <div class="mt-4 text-blue-600 font-bold text-xs uppercase flex items-center gap-2"><span data-i18n="serv-cta-app">Découvrir</span> <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
             </article>
             <article class="md:col-span-2 bento-item bento-blue reveal-up" onclick="openServiceDetail('ia')">
                 <span class="tag" style="background:white; color:var(--primary)">04. IA</span>
                 <h3 class="text-2xl font-black mb-6 tracking-tighter" data-i18n="serv-ia-title">IA & Robot.</h3>
                 <p class="text-white opacity-90 font-medium" data-i18n="serv-ia-desc">Chatbots intelligents et automatisation.</p>
-                <div class="mt-4 text-white font-bold text-xs uppercase flex items-center gap-2">Innovations <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                <div class="mt-4 text-white font-bold text-xs uppercase flex items-center gap-2"><span data-i18n="serv-cta-ia">Innovations</span> <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
             </article>
             <article class="md:col-span-2 bento-item reveal-up" onclick="openServiceDetail('learning')">
                 <span class="tag">05. Learning</span>
                 <h3 class="text-2xl font-black mb-6 text-blue-600" data-i18n="serv-learn-title">E-learning</h3>
                 <p class="text-slate-500 font-medium" data-i18n="serv-learn-desc">Plateformes de formation interactives.</p>
-                <div class="mt-4 text-blue-600 font-bold text-xs uppercase flex items-center gap-2">Apprendre <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                <div class="mt-4 text-blue-600 font-bold text-xs uppercase flex items-center gap-2"><span data-i18n="serv-cta-learn">Apprendre</span> <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
             </article>
         </div>
     </section>
 
+    <!-- METHOD -->
     <section id="process" class="py-32 px-6 bg-white/40">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -325,6 +410,7 @@
         </div>
     </section>
 
+    <!-- PORTFOLIO -->
     <section id="portfolio" class="py-48 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -334,14 +420,66 @@
         </div>
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
             <div class="bento-item p-0 min-h-[550px] relative reveal-up">
-                <iframe src="https://my.spline.design/r4xbot-TowiBcjXeP3tiZRqqB7OwFiy/" width="100%" height="100%" class="loaded"></iframe>
+                <iframe src="https://my.spline.design/r4xbot-TowiBcjXeP3tiZRqqB7OwFiy/" width="100%" height="100%" class="loaded" loading="lazy"></iframe>
             </div>
             <div class="bento-item p-0 min-h-[550px] relative reveal-up">
-                <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-ISR0inmI81qHYRxU9zwpmWsJ/" width="100%" height="100%" class="loaded"></iframe>
+                <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-ISR0inmI81qHYRxU9zwpmWsJ/" width="100%" height="100%" class="loaded" loading="lazy"></iframe>
             </div>
         </div>
     </section>
 
+    <!-- FAQ (SEO) -->
+    <section id="faq" class="py-32 px-6 relative">
+        <!-- Dégradé de fond subtil pour mettre la FAQ en valeur -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/40 to-transparent pointer-events-none -z-10"></div>
+        
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-16 reveal-up">
+                <span class="tag" data-i18n="faq-tag">06. FAQ</span>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter" data-i18n="faq-title">Questions Fréquentes.</h2>
+            </div>
+            
+            <div class="space-y-5 reveal-up">
+                <div class="faq-item faq-card p-6 md:p-8 cursor-pointer group" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center gap-6">
+                        <h3 class="text-xl md:text-2xl font-black text-slate-800 group-hover:text-blue-600 transition-colors" data-i18n="faq-q1">Pourquoi intégrer la 3D sur mon site internet ?</h3>
+                        <div class="faq-icon shrink-0 border border-transparent group-hover:border-blue-500/20"><i data-lucide="plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p class="text-slate-500 font-medium leading-relaxed pt-6 mt-4 border-t border-slate-100/50 text-lg" data-i18n="faq-a1">La 3D offre une expérience immersive qui capte l'attention, augmente le temps passé sur votre site et améliore considérablement vos taux de conversion. C'est un atout SEO majeur pour se démarquer.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item faq-card p-6 md:p-8 cursor-pointer group" onclick="toggleFaq(this)" style="transition-delay: 0.1s">
+                    <div class="flex justify-between items-center gap-6">
+                        <h3 class="text-xl md:text-2xl font-black text-slate-800 group-hover:text-blue-600 transition-colors" data-i18n="faq-q2">Comment l'IA peut-elle optimiser mon entreprise ?</h3>
+                        <div class="faq-icon shrink-0 border border-transparent group-hover:border-blue-500/20"><i data-lucide="plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p class="text-slate-500 font-medium leading-relaxed pt-6 mt-4 border-t border-slate-100/50 text-lg" data-i18n="faq-a2">Nous développons des chatbots intelligents et automatisons vos processus. Cela permet d'offrir un support client 24/7 et d'accélérer votre croissance.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item faq-card p-6 md:p-8 cursor-pointer group" onclick="toggleFaq(this)" style="transition-delay: 0.2s">
+                    <div class="flex justify-between items-center gap-6">
+                        <h3 class="text-xl md:text-2xl font-black text-slate-800 group-hover:text-blue-600 transition-colors" data-i18n="faq-q3">Quels sont les délais pour un projet web sur-mesure ?</h3>
+                        <div class="faq-icon shrink-0 border border-transparent group-hover:border-blue-500/20"><i data-lucide="plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p class="text-slate-500 font-medium leading-relaxed pt-6 mt-4 border-t border-slate-100/50 text-lg" data-i18n="faq-a3">Un site premium avec intégration 3D et SEO prend généralement entre 4 à 8 semaines, selon la complexité et les fonctionnalités requises.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
     <section id="contact" class="py-48 px-6 bg-[#0f172a]">
         <div class="max-w-3xl mx-auto">
             <div class="bg-white/5 p-10 md:p-16 rounded-[48px] border border-white/10 relative overflow-hidden backdrop-blur-xl min-h-[500px] flex flex-col justify-center">
@@ -350,8 +488,8 @@
                     <div class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-8">
                         <i data-lucide="check" class="text-white w-12 h-12"></i>
                     </div>
-                    <h3 class="text-4xl font-black text-white mb-4">Message envoyé !</h3>
-                    <p class="text-slate-400 text-lg">L'équipe JAAD Studio vous répondra très rapidement.</p>
+                    <h3 class="text-4xl font-black text-white mb-4" data-i18n="form-success-title">Message envoyé !</h3>
+                    <p class="text-slate-400 text-lg" data-i18n="form-success-desc">L'équipe JAAD Studio vous répondra très rapidement.</p>
                     <button type="button" onclick="resetForm()" class="mt-10 btn-premium btn-primary bg-white text-slate-900" data-i18n="form-btn-back">Retour au site</button>
                 </div>
 
@@ -359,24 +497,24 @@
                     <div class="progress-bar-container"><div id="form-progress-fill"></div></div>
                     <form id="quest-form" class="space-y-10" action="https://formspree.io/f/xjgeayjr" method="POST">
                         <div id="form-steps-container">
-                            <div class="form-step active" id="step-1"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-name">Votre nom ?</label><input type="text" name="name" id="q-name" placeholder="Nom complet" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
-                            <div class="form-step" id="step-2"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-email">Votre email ?</label><input type="email" name="email" id="q-email" placeholder="votre@email.com" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
-                            <div class="form-step" id="step-3"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-phone">Votre numéro ?</label><input type="tel" name="phone" id="q-phone" placeholder="06 00..." required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
+                            <div class="form-step active" id="step-1"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-name">Votre nom ?</label><input type="text" name="name" id="q-name" placeholder="Nom complet" data-i18n="form-ph-name" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
+                            <div class="form-step" id="step-2"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-email">Votre email ?</label><input type="email" name="email" id="q-email" placeholder="votre@email.com" data-i18n="form-ph-email" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
+                            <div class="form-step" id="step-3"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-phone">Votre numéro ?</label><input type="tel" name="phone" id="q-phone" placeholder="06 00..." data-i18n="form-ph-phone" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
                             <div class="form-step" id="step-4">
                                 <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-service">Quel service ?</label>
                                 <div class="flex flex-wrap gap-3">
-                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'Web')">Web Design</button>
-                                    <button type="button" class="service-pill" onclick="selectFormService(this, '3D')">Studio 3D</button>
-                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'IA')">IA Solutions</button>
+                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'Web')" data-i18n="form-opt-web">Web Design</button>
+                                    <button type="button" class="service-pill" onclick="selectFormService(this, '3D')" data-i18n="form-opt-3d">Studio 3D</button>
+                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'IA')" data-i18n="form-opt-ia">IA Solutions</button>
                                 </div>
                                 <input type="hidden" name="service" id="q-service">
                             </div>
-                            <div class="form-step" id="step-5"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-desc">Description</label><textarea name="message" id="q-desc" placeholder="..." required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 h-32 resize-none transition-colors"></textarea></div>
+                            <div class="form-step" id="step-5"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-desc">Description</label><textarea name="message" id="q-desc" placeholder="Détaillez votre projet..." data-i18n="form-ph-desc" required class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 h-32 resize-none transition-colors"></textarea></div>
                             <div class="form-step" id="step-6">
                                 <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-pref">Contact par ?</label>
                                 <div class="flex gap-3">
-                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'WhatsApp')">WhatsApp</button>
-                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'Email')">Email</button>
+                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'WhatsApp')" data-i18n="form-opt-wa">WhatsApp</button>
+                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'Email')" data-i18n="form-opt-email">Email</button>
                                 </div>
                                 <input type="hidden" name="pref" id="q-pref">
                             </div>
@@ -391,17 +529,19 @@
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="py-16 bg-white border-t border-slate-100 text-center">
         <a href="#top" class="text-3xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
-        <p class="text-slate-400 text-xs mt-6">© 2026 JAAD Studio.</p>
+        <p class="text-slate-400 text-xs mt-6" data-i18n="footer-text">© 2026 JAAD Studio.</p>
     </footer>
 
+    <!-- AI CHAT -->
     <div id="ai-chat-modal">
         <div class="bg-blue-600 p-5 text-white flex justify-between items-center font-black">
             <span class="flex items-center gap-2 text-[11px] uppercase tracking-widest"><i data-lucide="sparkles"></i> JAAD AI</span>
             <button onclick="toggleAiChat()"><i data-lucide="x"></i></button>
         </div>
-        <div id="chat-messages" class="chat-messages"><div class="msg msg-ai text-xs">Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?</div></div>
+        <div id="chat-messages" class="chat-messages"><div class="msg msg-ai text-xs" data-i18n="chat-welcome">Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?</div></div>
         <div class="p-4 flex gap-2 border-t bg-white">
             <input type="text" id="chat-input" class="flex-1 outline-none text-xs" placeholder="..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
             <button onclick="sendChatMessage()" id="chat-send-btn" class="bg-blue-600 text-white p-3 rounded-full"><i data-lucide="send" class="w-4 h-4"></i></button>
@@ -409,36 +549,47 @@
     </div>
 
     <script>
+        let currentLang = 'fr';
+
         const serviceDetails = {
             web: {
-                title: "Digital Experience", tag: "Design & Performance",
-                desc: "Nous concevons des voyages digitaux immersifs. JAAD Studio allie esthétique haut de gamme et performance SEO pour propulser votre marque.",
-                points: ["Architecture SEO optimisée", "Interfaces 3D interactives", "Vitesse ultra-rapide", "Design Mobile-First Premium"], cta: "Web"
+                fr: { title: "Digital Experience", tag: "Design & Performance", desc: "Nous concevons des voyages digitaux immersifs. JAAD Studio allie esthétique haut de gamme et performance SEO pour propulser votre marque.", points: ["Architecture SEO optimisée", "Interfaces 3D interactives", "Vitesse ultra-rapide", "Design Mobile-First Premium"], cta: "Web" },
+                en: { title: "Digital Experience", tag: "Design & Performance", desc: "We design immersive digital journeys. JAAD Studio combines premium aesthetics and SEO performance to boost your brand.", points: ["Optimized SEO Architecture", "Interactive 3D Interfaces", "Ultra-fast speed", "Premium Mobile-First Design"], cta: "Web" },
+                ar: { title: "التجربة الرقمية", tag: "تصميم وأداء", desc: "نصمم رحلات رقمية غامرة. يجمع استوديو جاد بين الجماليات الفاخرة وأداء تحسين محركات البحث لتعزيز علامتك التجارية.", points: ["بنية مُحسّنة لمحركات البحث", "واجهات 3D تفاعلية", "سرعة فائقة", "تصميم متوافق مع الهاتف المحمول"], cta: "Web" }
             },
             studio3d: {
-                title: "Studio 3D Créatif", tag: "Visualisation 8K",
-                desc: "Donnez vie à vos concepts avec une fidélité visuelle inégalée. De la modélisation produit à l'animation publicitaire, nous créons des univers marquants.",
-                points: ["Rendus photoréalistes", "Animations cinématiques", "Assets pour Métavers", "Configurateurs produits"], cta: "3D"
+                fr: { title: "Studio 3D Créatif", tag: "Visualisation 8K", desc: "Donnez vie à vos concepts avec une fidélité visuelle inégalée. De la modélisation produit à l'animation publicitaire, nous créons des univers marquants.", points: ["Rendus photoréalistes", "Animations cinématiques", "Assets pour Métavers", "Configurateurs produits"], cta: "3D" },
+                en: { title: "Creative 3D Studio", tag: "8K Visualization", desc: "Bring your concepts to life with unmatched visual fidelity. From product modeling to advertising animation, we create striking worlds.", points: ["Photorealistic renders", "Cinematic animations", "Metaverse assets", "Product configurators"], cta: "3D" },
+                ar: { title: "استوديو 3D إبداعي", tag: "تصور 8K", desc: "امنح مفاهيمك الحياة بدقة بصرية لا مثيل لها. من نمذجة المنتجات إلى الرسوم المتحركة الإعلانية، نصمم عوالم مذهلة.", points: ["عروض واقعية", "رسوم متحركة سينمائية", "أصول الميتافيرس", "مكونات المنتجات"], cta: "3D" }
             },
             apps: {
-                title: "Applications Mobiles", tag: "iOS & Android",
-                desc: "Des applications fluides conçues pour engager vos utilisateurs. Nous gérons tout, du design UX à la publication sur les stores.",
-                points: ["Développement Natif", "Notifications Push IA", "Synchronisation Cloud", "Maintenance Évolutive"], cta: "Apps"
+                fr: { title: "Applications Mobiles", tag: "iOS & Android", desc: "Des applications fluides conçues pour engager vos utilisateurs. Nous gérons tout, du design UX à la publication sur les stores.", points: ["Développement Natif", "Notifications Push IA", "Synchronisation Cloud", "Maintenance Évolutive"], cta: "Apps" },
+                en: { title: "Mobile Applications", tag: "iOS & Android", desc: "Smooth applications designed to engage your users. We manage everything from UX design to store publishing.", points: ["Native Development", "AI Push Notifications", "Cloud Synchronization", "Scalable Maintenance"], cta: "Apps" },
+                ar: { title: "تطبيقات الهاتف المحمول", tag: "iOS و Android", desc: "تطبيقات سلسة مصممة لإشراك المستخدمين. ندير كل شيء، من تصميم تجربة المستخدم إلى النشر في المتاجر.", points: ["تطوير أصلي", "إشعارات ذكية", "مزامنة سحابية", "صيانة قابلة للتطوير"], cta: "Apps" }
             },
             ia: {
-                title: "IA & Automatisation", tag: "Intelligence Future",
-                desc: "Boostez votre productivité avec l'IA. Nous développons des agents intelligents personnalisés pour libérer votre potentiel créatif.",
-                points: ["Agents conversationnels", "Automatisation workflows", "Analyse prédictive", "Intégration API Gemini"], cta: "IA"
+                fr: { title: "IA & Automatisation", tag: "Intelligence Future", desc: "Boostez votre productivité avec l'IA. Nous développons des agents intelligents personnalisés pour libérer votre potentiel créatif.", points: ["Agents conversationnels", "Automatisation workflows", "Analyse prédictive", "Intégration API Gemini"], cta: "IA" },
+                en: { title: "AI & Automation", tag: "Future Intelligence", desc: "Boost your productivity with AI. We develop customized intelligent agents to unleash your creative potential.", points: ["Conversational agents", "Workflow automation", "Predictive analysis", "Gemini API Integration"], cta: "IA" },
+                ar: { title: "الذكاء الاصطناعي والأتمتة", tag: "ذكاء المستقبل", desc: "عزز إنتاجيتك مع الذكاء الاصطناعي. نطور وكلاء أذكياء مخصصين لإطلاق إمكاناتك الإبداعية.", points: ["وكلاء محادثة", "أتمتة سير العمل", "تحليل تنبؤي", "دمج واجهة Gemini"], cta: "IA" }
             },
             learning: {
-                title: "E-learning Immersif", tag: "Education 2.0",
-                desc: "Transformez l'apprentissage en expérience ludique. Nous créons des plateformes sur-mesure utilisant la gamification et la 3D.",
-                points: ["LMS Customisé", "Gamification pédagogique", "Suivi analytics détaillé", "Contenus interactifs 3D"], cta: "Learning"
+                fr: { title: "E-learning Immersif", tag: "Education 2.0", desc: "Transformez l'apprentissage en expérience ludique. Nous créons des plateformes sur-mesure utilisant la gamification et la 3D.", points: ["LMS Customisé", "Gamification pédagogique", "Suivi analytics détaillé", "Contenus interactifs 3D"], cta: "Learning" },
+                en: { title: "Immersive E-learning", tag: "Education 2.0", desc: "Transform learning into a playful experience. We create custom platforms using gamification and 3D.", points: ["Custom LMS", "Educational Gamification", "Detailed analytics tracking", "Interactive 3D content"], cta: "Learning" },
+                ar: { title: "تعليم إلكتروني غامر", tag: "التعليم 2.0", desc: "حوّل التعلم إلى تجربة ممتعة. نبتكر منصات مخصصة باستخدام الألعاب والتقنية ثلاثية الأبعاد.", points: ["نظام إدارة تعلم مخصص", "ألعاب تعليمية", "تتبع تحليلات مفصل", "محتوى 3D تفاعلي"], cta: "Learning" }
             }
         };
 
+        const translations = {
+            fr: { "nav-expertise": "Expertise", "nav-methode": "Méthode", "nav-realisations": "Réalisations", "nav-contact-btn": "Contact", "nav-close": "Fermer", "hero-btn": "Parlons-en.", "hero-btn-secondary": "Nos créations.", "exp-title-marquee": "On crée pour vous. E-learning. IA.", "serv-web-title": "Web Design Immersif", "serv-web-desc": "Sites immersifs et SEO performant.", "serv-3d-title": "Studio 3D.", "serv-3d-desc": "Graphisme 3D haute qualité pour vos produits.", "serv-app-title": "Apps Mobile", "serv-app-desc": "Développement natif et publication stores.", "serv-ia-title": "IA & Robot.", "serv-ia-desc": "Chatbots intelligents et automatisation.", "serv-learn-title": "E-learning", "serv-learn-desc": "Plateformes de formation interactives.", "method-title-marquee": "Notre méthode. Stratégie. Design. Publication.", "method-1-title": "Stratégie", "method-1-desc": "Analyse de vos besoins et objectifs.", "method-2-title": "Design", "method-2-desc": "Conception visuelle et IA.", "method-3-title": "Publication", "method-3-desc": "Mise en ligne et SEO technique.", "method-4-title": "Maintenance", "method-4-desc": "Support continu et évolutions.", "port-title-marquee": "Nos réalisations. Web. 3D. IA. Robots.", "form-name": "Votre nom ?", "form-email": "Votre email ?", "form-phone": "Votre numéro ?", "form-service": "Quel service ?", "form-desc": "Description", "form-pref": "Contact par ?", "form-btn-next": "Suivant", "form-btn-prev": "Retour", "form-btn-send": "Envoyer", "form-btn-back": "Retour au site", "form-err-service": "Sélectionnez un service.", "form-err-pref": "Sélectionnez un contact.", "faq-title": "Questions Fréquentes.", "faq-tag": "06. FAQ", "faq-q1": "Pourquoi intégrer la 3D sur mon site internet ?", "faq-a1": "La 3D offre une expérience immersive qui capte l'attention, augmente le temps passé sur votre site et améliore considérablement vos taux de conversion. C'est un atout SEO majeur pour se démarquer.", "faq-q2": "Comment l'IA peut-elle optimiser mon entreprise ?", "faq-a2": "Nous développons des chatbots intelligents et automatisons vos processus. Cela permet d'offrir un support client 24/7 et d'accélérer votre croissance.", "faq-q3": "Quels sont les délais pour un projet web sur-mesure ?", "faq-a3": "Un site premium avec intégration 3D et SEO prend généralement entre 4 à 8 semaines, selon la complexité et les fonctionnalités requises.", "serv-cta-web": "Voir plus", "serv-cta-3d": "Explorer", "serv-cta-app": "Découvrir", "serv-cta-ia": "Innovations", "serv-cta-learn": "Apprendre", "form-success-title": "Message envoyé !", "form-success-desc": "L'équipe JAAD Studio vous répondra très rapidement.", "form-opt-web": "Web Design", "form-opt-3d": "Studio 3D", "form-opt-ia": "IA Solutions", "form-opt-wa": "WhatsApp", "form-opt-email": "Email", "footer-text": "© 2026 JAAD Studio.", "chat-welcome": "Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?", "modal-btn-start": "Démarrer mon projet", "modal-btn-close": "Fermer", "form-ph-name": "Nom complet", "form-ph-email": "votre@email.com", "form-ph-phone": "06 00...", "form-ph-desc": "Détaillez votre projet..." },
+            en: { "nav-expertise": "Expertise", "nav-methode": "Method", "nav-realisations": "Works", "nav-contact-btn": "Contact", "nav-close": "Close", "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.", "exp-title-marquee": "We create for you. E-learning. AI.", "serv-web-title": "Immersive Web Design", "serv-web-desc": "Immersive sites and high-performance SEO.", "serv-3d-title": "3D Studio.", "serv-3d-desc": "High quality 3D graphics for your products.", "serv-app-title": "Mobile Apps", "serv-app-desc": "Native development and store publishing.", "serv-ia-title": "AI & Robot.", "serv-ia-desc": "Smart chatbots and automation.", "serv-learn-title": "E-learning", "serv-learn-desc": "Interactive training platforms.", "method-title-marquee": "Our method. Strategy. Design. Publishing.", "method-1-title": "Strategy", "method-1-desc": "Analysis of your needs and goals.", "method-2-title": "Design", "method-2-desc": "Visual conception and AI.", "method-3-title": "Publishing", "method-3-desc": "Going live and technical SEO.", "method-4-title": "Maintenance", "method-4-desc": "Continuous support and updates.", "port-title-marquee": "Our works. Web. 3D. IA. Robots.", "form-name": "Your name?", "form-email": "Your email?", "form-phone": "Your phone?", "form-service": "Which service?", "form-desc": "Description", "form-pref": "Contact via?", "form-btn-next": "Next", "form-btn-prev": "Back", "form-btn-send": "Send", "form-btn-back": "Back to site", "form-err-service": "Select a service.", "form-err-pref": "Select a contact.", "faq-title": "Frequently Asked Questions.", "faq-tag": "06. FAQ", "faq-q1": "Why integrate 3D on my website?", "faq-a1": "3D offers an immersive experience that captures attention, increases time spent on your site, and significantly improves conversion rates. It is a major SEO asset.", "faq-q2": "How can AI optimize my business?", "faq-a2": "We develop smart chatbots and automate your workflows. This provides 24/7 customer support, reduces costs, and accelerates growth.", "faq-q3": "What is the timeframe for a custom web project?", "faq-a3": "A premium website with 3D integration and SEO usually takes between 4 to 8 weeks, depending on complexity and required features.", "serv-cta-web": "See more", "serv-cta-3d": "Explore", "serv-cta-app": "Discover", "serv-cta-ia": "Innovations", "serv-cta-learn": "Learn", "form-success-title": "Message sent!", "form-success-desc": "The JAAD Studio team will reply shortly.", "form-opt-web": "Web Design", "form-opt-3d": "3D Studio", "form-opt-ia": "AI Solutions", "form-opt-wa": "WhatsApp", "form-opt-email": "Email", "footer-text": "© 2026 JAAD Studio.", "chat-welcome": "Hello! I am JAAD AI. How can I help you?", "modal-btn-start": "Start my project", "modal-btn-close": "Close", "form-ph-name": "Full name", "form-ph-email": "your@email.com", "form-ph-phone": "Phone number...", "form-ph-desc": "Describe your project..." },
+            ar: { "nav-expertise": "خبراتنا", "nav-methode": "منهجيتنا", "nav-realisations": "أعمالنا", "nav-contact-btn": "اتصل بنا", "nav-close": "إغلاق", "hero-btn": "لنبدأ العمل.", "hero-btn-secondary": "أعمالنا.", "exp-title-marquee": "نبتكر من أجلك. التعليم الإلكتروني. الذكاء الاصطناعي.", "serv-web-title": "تصميم ويب غامر", "serv-web-desc": "مواقع غامرة وتحسين محركات البحث.", "serv-ia-title": "الذكاء الاصطناعي والروبوت.", "serv-ia-desc": "روبوتات محادثة ذكية وأتمتة.", "serv-learn-title": "التعليم الإلكتروني", "serv-learn-desc": "منصات تدريب تفاعلية.", "method-title-marquee": "منهجيتنا. استراتيجية. تصميم. نشر.", "method-1-title": "الاستراتيجية", "method-1-desc": "تحليل احتياجاتك وأهدافك.", "method-2-title": "التصميم", "method-2-desc": "التصور المرئي والذكاء الاصطناعي.", "method-3-title": "النشر", "method-3-desc": "الإطلاق وتحسين محركات البحث.", "method-4-title": "الصيانة", "method-4-desc": "دعم مستمر وتحديثات.", "port-title-marquee": "أعمالنا. ويب. ثلاثي الأبعاد. ذكاء اصطناعي. روبوتات.", "form-name": "اسمك؟", "form-email": "بريدك الإلكتروني؟", "form-phone": "رقم هاتفك؟", "form-service": "أي خدمة؟", "form-desc": "الوصف", "form-pref": "التواصل عبر؟", "form-btn-next": "التالي", "form-btn-prev": "رجوع", "form-btn-send": "إرسال", "form-btn-back": "العودة للموقع", "form-err-service": "اختر خدمة.", "form-err-pref": "اختر وسيلة.", "faq-title": "الأسئلة الشائعة.", "faq-tag": "06. الأسئلة الشائعة", "faq-q1": "لماذا يجب دمج تقنية 3D في موقعي؟", "faq-a1": "توفر تقنية 3D تجربة غامرة تجذب الانتباه، وتزيد من الوقت المقضي في موقعك، وتحسن معدلات التحويل بشكل كبير. إنها ميزة قوية لتحسين محركات البحث.", "faq-q2": "كيف يمكن للذكاء الاصطناعي تحسين عملي؟", "faq-a2": "نقوم بتطوير روبوتات محادثة ذكية وأتمتة سير العمل الخاص بك. هذا يوفر دعماً للعملاء على مدار الساعة، ويقلل التكاليف، ويسرع النمو.", "faq-q3": "ما هو الإطار الزمني لمشروع ويب مخصص؟", "faq-a3": "يستغرق الموقع المتميز مع دمج 3D وتحسين محركات البحث عادةً ما بين 4 إلى 8 أسابيع، اعتماداً على التعقيد والميزات المطلوبة.", "serv-cta-web": "رؤية المزيد", "serv-cta-3d": "استكشاف", "serv-cta-app": "اكتشاف", "serv-cta-ia": "ابتكارات", "serv-cta-learn": "تعلم", "form-success-title": "تم إرسال الرسالة!", "form-success-desc": "سيرد عليك فريق استوديو جاد قريباً.", "form-opt-web": "تصميم ويب", "form-opt-3d": "استوديو 3D", "form-opt-ia": "حلول الذكاء الاصطناعي", "form-opt-wa": "واتساب", "form-opt-email": "بريد إلكتروني", "footer-text": "© 2026 استوديو جاد.", "chat-welcome": "مرحباً! أنا ذكاء جاد الاصطناعي. كيف يمكنني مساعدتك؟", "modal-btn-start": "ابدأ مشروعي", "modal-btn-close": "إغلاق", "form-ph-name": "الاسم الكامل", "form-ph-email": "بريدك@email.com", "form-ph-phone": "رقم الهاتف...", "form-ph-desc": "صف مشروعك..." }
+        };
+
         function openServiceDetail(key) {
-            const data = serviceDetails[key];
+            const data = serviceDetails[key][currentLang];
+            const btnStart = translations[currentLang]["modal-btn-start"];
+            const btnClose = translations[currentLang]["modal-btn-close"];
+
             const content = `
                 <div class="reveal-up active">
                     <span class="tag bg-blue-600 text-white border-none mb-8 px-5 py-2 inline-block">${data.tag}</span>
@@ -448,8 +599,8 @@
                         ${data.points.map(p => `<div class="group flex items-center gap-4 p-5 bg-slate-50 rounded-3xl border border-slate-100 transition-all hover:bg-white hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/10"><div class="w-10 h-10 bg-blue-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5"></i></div><span class="font-bold text-slate-700 text-sm tracking-tight">${p}</span></div>`).join('')}
                     </div>
                     <div class="flex flex-col sm:flex-row gap-5">
-                        <button onclick="contactForService('${data.cta}')" class="btn-premium btn-primary group px-10 py-5 justify-center">Démarrer mon projet <i data-lucide="zap" class="w-5 h-5 fill-current group-hover:animate-pulse"></i></button>
-                        <button onclick="toggleServiceModal()" class="btn-premium btn-secondary px-10 py-5 justify-center hover:bg-slate-50">Fermer</button>
+                        <button onclick="contactForService('${data.cta}')" class="btn-premium btn-primary group px-10 py-5 justify-center">${btnStart} <i data-lucide="zap" class="w-5 h-5 fill-current group-hover:animate-pulse"></i></button>
+                        <button onclick="toggleServiceModal()" class="btn-premium btn-secondary px-10 py-5 justify-center hover:bg-slate-50">${btnClose}</button>
                     </div>
                 </div>`;
             document.getElementById('modal-body-content').innerHTML = content;
@@ -475,25 +626,30 @@
                     window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
                     const pills = document.querySelectorAll('.service-pill');
                     pills.forEach(p => {
-                        if(p.innerText.toLowerCase().includes(serviceName.toLowerCase())) {
-                            document.querySelectorAll('.service-pill').forEach(b => b.classList.remove('selected'));
+                        // Matching is simpler now, we just rely on data value rather than visual text to avoid translation mismatch
+                        document.querySelectorAll('.service-pill').forEach(b => b.classList.remove('selected'));
+                        if (p.getAttribute('onclick').includes(serviceName)) {
                             p.classList.add('selected');
-                            document.getElementById('q-service').value = serviceName;
                         }
                     });
+                    document.getElementById('q-service').value = serviceName;
                 }
             }, 300);
         }
 
-        const translations = {
-            fr: { "nav-expertise": "Expertise", "nav-methode": "Méthode", "nav-realisations": "Réalisations", "nav-contact-btn": "Contact", "nav-close": "Fermer", "hero-btn": "Parlons-en.", "hero-btn-secondary": "Nos créations.", "exp-title-marquee": "On crée pour vous. E-learning. IA.", "serv-web-title": "Web Design Immersif", "serv-web-desc": "Sites immersifs et SEO performant.", "serv-3d-title": "Studio 3D.", "serv-3d-desc": "Graphisme 3D haute qualité pour vos produits.", "serv-app-title": "Apps Mobile", "serv-app-desc": "Développement natif et publication stores.", "serv-ia-title": "IA & Robot.", "serv-ia-desc": "Chatbots intelligents et automatisation.", "serv-learn-title": "E-learning", "serv-learn-desc": "Plateformes de formation interactives.", "method-title-marquee": "Notre méthode. Stratégie. Design. Publication.", "method-1-title": "Stratégie", "method-1-desc": "Analyse de vos besoins et objectifs.", "method-2-title": "Design", "method-2-desc": "Conception visuelle et IA.", "method-3-title": "Publication", "method-3-desc": "Mise en ligne et SEO technique.", "method-4-title": "Maintenance", "method-4-desc": "Support continu et évolutions.", "port-title-marquee": "Nos réalisations. Web. 3D. IA. Robots.", "form-name": "Votre nom ?", "form-email": "Votre email ?", "form-phone": "Votre numéro ?", "form-service": "Quel service ?", "form-desc": "Description", "form-pref": "Contact par ?", "form-btn-next": "Suivant", "form-btn-prev": "Retour", "form-btn-send": "Envoyer", "form-btn-back": "Retour au site", "form-err-service": "Sélectionnez un service.", "form-err-pref": "Sélectionnez un contact." },
-            en: { "nav-expertise": "Expertise", "nav-methode": "Method", "nav-realisations": "Works", "nav-contact-btn": "Contact", "nav-close": "Close", "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.", "exp-title-marquee": "We create for you. E-learning. AI.", "serv-web-title": "Immersive Web Design", "serv-web-desc": "Immersive sites and high-performance SEO.", "serv-3d-title": "3D Studio.", "serv-3d-desc": "High quality 3D graphics for your products.", "serv-app-title": "Mobile Apps", "serv-app-desc": "Native development and store publishing.", "serv-ia-title": "AI & Robot.", "serv-ia-desc": "Smart chatbots and automation.", "serv-learn-title": "E-learning", "serv-learn-desc": "Interactive training platforms.", "method-title-marquee": "Our method. Strategy. Design. Publishing.", "method-1-title": "Strategy", "method-1-desc": "Analysis of your needs and goals.", "method-2-title": "Design", "method-2-desc": "Visual conception and AI.", "method-3-title": "Publishing", "method-3-desc": "Going live and technical SEO.", "method-4-title": "Maintenance", "method-4-desc": "Continuous support and updates.", "port-title-marquee": "Our works. Web. 3D. IA. Robots.", "form-name": "Your name?", "form-email": "Your email?", "form-phone": "Your phone?", "form-service": "Which service?", "form-desc": "Description", "form-pref": "Contact via?", "form-btn-next": "Next", "form-btn-prev": "Back", "form-btn-send": "Send", "form-btn-back": "Back to site", "form-err-service": "Select a service.", "form-err-pref": "Select a contact." },
-            ar: { "nav-expertise": "خبراتنا", "nav-methode": "منهجيتنا", "nav-realisations": "أعمالنا", "nav-contact-btn": "اتصل بنا", "nav-close": "إغلاق", "hero-btn": "لنبدأ العمل.", "hero-btn-secondary": "أعمالنا.", "exp-title-marquee": "نبتكر من أجلك. التعليم الإلكتروني. الذكاء الاصطناعي.", "serv-web-title": "تصميم ويب غامر", "serv-web-desc": "مواقع غامرة وتحسين محركات البحث.", "serv-ia-title": "الذكاء الاصطناعي والروبوت.", "serv-ia-desc": "روبوتات محادثة ذكية وأتمتة.", "serv-learn-title": "التعليم الإلكتروني", "serv-learn-desc": "منصات تدريب تفاعلية.", "method-title-marquee": "منهجيتنا. استراتيجية. تصميم. نشر.", "method-1-title": "الاستراتيجية", "method-1-desc": "تحليل احتياجاتك وأهدافك.", "method-2-title": "التصميم", "method-2-desc": "التصور المرئي والذكاء الاصطناعي.", "method-3-title": "النشر", "method-3-desc": "الإطلاق وتحسين محركات البحث.", "method-4-title": "الصيانة", "method-4-desc": "دعم مستمر وتحديثات.", "port-title-marquee": "أعمالنا. ويب. ثلاثي الأبعاد. ذكاء اصطناعي. روبوتات.", "form-name": "اسمك؟", "form-email": "بريدك الإلكتروني؟", "form-phone": "رقم هاتفك؟", "form-service": "أي خدمة؟", "form-desc": "الوصف", "form-pref": "التواصل عبر؟", "form-btn-next": "التالي", "form-btn-prev": "رجوع", "form-btn-send": "إرسال", "form-btn-back": "العودة للموقع", "form-err-service": "اختر خدمة.", "form-err-pref": "اختر وسيلة." }
-        };
-
         function switchLanguage(lang) {
+            currentLang = lang;
             document.documentElement.lang = lang; document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-            document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (translations[lang][key]) el.innerText = translations[lang][key]; });
+            document.querySelectorAll('[data-i18n]').forEach(el => { 
+                const key = el.getAttribute('data-i18n'); 
+                if (translations[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        el.innerText = translations[lang][key];
+                    }
+                }
+            });
             const nextBtn = document.getElementById('next-btn');
             if (nextBtn) nextBtn.innerText = (currentStep === 6) ? translations[lang]["form-btn-send"] : translations[lang]["form-btn-next"];
         }
@@ -574,6 +730,20 @@
             }
             chatHistory.push({ role: "model", parts: [{ text: responseText }] });
             box.innerHTML += `<div class="msg msg-ai">${responseText.replace(/\n/g, '<br>')}</div>`; box.scrollTop = box.scrollHeight;
+        }
+
+        function toggleFaq(el) {
+            const item = el.closest('.faq-item');
+            const wasActive = item.classList.contains('active');
+            
+            // Ferme toutes les questions
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            
+            // Ouvre la question cliquée si elle n'était pas déjà ouverte
+            if (!wasActive) item.classList.add('active');
+            
+            // Rafraîchir les icônes si nécessaire
+            lucide.createIcons();
         }
 
         function revealOnScroll() { const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }); }); document.querySelectorAll('.reveal-up').forEach(el => obs.observe(el)); }
