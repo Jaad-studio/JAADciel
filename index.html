@@ -6,6 +6,8 @@
     <title>JAAD | Agence Créative Web, 3D, IA & E-learning</title>
     <meta name="description" content="JAAD Studio : Agence créative spécialisée en Web Design immersif, Studio 3D, Intelligence Artificielle et solutions E-learning.">
     
+    <link rel="icon" href="logo.png" type="image/png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;700;900&display=swap" rel="stylesheet">
@@ -162,14 +164,12 @@
 
     <div id="scroll-progress"></div>
 
-    <!-- PRELOADER -->
     <div id="preloader">
         <div class="loader-content text-center">
             <div class="loader-logo-base">JAAD.<div class="loader-logo-fill" id="loader-fill">JAAD.</div></div>
         </div>
     </div>
 
-    <!-- MODAL SERVICE DETAILS -->
     <div id="service-modal" onclick="closeServiceModal(event)">
         <div class="modal-content shadow-2xl" onclick="event.stopPropagation()">
             <button onclick="toggleServiceModal()" class="absolute top-10 right-10 p-3 hover:bg-slate-50 rounded-full transition-all text-slate-300 hover:text-slate-900 border border-slate-100 hover:border-slate-200"><i data-lucide="x"></i></button>
@@ -177,7 +177,6 @@
         </div>
     </div>
 
-    <!-- MOBILE MENU -->
     <div id="mobile-menu-overlay">
         <a href="#services" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-expertise">Expertise</a>
         <a href="#process" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-methode">Méthode</a>
@@ -186,7 +185,6 @@
         <button class="mt-12 text-slate-400 font-bold uppercase text-xs" onclick="toggleMenu()" data-i18n="nav-close">Fermer</button>
     </div>
 
-    <!-- NAVIGATION -->
     <nav class="fixed top-0 w-full z-[1000] flex justify-center pt-8 px-4">
         <div id="navbar" class="glass-nav px-8 md:px-10 py-5 rounded-full flex items-center max-w-6xl w-full justify-between shadow-sm">
             <a href="#top" class="text-2xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
@@ -207,19 +205,15 @@
         </div>
     </nav>
 
-    <!-- FLOATING ACTIONS -->
     <div class="fixed bottom-8 right-8 z-[1500] flex flex-col gap-4">
         <button id="ai-chat-trigger" onclick="toggleAiChat()" class="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="sparkles"></i></button>
-        <!-- WHATSAPP REDIRECTION UPDATED -->
         <a href="https://wa.me/33788408004" target="_blank" class="w-14 h-14 rounded-full bg-[#25d366] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform"><i data-lucide="message-circle"></i></a>
     </div>
 
-    <!-- HERO -->
     <header id="top" class="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
             
-            <!-- SPLINE : CENTRAGE MATHEMATIQUE PARFAIT (-1/2) SUR MOBILE ET BUREAU -->
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[140vw] md:w-full h-full flex items-center justify-center">
                 <iframe id="hero-spline" 
                         src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
@@ -237,7 +231,6 @@
         </div>
     </header>
 
-    <!-- SERVICES (EXPERTISE) -->
     <section id="services" class="py-32 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -279,7 +272,6 @@
         </div>
     </section>
 
-    <!-- METHOD -->
     <section id="process" class="py-32 px-6 bg-white/40">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -333,7 +325,6 @@
         </div>
     </section>
 
-    <!-- PORTFOLIO -->
     <section id="portfolio" class="py-48 px-6">
         <div class="marquee-wrapper mb-20">
             <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
@@ -351,7 +342,6 @@
         </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" class="py-48 px-6 bg-[#0f172a]">
         <div class="max-w-3xl mx-auto">
             <div class="bg-white/5 p-10 md:p-16 rounded-[48px] border border-white/10 relative overflow-hidden backdrop-blur-xl min-h-[500px] flex flex-col justify-center">
@@ -401,13 +391,11 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="py-16 bg-white border-t border-slate-100 text-center">
         <a href="#top" class="text-3xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
         <p class="text-slate-400 text-xs mt-6">© 2026 JAAD Studio.</p>
     </footer>
 
-    <!-- AI CHAT -->
     <div id="ai-chat-modal">
         <div class="bg-blue-600 p-5 text-white flex justify-between items-center font-black">
             <span class="flex items-center gap-2 text-[11px] uppercase tracking-widest"><i data-lucide="sparkles"></i> JAAD AI</span>
