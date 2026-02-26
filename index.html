@@ -620,26 +620,44 @@
         }
 
         const systemPrompt = `Tu es JAAD AI, l'assistant premium de l'agence créative JAAD Studio. 
-Expertises : Web Design 3D immersif, Studio 3D (Rendu 8K), Applications Mobiles natives, IA & Automatisation, E-learning (LMS & Gamification).
-Méthode : 01 Stratégie, 02 Design/IA, 03 Publication/SEO, 04 Maintenance.
-Délais : 4 à 8 semaines. Ton ton est chaleureux et pro.
+Expertises : Web Design 3D immersif, Studio 3D (Rendu 8K), Apps Mobiles natives, IA & Automatisation, E-learning.
 
-RÈGLES STRICTES DE RÉPONSE : 
-- Va toujours droit au but de manière très concise.
-- Fais des réponses courtes (2 à 3 phrases maximum).
-- N'utilise JAMAIS d'astérisques (*), de gras, ou de formatage Markdown. Réponds uniquement en texte brut.
+RÈGLES DE CONVERSATION STRICTES :
+1. Qualifie le besoin : Au début, pose 1 ou 2 questions courtes pour comprendre le projet du client (secteur, envies, objectifs).
+2. Ne donne SURTOUT PAS les infos de contact dès le premier message. Attends d'avoir un minimum de détails sur le projet.
+3. Une fois que le client t'a donné quelques détails et que le projet semble défini, propose-lui de passer à l'étape suivante avec l'équipe.
+4. Pour lui proposer le formulaire, tu DOIS obligatoirement inclure exactement ce mot-clé à la fin de ton message : [BOUTON_CONTACT]
+5. Reste direct, chaleureux et très concis (2 à 3 phrases max).
+6. N'utilise JAMAIS de gras, d'astérisques (*) ou de formatage Markdown. Seulement du texte brut.`;
+      async function sendChatMessage() {
+    const input = document.getElementById('chat-input'); 
+    const box = document.getElementById('chat-messages'); 
+    if(!input.value.trim()) return;
 
-Encourage toujours à utiliser le formulaire ou WhatsApp (+33 7 88 40 80 04).`;
+    const msg = input.value; 
+    box.innerHTML += `<div class="msg msg-user">${msg}</div>`; 
+    input.value = '';
+    box.innerHTML += `<div class="msg msg-ai italic" id="loading">...</div>`; 
+    box.scrollTop = box.scrollHeight;
+    
+    const responseText = await fetchGeminiAPI([{ role: "user", parts: [{ text: msg }] }], systemPrompt);
+    const loadingEl = document.getElementById('loading');
+    if(loadingEl) loadingEl.remove();
 
-        async function sendChatMessage() {
-            const input = document.getElementById('chat-input'); const box = document.getElementById('chat-messages'); if(!input.value.trim()) return;
-            const msg = input.value; box.innerHTML += `<div class="msg msg-user">${msg}</div>`; input.value = '';
-            box.innerHTML += `<div class="msg msg-ai italic" id="loading">...</div>`; box.scrollTop = box.scrollHeight;
-            
-            const responseText = await fetchGeminiAPI([{ role: "user", parts: [{ text: msg }] }], systemPrompt);
-            const loadingEl = document.getElementById('loading');
-            if(loadingEl) loadingEl.remove();
-            box.innerHTML += `<div class="msg msg-ai">${responseText.replace(/\n/g, '<br>')}</div>`; box.scrollTop = box.scrollHeight;
+    // On prépare le texte et on cherche le code secret de l'IA
+    let formattedResponse = responseText.replace(/\n/g, '<br>');
+    
+    if (formattedResponse.includes('[BOUTON_CONTACT]')) {
+        // Le bouton qui ferme le chat et scrolle vers le formulaire de contact
+        const btnHtml = `<br><br><button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'}); toggleAiChat();" class="bg-[#0f172a] text-white px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:scale-105 transition-all w-full shadow-lg text-center mt-1">📝 Remplir le formulaire</button>`;
+        
+        // On remplace le mot-clé par le vrai code HTML du bouton
+        formattedResponse = formattedResponse.replace('[BOUTON_CONTACT]', btnHtml);
+    }
+
+    box.innerHTML += `<div class="msg msg-ai">${formattedResponse}</div>`; 
+    box.scrollTop = box.scrollHeight;
+}
         }
 
         async function enhanceDescription() {
