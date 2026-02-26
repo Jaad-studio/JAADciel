@@ -10,18 +10,17 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "La clé API n'est pas configurée sur Vercel." });
   }
 
-  // Utilisation du modèle stable
   const modelName = "gemini-1.5-flash"; 
 
   try {
-    // Changement de l'URL : on utilise /v1/ au lieu de /v1beta/
+    // On utilise l'endpoint stable v1
     const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/${modelName}:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contents: contents,
-        // La structure reste la même pour le modèle 1.5
-        systemInstruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined,
+        // CORRECTION ICI : "system_instruction" au lieu de "systemInstruction"
+        system_instruction: systemInstruction ? { parts: [{ text: systemInstruction }] } : undefined,
         generationConfig: {
             maxOutputTokens: 1000,
             temperature: 0.7,
