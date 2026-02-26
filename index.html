@@ -611,7 +611,6 @@
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error || "API Error");
                 
-                // On attend que l'API Vercel renvoie directement { text: "réponse" }
                 return data.text || "Erreur de format de réponse.";
             } catch (error) {
                 console.error(error);
@@ -619,15 +618,20 @@
             }
         }
 
-       const systemPrompt = `Tu es JAAD AI, l'expert digital premium de l'agence créative JAAD Studio.
+        // 1. MÉMOIRE GLOBALE DE L'IA
+        let chatHistory = [];
+
+        // 2. PROMPT ANTI-BOUCLE SÉVÈRE
+        const systemPrompt = `Tu es JAAD AI, l'expert digital premium de l'agence créative JAAD Studio.
         Expertises : Web Design 3D immersif, Studio 3D (Rendu 8K), Apps Mobiles natives, IA & Automatisation, E-learning.
 
-        RÈGLES DE CONVERSATION STRICTES :
-        1. Comportement : Tu es un consultant haut de gamme. Écoute le client, sois le plus utile possible et apporte-lui de la valeur (idées, conseils stratégiques) avant de vouloir vendre.
-        2. Qualification naturelle : Pose des questions expertes pour bien cerner le projet (objectifs, design, cibles, fonctionnalités), mais fais-le sous forme de discussion fluide, une question à la fois.
-        3. Le bon moment : Ne te précipite pas. Discute naturellement. Quand tu juges que le besoin est bien compris, que tu as assez de détails, et que le client est prêt à en discuter concrètement, propose-lui de contacter l'équipe.
-        4. Redirection : Uniquement à ce moment-là, termine OBLIGATOIREMENT ton message par ce mot-clé exact : [BOUTON_CONTACT]
-        5. Format : Reste toujours très concis (2 à 3 phrases max par message). Aucun formatage Markdown (ni gras, ni astérisques). Texte brut uniquement.`;
+        RÈGLES ANTI-BOUCLE (TRÈS STRICTES) :
+        1. NE RÉPÈTE JAMAIS une question.
+        2. Pose au MAXIMUM UNE ou DEUX questions au total dans toute la conversation pour cerner le projet.
+        3. Dès que le client a répondu à ta première ou deuxième question, ARRÊTE de l'interroger.
+        4. Passe directement à la conclusion en lui disant que le projet est super et qu'il faut en discuter avec l'équipe.
+        5. Termine OBLIGATOIREMENT ton message de conclusion par ce mot-clé exact : [BOUTON_CONTACT]
+        6. Reste très concis (2 phrases max). Aucun formatage Markdown (ni gras, ni astérisques).`;
 
         async function sendChatMessage() {
             const input = document.getElementById('chat-input'); 
@@ -640,10 +644,20 @@
             box.innerHTML += `<div class="msg msg-ai italic" id="loading">...</div>`; 
             box.scrollTop = box.scrollHeight;
             
-            const responseText = await fetchGeminiAPI([{ role: "user", parts: [{ text: msg }] }], systemPrompt);
+            // On enregistre le message du client dans la mémoire
+            chatHistory.push({ role: "user", parts: [{ text: msg }] });
+            
+            // On envoie l'historique complet à Vercel
+            const responseText = await fetchGeminiAPI(chatHistory, systemPrompt);
+            
             const loadingEl = document.getElementById('loading');
             if(loadingEl) loadingEl.remove();
 
+            // On nettoie la réponse de l'IA pour sa propre mémoire
+            let cleanAiText = responseText.replace('[BOUTON_CONTACT]', '').trim();
+            chatHistory.push({ role: "model", parts: [{ text: cleanAiText }] });
+
+            // On formate pour l'affichage client
             let formattedResponse = responseText.replace(/\n/g, '<br>');
             
             if (formattedResponse.includes('[BOUTON_CONTACT]')) {
