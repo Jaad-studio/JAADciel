@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
   try {
     // 1. CORRECTION ICI : Utilisation obligatoire de v1beta pour supporter systemInstruction
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     
     const payload = {
       contents: contents,
