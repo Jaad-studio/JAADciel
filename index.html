@@ -66,6 +66,26 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* --- FOND ANIMÉ GLOBLAL (BLOBS) --- */
+        .bg-blobs {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            overflow: hidden; z-index: 0; pointer-events: none;
+        }
+        .blob {
+            position: absolute; filter: blur(90px); opacity: 0.6;
+            border-radius: 50%; animation: float 20s infinite ease-in-out alternate;
+            will-change: transform;
+        }
+        .blob-1 { width: 40vw; height: 40vw; background: rgba(37, 99, 235, 0.3); top: -10%; left: -10%; animation-delay: 0s; }
+        .blob-2 { width: 50vw; height: 50vw; background: rgba(96, 165, 250, 0.25); bottom: -20%; right: -10%; animation-delay: -5s; }
+        .blob-3 { width: 30vw; height: 30vw; background: rgba(167, 139, 250, 0.3); top: 30%; left: 50%; animation-delay: -10s; }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(3vw, 5vh) scale(1.05) rotate(5deg); }
+            100% { transform: translate(-2vw, 8vh) scale(1.1) rotate(-5deg); }
+        }
+
         /* --- LOGIQUE DE SCROLL & POSITIONNEMENT --- */
         #hero-spline {
             pointer-events: none !important;
@@ -73,8 +93,7 @@
         }
 
         .noise::before {
-            content: "";
-            position: fixed;
+            content: ""; position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             opacity: 0.04; pointer-events: none; z-index: 9999;
@@ -150,12 +169,33 @@
         .giant-num { position: absolute; bottom: -2rem; right: -1rem; font-size: 14rem; font-weight: 900; line-height: 1; color: transparent; -webkit-text-stroke: 2px rgba(37, 99, 235, 0.05); z-index: 0; pointer-events: none; }
         .phase-badge { background: #0f172a; color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.5rem; display: inline-block; }
 
-        /* --- FORM --- */
+        /* --- FORM STYLES AMÉLIORÉS --- */
         .form-step { display: none; }
-        .form-step.active { display: block; animation: fadeIn 0.5s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .service-pill { padding: 0.8rem 1.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; }
-        .service-pill.selected { background: var(--primary); border-color: var(--primary); }
+        .form-step.active { display: block; animation: slideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        
+        .form-input-modern {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.25rem 1.5rem;
+            font-size: 1.25rem;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-input-modern:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--sky-blue);
+            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15), inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-input-modern::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .service-pill { padding: 1rem 2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 600; color: white; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .service-pill:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+        .service-pill.selected { background: var(--primary); border-color: var(--primary); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4); transform: translateY(-2px); }
 
         /* --- MODAL SERVICE --- */
         #service-modal {
@@ -234,7 +274,14 @@
         }
     </style>
 </head>
-<body class="noise">
+<body class="noise relative">
+
+    <!-- FOND ANIMÉ GLOBALE -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
 
     <div id="scroll-progress"></div>
 
@@ -301,17 +348,17 @@
     </div>
 
     <header id="top" class="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);">
+        <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, transparent 100%);">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[140vw] md:w-full h-full flex items-center justify-center">
                 <iframe id="hero-spline" 
                         src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
                         frameborder='0' width="100%" height="100%"
-                        class="opacity-0 transition-opacity duration-1000" 
+                        class="opacity-0 transition-opacity duration-1000 relative z-20" 
                         onload="this.style.opacity='1'"></iframe>
             </div>
         </div>
-        <div class="relative z-20 text-center px-6 mt-[35dvh] pointer-events-none">
+        <div class="relative z-30 text-center px-6 mt-[35dvh] pointer-events-none">
             <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active pointer-events-auto">
                 <a href="#contact" class="btn-premium btn-primary anchor-link"><span data-i18n="hero-btn">Parlons-en.</span> <i data-lucide="zap" class="w-4 h-4 fill-current"></i></a>
                 <a href="#portfolio" class="btn-premium btn-secondary anchor-link"><span data-i18n="hero-btn-secondary">Nos créations.</span></a>
@@ -441,7 +488,7 @@
 
     <section id="faq" class="py-32 px-6 relative">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/40 to-transparent pointer-events-none -z-10"></div>
-        <div class="max-w-3xl mx-auto">
+        <div class="max-w-3xl mx-auto relative z-20">
             <div class="text-center mb-16 reveal-up">
                 <span class="tag" data-i18n="faq-tag">06. FAQ</span>
                 <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter" data-i18n="faq-title">Questions Fréquentes.</h2>
@@ -486,47 +533,97 @@
         </div>
     </section>
 
-    <section id="contact" class="py-48 px-6 bg-[#0f172a]">
-        <div class="max-w-3xl mx-auto">
-            <div class="bg-white/5 p-10 md:p-16 rounded-[48px] border border-white/10 relative overflow-hidden backdrop-blur-xl min-h-[500px] flex flex-col justify-center">
+    <!-- FORMULAIRE PREMIUM -->
+    <section id="contact" class="py-48 px-6 bg-[#0f172a] relative overflow-hidden z-10">
+        <!-- Orbes de fond pour le formulaire -->
+        <div class="absolute top-1/4 right-0 w-[500px] h-[500px] bg-blue-600/20 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-indigo-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-3xl mx-auto relative z-20">
+            <div class="bg-white/[0.03] p-10 md:p-16 rounded-[48px] border border-white/10 relative overflow-hidden backdrop-blur-2xl shadow-2xl min-h-[500px] flex flex-col justify-center">
+                
                 <div id="form-success" class="hidden text-center py-10 reveal-up">
-                    <div class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-8"><i data-lucide="check" class="text-white w-12 h-12"></i></div>
+                    <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-sky-400 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg shadow-blue-500/30"><i data-lucide="check" class="text-white w-12 h-12"></i></div>
                     <h3 class="text-4xl font-black text-white mb-4" data-i18n="form-success-title">Message envoyé !</h3>
                     <p class="text-slate-400 text-lg" data-i18n="form-success-desc">L'équipe JAAD Studio vous répondra très rapidement.</p>
-                    <button type="button" onclick="resetForm()" class="mt-10 btn-premium btn-primary bg-white text-slate-900" data-i18n="form-btn-back">Retour au site</button>
+                    <button type="button" onclick="resetForm()" class="mt-10 btn-premium bg-white text-slate-900 shadow-xl hover:scale-105" data-i18n="form-btn-back">Retour au site</button>
                 </div>
+
                 <div id="form-wrapper">
-                    <div class="progress-bar-container"><div id="form-progress-fill" style="width: 16.66%;"></div></div>
-                    <form id="quest-form" class="space-y-10" action="https://formspree.io/f/xjgeayjr" method="POST">
+                    <div class="w-full h-2 bg-white/10 rounded-full mb-12 overflow-hidden shadow-inner">
+                        <div id="form-progress-fill" class="h-full bg-gradient-to-r from-blue-600 to-sky-400 rounded-full transition-all duration-500 relative" style="width: 16.66%;">
+                            <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                        </div>
+                    </div>
+                    
+                    <form id="quest-form" class="space-y-8 relative min-h-[160px]" action="https://formspree.io/f/xjgeayjr" method="POST">
                         <div id="form-steps-container">
-                            <div class="form-step active" id="step-1"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-name">Votre nom ?</label><input type="text" name="name" id="q-name" required placeholder="Nom complet" data-i18n="form-ph-name" class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
-                            <div class="form-step" id="step-2"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-email">Votre email ?</label><input type="email" name="email" id="q-email" required placeholder="votre@email.com" data-i18n="form-ph-email" class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
-                            <div class="form-step" id="step-3"><label class="block text-2xl font-black mb-6 text-white" data-i18n="form-phone">Votre numéro ?</label><input type="tel" name="phone" id="q-phone" required placeholder="06 00..." data-i18n="form-ph-phone" class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 transition-colors"></div>
+                            <div class="form-step active" id="step-1">
+                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
+                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="user" class="w-6 h-6"></i></div>
+                                    <span data-i18n="form-name">Votre nom ?</span>
+                                </label>
+                                <input type="text" name="name" id="q-name" required placeholder="Nom complet" data-i18n="form-ph-name" class="form-input-modern">
+                            </div>
+                            
+                            <div class="form-step" id="step-2">
+                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
+                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="mail" class="w-6 h-6"></i></div>
+                                    <span data-i18n="form-email">Votre email ?</span>
+                                </label>
+                                <input type="email" name="email" id="q-email" required placeholder="votre@email.com" data-i18n="form-ph-email" class="form-input-modern">
+                            </div>
+                            
+                            <div class="form-step" id="step-3">
+                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
+                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="phone" class="w-6 h-6"></i></div>
+                                    <span data-i18n="form-phone">Votre numéro ?</span>
+                                </label>
+                                <input type="tel" name="phone" id="q-phone" required placeholder="06 00..." data-i18n="form-ph-phone" class="form-input-modern">
+                            </div>
+                            
                             <div class="form-step" id="step-4">
-                                <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-service">Quel service ?</label>
-                                <div class="flex flex-wrap gap-3">
-                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'Web')" data-i18n="form-opt-web">Web Design</button>
-                                    <button type="button" class="service-pill" onclick="selectFormService(this, '3D')" data-i18n="form-opt-3d">Studio 3D</button>
-                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'IA')" data-i18n="form-opt-ia">IA Solutions</button>
+                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
+                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="layers" class="w-6 h-6"></i></div>
+                                    <span data-i18n="form-service">Quel service ?</span>
+                                </label>
+                                <div class="flex flex-wrap gap-4 mt-4">
+                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'Web')"><i data-lucide="monitor" class="w-4 h-4"></i> <span data-i18n="form-opt-web">Web Design</span></button>
+                                    <button type="button" class="service-pill" onclick="selectFormService(this, '3D')"><i data-lucide="box" class="w-4 h-4"></i> <span data-i18n="form-opt-3d">Studio 3D</span></button>
+                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'IA')"><i data-lucide="bot" class="w-4 h-4"></i> <span data-i18n="form-opt-ia">IA Solutions</span></button>
                                 </div>
                                 <input type="hidden" name="service" id="q-service">
                             </div>
+                            
                             <div class="form-step" id="step-5">
-                                <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-desc">Description</label>
-                                <textarea name="message" id="q-desc" required placeholder="Détaillez votre projet..." data-i18n="form-ph-desc" class="w-full bg-transparent border-b-2 border-white/10 py-5 text-xl text-white outline-none focus:border-blue-600 h-32 resize-none transition-colors"></textarea>
+                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
+                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="message-square" class="w-6 h-6"></i></div>
+                                    <span data-i18n="form-desc">Description</span>
+                                </label>
+                                <textarea name="message" id="q-desc" required placeholder="Détaillez votre projet..." data-i18n="form-ph-desc" class="form-input-modern h-40 resize-none"></textarea>
                             </div>
+                            
                             <div class="form-step" id="step-6">
-                                <label class="block text-2xl font-black mb-6 text-white" data-i18n="form-pref">Je souhaite être contacté par :</label>
-                                <div class="flex gap-3">
-                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'WhatsApp')" data-i18n="form-opt-wa">WhatsApp</button>
-                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'Email')" data-i18n="form-opt-email">Email</button>
+                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
+                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="smartphone" class="w-6 h-6"></i></div>
+                                    <span data-i18n="form-pref">Je souhaite être contacté par :</span>
+                                </label>
+                                <div class="flex gap-4 mt-4">
+                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'WhatsApp')"><i data-lucide="message-circle" class="w-4 h-4"></i> <span data-i18n="form-opt-wa">WhatsApp</span></button>
+                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'Email')"><i data-lucide="mail" class="w-4 h-4"></i> <span data-i18n="form-opt-email">Email</span></button>
                                 </div>
                                 <input type="hidden" name="pref" id="q-pref">
                             </div>
                         </div>
-                        <div id="form-nav" class="flex justify-between items-center pt-10">
-                            <button type="button" id="prev-btn" onclick="changeStep(-1)" class="opacity-0 pointer-events-none text-slate-400 font-bold uppercase text-xs transition-opacity" data-i18n="form-btn-prev">Retour</button>
-                            <button type="button" id="next-btn" onclick="changeStep(1)" class="btn-premium bg-white text-slate-900 border-none px-10" data-i18n="form-btn-next">Suivant</button>
+
+                        <div id="form-nav" class="flex justify-between items-center pt-10 border-t border-white/5 mt-8">
+                            <button type="button" id="prev-btn" onclick="changeStep(-1)" class="opacity-0 pointer-events-none text-slate-400 font-bold uppercase text-[11px] tracking-widest hover:text-white transition-all flex items-center gap-2">
+                                <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="form-btn-prev">Retour</span>
+                            </button>
+                            
+                            <button type="button" id="next-btn" onclick="changeStep(1)" class="btn-premium bg-gradient-to-r from-blue-600 to-sky-500 text-white border-none px-10 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all">
+                                <span id="next-btn-text" data-i18n="form-btn-next">Suivant</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -534,7 +631,7 @@
         </div>
     </section>
 
-    <footer class="py-16 bg-white text-center border-t border-slate-100">
+    <footer class="py-16 bg-white text-center border-t border-slate-100 relative z-20">
         <a href="#top" class="text-3xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
         <p class="text-slate-400 text-xs mt-6" data-i18n="footer-rights">© 2026 JAAD Studio.</p>
     </footer>
@@ -552,7 +649,7 @@
     </div>
 
     <script>
-        // CONFIGURATION API (On appelle maintenant votre propre API locale sur Vercel)
+        // CONFIGURATION API
         const apiEndpoint = "/api/chat"; 
 
         let currentLang = 'fr';
@@ -655,10 +752,7 @@
             }
         }
 
-        // 1. MÉMOIRE GLOBALE DE L'IA
         let chatHistory = [];
-
-        // 2. PROMPT ANTI-BOUCLE SÉVÈRE
         const systemPrompt = `Tu es JAAD AI, l'expert digital premium de l'agence créative JAAD Studio.
         Expertises : Web Design 3D immersif, Studio 3D (Rendu 8K), Apps Mobiles natives, IA & Automatisation, E-learning.
 
@@ -681,20 +775,16 @@
             box.innerHTML += `<div class="msg msg-ai italic" id="loading">...</div>`; 
             box.scrollTop = box.scrollHeight;
             
-            // On enregistre le message du client dans la mémoire
             chatHistory.push({ role: "user", parts: [{ text: msg }] });
             
-            // On envoie l'historique complet à Vercel
             const responseText = await fetchGeminiAPI(chatHistory, systemPrompt);
             
             const loadingEl = document.getElementById('loading');
             if(loadingEl) loadingEl.remove();
 
-            // On nettoie la réponse de l'IA pour sa propre mémoire
             let cleanAiText = responseText.replace('[BOUTON_CONTACT]', '').trim();
             chatHistory.push({ role: "model", parts: [{ text: cleanAiText }] });
 
-            // On formate pour l'affichage client
             let formattedResponse = responseText.replace(/\n/g, '<br>');
             
             if (formattedResponse.includes('[BOUTON_CONTACT]')) {
@@ -727,19 +817,22 @@
                     }
                 }
             });
+            // Update the form "Next" button specifically because it relies on JS state
+            const nextTextSpan = document.getElementById('next-btn-text');
+            if (nextTextSpan) {
+                const isLastStep = currentStep === document.querySelectorAll('.form-step').length;
+                const nextKey = isLastStep ? "form-btn-send" : "form-btn-next";
+                nextTextSpan.innerText = translations[currentLang][nextKey];
+            }
         }
 
         function toggleFaq(el) {
             const item = el.closest('.faq-item');
             const wasActive = item.classList.contains('active');
             
-            // Ferme toutes les questions
             document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-            
-            // Ouvre la question cliquée si elle n'était pas déjà ouverte
             if (!wasActive) item.classList.add('active');
             
-            // Rafraîchir les icônes lucide
             lucide.createIcons();
         }
 
@@ -800,10 +893,23 @@
                 }
             }
             if (n > 0 && currentStep >= steps.length) { handleFormSubmit(); return; }
-            steps[currentStep-1].classList.remove('active'); currentStep += n; steps[currentStep-1].classList.add('active');
+            
+            steps[currentStep-1].classList.remove('active'); 
+            currentStep += n; 
+            steps[currentStep-1].classList.add('active');
+            
             document.getElementById('form-progress-fill').style.width = (currentStep / steps.length) * 100 + "%";
             document.getElementById('prev-btn').style.opacity = (currentStep === 1) ? "0" : "1";
-            document.getElementById('next-btn').innerText = (currentStep === steps.length) ? "Envoyer" : "Suivant";
+            document.getElementById('prev-btn').style.pointerEvents = (currentStep === 1) ? "none" : "auto";
+            
+            const nextTextSpan = document.getElementById('next-btn-text');
+            if (currentStep === steps.length) {
+                nextTextSpan.setAttribute('data-i18n', 'form-btn-send');
+                nextTextSpan.innerText = translations[currentLang]['form-btn-send'];
+            } else {
+                nextTextSpan.setAttribute('data-i18n', 'form-btn-next');
+                nextTextSpan.innerText = translations[currentLang]['form-btn-next'];
+            }
         }
 
         function selectFormService(el, val) { 
@@ -818,7 +924,7 @@
         async function handleFormSubmit() {
             const form = document.getElementById('quest-form');
             const btn = document.getElementById('next-btn');
-            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4"></i>';
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4 mx-auto"></i>';
             const response = await fetch(form.getAttribute('action'), { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
             if (response.ok) { document.getElementById('form-wrapper').style.display = 'none'; document.getElementById('form-success').classList.remove('hidden'); lucide.createIcons(); }
             else { btn.innerText = "Erreur"; }
