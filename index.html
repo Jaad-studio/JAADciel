@@ -86,6 +86,14 @@
             100% { transform: translate(-2vw, 8vh) scale(1.1) rotate(-5deg); }
         }
 
+        @keyframes float-img {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.02); }
+        }
+        .animate-float-img {
+            animation: float-img 6s ease-in-out infinite;
+        }
+
         /* --- LOGIQUE DE SCROLL & POSITIONNEMENT --- */
         #hero-spline {
             pointer-events: none !important;
@@ -352,21 +360,21 @@
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
         </div>
 
-        <!-- 1. L'IMAGE CENTRÉE SANS FOND -->
+        <!-- 1. LE TEXTE JAAD EN ARRIÈRE-PLAN -->
         <div class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none pb-12">
-            <!-- Remplacez 'votre-image-sans-fond.png' par le chemin de votre image (PNG/WebP transparente) -->
-            <img src="votre-image-sans-fond.png" 
-                 alt="Illustration 3D JAAD" 
-                 class="w-[85vw] md:w-[45vw] max-h-[60vh] object-contain drop-shadow-2xl animate-[float_6s_ease-in-out_infinite] opacity-0 transition-opacity duration-1000" 
-                 onload="this.style.opacity='1'"
-                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'35\' fill=\'%23ffffff\' fill-opacity=\'0.4\'/></svg>'; this.style.opacity='1'">
-        </div>
-
-        <!-- 2. LE TEXTE JAAD PAR DESSUS L'IMAGE -->
-        <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none pb-12">
             <h1 class="text-[28vw] md:text-[20vw] font-black tracking-tighter leading-none text-slate-900 drop-shadow-[0_10px_30px_rgba(255,255,255,0.5)] select-none">
                 JAAD<span class="text-blue-600">.</span>
             </h1>
+        </div>
+
+        <!-- 2. L'IMAGE CENTRÉE PAR DESSUS LE TEXTE -->
+        <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none pb-12">
+            <!-- Remplacez 'votre-image-sans-fond.png' par le chemin de votre image (PNG/WebP transparente) -->
+            <img src="votre-image-sans-fond.png" 
+                 alt="Illustration 3D JAAD" 
+                 class="w-[85vw] md:w-[45vw] max-h-[60vh] object-contain drop-shadow-2xl opacity-0 transition-opacity duration-1000 animate-float-img" 
+                 onload="this.style.opacity='1'"
+                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'35\' fill=\'%23ffffff\' fill-opacity=\'0.4\'/></svg>'; this.style.opacity='1'">
         </div>
 
         <!-- BOUTONS (Ajustement du mt-[...] pour les espacer du titre) -->
