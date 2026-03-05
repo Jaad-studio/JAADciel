@@ -350,15 +350,27 @@
     <header id="top" class="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, transparent 100%);">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[140vw] md:w-full h-full flex items-center justify-center">
-                <iframe id="hero-spline" 
-                        src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
-                        frameborder='0' width="100%" height="100%"
-                        class="opacity-0 transition-opacity duration-1000 relative z-20" 
-                        onload="this.style.opacity='1'"></iframe>
-            </div>
         </div>
-        <div class="relative z-30 text-center px-6 mt-[35dvh] pointer-events-none">
+
+        <!-- 1. L'IMAGE CENTRÉE SANS FOND -->
+        <div class="absolute inset-0 z-10 flex items-center justify-center pointer-events-none pb-12">
+            <!-- Remplacez 'votre-image-sans-fond.png' par le chemin de votre image (PNG/WebP transparente) -->
+            <img src="votre-image-sans-fond.png" 
+                 alt="Illustration 3D JAAD" 
+                 class="w-[85vw] md:w-[45vw] max-h-[60vh] object-contain drop-shadow-2xl animate-[float_6s_ease-in-out_infinite] opacity-0 transition-opacity duration-1000" 
+                 onload="this.style.opacity='1'"
+                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'35\' fill=\'%23ffffff\' fill-opacity=\'0.4\'/></svg>'; this.style.opacity='1'">
+        </div>
+
+        <!-- 2. LE TEXTE JAAD PAR DESSUS L'IMAGE -->
+        <div class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none pb-12">
+            <h1 class="text-[28vw] md:text-[20vw] font-black tracking-tighter leading-none text-slate-900 drop-shadow-[0_10px_30px_rgba(255,255,255,0.5)] select-none">
+                JAAD<span class="text-blue-600">.</span>
+            </h1>
+        </div>
+
+        <!-- BOUTONS (Ajustement du mt-[...] pour les espacer du titre) -->
+        <div class="relative z-30 text-center px-6 mt-[45dvh] md:mt-[40dvh] pointer-events-none">
             <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active pointer-events-auto">
                 <a href="#contact" class="btn-premium btn-primary anchor-link"><span data-i18n="hero-btn">Parlons-en.</span> <i data-lucide="zap" class="w-4 h-4 fill-current"></i></a>
                 <a href="#portfolio" class="btn-premium btn-secondary anchor-link"><span data-i18n="hero-btn-secondary">Nos créations.</span></a>
