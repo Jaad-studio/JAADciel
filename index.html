@@ -40,255 +40,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://my.spline.design">
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
 
+    <!-- Script Tailwind (Pour un fonctionnement immédiat) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Ton fichier CSS personnalisé -->
+    <link href="./style.css" rel="stylesheet">
+    
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --bg-main: #f9f9fb; 
-            --bg-card: #ffffff;
-            --text-main: #1e293b;
-            --sky-blue: #60a5fa; 
-        }
-
-        [lang="ar"] { font-family: 'Noto Sans Arabic', sans-serif; }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* --- FOND ANIMÉ GLOBLAL (BLOBS) --- */
-        .bg-blobs {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            overflow: hidden; z-index: 0; pointer-events: none;
-        }
-        .blob {
-            position: absolute; filter: blur(90px); opacity: 0.6;
-            border-radius: 50%; animation: float 20s infinite ease-in-out alternate;
-            will-change: transform;
-        }
-        .blob-1 { width: 40vw; height: 40vw; background: rgba(37, 99, 235, 0.3); top: -10%; left: -10%; animation-delay: 0s; }
-        .blob-2 { width: 50vw; height: 50vw; background: rgba(96, 165, 250, 0.25); bottom: -20%; right: -10%; animation-delay: -5s; }
-        .blob-3 { width: 30vw; height: 30vw; background: rgba(167, 139, 250, 0.3); top: 30%; left: 50%; animation-delay: -10s; }
-        
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            50% { transform: translate(3vw, 5vh) scale(1.05) rotate(5deg); }
-            100% { transform: translate(-2vw, 8vh) scale(1.1) rotate(-5deg); }
-        }
-
-        /* --- NUAGES ANIMÉS EN FOND DE HERO --- */
-        .clouds-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 15; overflow: hidden; pointer-events: none;
-        }
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.8);
-            filter: blur(40px);
-            border-radius: 50%;
-            animation: drift linear infinite;
-            will-change: transform;
-        }
-        .cloud-1 { width: 45vw; height: 20vh; top: 10%; left: -50vw; animation-duration: 45s; animation-delay: -10s; }
-        .cloud-2 { width: 35vw; height: 15vh; top: 45%; left: -40vw; animation-duration: 35s; animation-delay: -25s; background: rgba(255, 255, 255, 0.5); }
-        .cloud-3 { width: 60vw; height: 25vh; top: 65%; left: -60vw; animation-duration: 60s; animation-delay: -5s; background: rgba(255, 255, 255, 0.6); }
-        .cloud-4 { width: 40vw; height: 18vh; top: 25%; left: -45vw; animation-duration: 50s; animation-delay: -40s; background: rgba(255, 255, 255, 0.4); }
-
-        @keyframes drift {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(160vw); }
-        }
-
-        /* --- LOGIQUE DE SCROLL & POSITIONNEMENT --- */
-        #hero-spline {
-            pointer-events: none !important;
-            user-select: none !important;
-        }
-
-        #scroll-progress {
-            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
-            background: var(--primary); z-index: 1001;
-        }
-
-        /* --- PRELOADER --- */
-        #preloader {
-            position: fixed; inset: 0; z-index: 9999;
-            display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, var(--bg-main) 100%);
-            transition: transform 0.6s cubic-bezier(0.85, 0, 0.15, 1);
-        }
-        .preloader-active { transform: translateY(-100%); pointer-events: none; }
-
-        .loader-logo-base {
-            font-family: 'Outfit', sans-serif; 
-            font-size: clamp(2.5rem, 12vw, 5rem); 
-            font-weight: 900; color: rgba(255, 255, 255, 0.2); 
-            font-style: italic; letter-spacing: -0.02em;
-            position: relative; text-transform: uppercase;
-        }
-        .loader-logo-fill {
-            position: absolute; top: 0; left: 0; color: #ffffff; 
-            width: 0%; overflow: hidden; white-space: nowrap; 
-            transition: width 0.3s ease-out;
-        }
-
-        /* --- NAV --- */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.05); transition: all 0.4s ease;
-        }
-
-        /* --- BUTTONS --- */
-        .btn-premium {
-            padding: 1.2rem 2.8rem; border-radius: 100px; font-weight: 900; text-transform: uppercase; font-size: 11px;
-            letter-spacing: 0.15em; transition: all 0.4s ease; display: inline-flex; align-items: center; gap: 0.8rem;
-        }
-        .btn-primary { background: #0f172a; color: white; }
-        .btn-primary:hover { background: var(--primary); transform: scale(1.05); }
-        .btn-secondary { background: white; color: #0f172a; border: 2px solid rgba(0,0,0,0.1); }
-        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.05); }
-
-        /* --- BENTO --- */
-        .bento-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
-        @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(6, 1fr); } }
-        .bento-item {
-            background: var(--bg-card); border-radius: 40px; padding: 3rem; border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: all 0.5s ease; position: relative; overflow: hidden; cursor: pointer;
-        }
-        .bento-item:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-        .bento-blue { background: linear-gradient(135deg, #0f172a) !important; color: white; border: none; }
-
-        .tag {
-            display: inline-block; padding: 0.4rem 1rem; background: rgba(37, 99, 235, 0.1);
-            border-radius: 100px; font-size: 10px; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 0.1em; margin-bottom: 1.5rem; color: var(--primary);
-        }
-
-        /* --- MARQUEE --- */
-        .marquee-wrapper { position: relative; overflow: hidden; padding: 3rem 0; white-space: nowrap; }
-        .marquee-content { display: flex; gap: 4rem; animation: marquee 30s linear infinite; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* --- METHOD DESIGN --- */
-        .method-card { background: white; border-radius: 40px; padding: 3rem; position: relative; z-index: 10; border: 1px solid rgba(0,0,0,0.04); transition: all 0.4s ease; }
-        .method-card:hover { transform: translateY(-10px); border-color: var(--primary); }
-        .giant-num { position: absolute; bottom: -2rem; right: -1rem; font-size: 14rem; font-weight: 900; line-height: 1; color: transparent; -webkit-text-stroke: 2px rgba(37, 99, 235, 0.05); z-index: 0; pointer-events: none; }
-        .phase-badge { background: #0f172a; color: white; font-size: 10px; font-weight: 900; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.5rem; display: inline-block; }
-
-        /* --- FORM STYLES AMÉLIORÉS --- */
-        .form-step { display: none; }
-        .form-step.active { display: block; animation: slideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
-        
-        .form-input-modern {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 1.25rem 1.5rem;
-            font-size: 1.25rem;
-            color: white;
-            outline: none;
-            transition: all 0.3s ease;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .form-input-modern:focus {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--sky-blue);
-            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15), inset 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .form-input-modern::placeholder { color: rgba(255, 255, 255, 0.3); }
-
-        .service-pill { padding: 1rem 2rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 600; color: white; display: inline-flex; align-items: center; gap: 0.5rem; }
-        .service-pill:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
-        .service-pill.selected { background: var(--primary); border-color: var(--primary); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4); transform: translateY(-2px); }
-
-        /* --- MODAL SERVICE --- */
-        #service-modal {
-            position: fixed; inset: 0; z-index: 5000;
-            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(25px);
-            display: none; align-items: center; justify-content: center; padding: 1.5rem;
-            opacity: 0; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        #service-modal.active { display: flex; opacity: 1; }
-        .modal-content {
-            background: white; width: 100%; max-width: 850px; max-height: 85vh;
-            border-radius: 50px; overflow-y: auto; padding: 4rem; position: relative;
-            transform: scale(0.9) translateY(30px); transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.2);
-        }
-        #service-modal.active .modal-content { transform: scale(1) translateY(0); }
-
-        /* --- AI CHAT --- */
-        #ai-chat-modal { 
-            position: fixed; bottom: 8rem; right: 2rem; width: 360px; max-width: calc(100vw - 4rem); 
-            background: white; border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.1); 
-            z-index: 7000; display: none; flex-direction: column; overflow: hidden; 
-            border: 1px solid rgba(0,0,0,0.05); 
-        }
-        #ai-chat-modal.active { display: flex; }
-        .chat-messages { height: 350px; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #fafafa; }
-        .msg { padding: 0.8rem 1.2rem; border-radius: 18px; font-size: 13px; line-height: 1.5; max-width: 85%; }
-        .msg-user { align-self: flex-end; background: #2563eb; color: white; border-bottom-right-radius: 4px; }
-        .msg-ai { align-self: flex-start; background: white; color: #0f172a; border-bottom-left-radius: 4px; border: 1px solid #eee; }
-
-        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal-up.active { opacity: 1; transform: translateY(0); }
-
-        #mobile-menu-overlay { position: fixed; inset: 0; background: white; z-index: 2000; display: none; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem; }
-        #mobile-menu-overlay.active { display: flex; }
-
-        /* --- FAQ --- */
-        .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .faq-answer-inner { overflow: hidden; }
-        .faq-item.active .faq-answer { grid-template-rows: 1fr; }
-        
-        .faq-card {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 32px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.02);
-        }
-        .faq-card:hover {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: rgba(37, 99, 235, 0.2);
-            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.08);
-            transform: translateY(-4px);
-        }
-        .faq-card.active {
-            background: #ffffff;
-            border-color: rgba(37, 99, 235, 0.4);
-            box-shadow: 0 30px 60px -15px rgba(37, 99, 235, 0.15);
-        }
-        .faq-icon {
-            width: 48px; height: 48px; border-radius: 50%;
-            background: #f1f5f9; color: #0f172a;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .faq-card:hover .faq-icon {
-            background: var(--primary); color: white;
-            transform: scale(1.05);
-        }
-        .faq-card.active .faq-icon {
-            background: var(--primary); color: white;
-            transform: rotate(135deg) scale(1.1);
-            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
-        }
-    </style>
 </head>
 <body class="relative">
 
@@ -386,8 +146,10 @@
             </div>
 
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[140vw] md:w-full h-full flex items-center justify-center">
+                <!-- Iframe avec chargement fainéant (lazy) pour améliorer la vitesse -->
                 <iframe id="hero-spline" 
                         src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
+                        loading="lazy"
                         frameborder='0' width="100%" height="100%"
                         class="opacity-0 transition-opacity duration-1000 relative z-20" 
                         onload="this.style.opacity='1'"></iframe>
@@ -519,10 +281,9 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-                <!-- Vidéo 1 (Large) -->
+                <!-- Vidéo 1 (Large) - preload="none" pour les performances -->
                 <div class="md:col-span-8 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" onclick="openVideoModal(this)">
-                    <!-- Utilisation d'une vraie vidéo de placeholder pour éviter l'erreur de source vide -->
-                    <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                    <video preload="none" loop muted playsinline poster="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video1.mp4" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
@@ -537,9 +298,9 @@
                     </div>
                 </div>
 
-                <!-- Vidéo 2 -->
+                <!-- Vidéo 2 - preload="none" -->
                 <div class="md:col-span-4 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.1s" onclick="openVideoModal(this)">
-                    <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                    <video preload="none" loop muted playsinline poster="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video2.mp4" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
@@ -554,9 +315,9 @@
                     </div>
                 </div>
 
-                <!-- Vidéo 3 -->
+                <!-- Vidéo 3 - preload="none" -->
                 <div class="md:col-span-6 relative rounded-[2rem] overflow-hidden group h-[350px] md:h-[400px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.2s" onclick="openVideoModal(this)">
-                    <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                    <video preload="none" loop muted playsinline poster="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video3.mp4" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
@@ -571,9 +332,9 @@
                     </div>
                 </div>
 
-                <!-- Vidéo 4 -->
+                <!-- Vidéo 4 - preload="none" -->
                 <div class="md:col-span-6 relative rounded-[2rem] overflow-hidden group h-[350px] md:h-[400px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.3s" onclick="openVideoModal(this)">
-                    <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                    <video preload="none" loop muted playsinline poster="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video4.mp4" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
@@ -771,9 +532,8 @@
         const apiEndpoint = "/api/chat"; 
 
         let currentLang = 'fr';
-        let currentStep = 1; // Déplacé en haut pour éviter toute erreur de Temporal Dead Zone
+        let currentStep = 1;
 
-        // Fonction sécurisée pour charger les icônes lucide
         function updateIcons() {
             if (typeof window.lucide !== 'undefined' && window.lucide.createIcons) {
                 window.lucide.createIcons();
@@ -800,11 +560,6 @@
                 fr: { title: "IA & Automatisation", tag: "Intelligence Future", desc: "Boostez votre productivité avec l'IA. Nous développons des agents intelligents personnalisés pour libérer votre potentiel créatif.", points: ["Agents conversationnels", "Automatisation workflows", "Analyse prédictive", "Intégration API Gemini"], cta: "IA" },
                 en: { title: "AI & Automation", tag: "Future Intelligence", desc: "Boost your productivity with AI. We develop customized intelligent agents to unleash your creative potential.", points: ["Conversational agents", "Workflow automation", "Predictive analysis", "Gemini API Integration"], cta: "IA" },
                 ar: { title: "الذكاء الاصطناعي والأتمتة", tag: "ذكاء المستقبل", desc: "عزز إنتاجيتك مع الذكاء الاصطناعي. نطور وكلاء أذكياء مخصصين لإطلاق إمكاناتك الإبداعية.", points: ["وكلاء محادثة", "أتمتة سير العمل", "تحليل تنبؤي", "دمج واجهة Gemini"], cta: "IA" }
-            },
-            learning: {
-                fr: { title: "E-learning Immersif", tag: "Education 2.0", desc: "Transformez l'apprentissage en expérience ludique. Nous créons des plateformes sur-mesure utilisant la gamification et la 3D.", points: ["LMS Customisé", "Gamification pédagogique", "Suivi analytics détaillé", "Contenus interactifs 3D"], cta: "Learning" },
-                en: { title: "Immersive E-learning", tag: "Education 2.0", desc: "Transform learning into a playful experience. We create custom platforms using gamification and 3D.", points: ["Custom LMS", "Educational Gamification", "Detailed analytics tracking", "Interactive 3D content"], cta: "Learning" },
-                ar: { title: "تعليم إلكتروني غامر", tag: "التعليم 2.0", desc: "حوّل التعلم إلى تجربة ممتعة. نبتكر منصات مخصصة باستخدام الألعاب والتقنية ثلاثية الأبعاد.", points: ["نظام إدارة تعلم مخصص", "ألعاب تعليمية", "تتبع تحليلات مفصل", "محتوى 3D تفاعلي"], cta: "Learning" }
             }
         };
 
@@ -830,7 +585,6 @@
                 "vid2-tag": "Studio 3D", "vid2-title": "Modélisation Produit",
                 "vid3-tag": "IA Solutions", "vid3-title": "Assistant Virtuel",
                 "vid4-tag": "App Mobile", "vid4-title": "Application iOS native",
-                "vid5-tag": "E-learning", "vid5-title": "Plateforme interactive",
                 "portfolio-btn": "Discuter de votre projet"
             },
             en: { 
@@ -854,7 +608,6 @@
                 "vid2-tag": "3D Studio", "vid2-title": "Product Modeling",
                 "vid3-tag": "AI Solutions", "vid3-title": "Virtual Assistant",
                 "vid4-tag": "Mobile App", "vid4-title": "Native iOS Application",
-                "vid5-tag": "E-learning", "vid5-title": "Interactive Platform",
                 "portfolio-btn": "Discuss your project"
             },
             ar: {
@@ -878,7 +631,6 @@
                 "vid2-tag": "استوديو 3D", "vid2-title": "نمذجة المنتجات",
                 "vid3-tag": "حلول ذكاء اصطناعي", "vid3-title": "مساعد افتراضي",
                 "vid4-tag": "تطبيق جوال", "vid4-title": "تطبيق iOS أصلي",
-                "vid5-tag": "تعليم إلكتروني", "vid5-title": "منصة تفاعلية",
                 "portfolio-btn": "ناقش مشروعك"
             }
         };
@@ -968,7 +720,6 @@
                     }
                 }
             });
-            // Update the form "Next" button specifically because it relies on JS state
             const nextTextSpan = document.getElementById('next-btn-text');
             if (nextTextSpan) {
                 const isLastStep = currentStep === document.querySelectorAll('.form-step').length;
@@ -1021,18 +772,17 @@
             
             if (!originalVideo) return;
 
-            // Créer une nouvelle balise vidéo pour le modal
             const videoClone = document.createElement('video');
-            videoClone.innerHTML = originalVideo.innerHTML; // Copier les <source>
+            videoClone.innerHTML = originalVideo.innerHTML; 
             videoClone.poster = originalVideo.poster;
             videoClone.autoplay = true;
-            videoClone.controls = true; // Ajoute les contrôles (play, pause, fullscreen)
-            videoClone.className = 'w-full h-full object-contain'; // object-contain pour ne pas rogner la vidéo
+            videoClone.preload = "auto";
+            videoClone.controls = true;
+            videoClone.className = 'w-full h-full object-contain';
             
             content.innerHTML = '';
             content.appendChild(videoClone);
 
-            // Afficher le modal avec animation
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
@@ -1046,14 +796,13 @@
             const modal = document.getElementById('video-modal');
             const content = document.getElementById('video-modal-content');
             
-            // Masquer avec animation
             modal.classList.add('opacity-0');
             content.classList.add('scale-95');
             
             setTimeout(() => {
                 modal.classList.remove('flex');
                 modal.classList.add('hidden');
-                content.innerHTML = ''; // Vide le contenu pour stopper la lecture audio/vidéo
+                content.innerHTML = ''; 
             }, 500);
         }
 
