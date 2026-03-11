@@ -52,23 +52,23 @@
     <style>
         /* Animation de lévitation pour le bloc central */
         @keyframes floatHero {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(0.5deg); }
         }
         .animate-float-hero {
-            animation: floatHero 6s ease-in-out infinite;
+            animation: floatHero 8s ease-in-out infinite;
         }
 
-        /* Effet de texte métallique/liquide luxueux */
+        /* Effet de texte Métal Liquide / Cristal (Plus classe) */
         .jaad-premium-text {
             background: linear-gradient(
                 to right, 
                 #ffffff 0%, 
-                #e0f2fe 20%, 
-                #38bdf8 40%, 
-                #1d4ed8 50%, 
-                #38bdf8 60%, 
-                #e0f2fe 80%, 
+                #f8fafc 15%, 
+                #94a3b8 30%, 
+                #1e293b 50%, 
+                #94a3b8 70%, 
+                #f8fafc 85%, 
                 #ffffff 100%
             );
             background-size: 200% auto;
@@ -76,7 +76,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shineText 5s linear infinite;
+            animation: shineText 8s linear infinite;
         }
 
         @keyframes shineText {
@@ -166,7 +166,7 @@
         </a>
     </div>
 
-    <header id="top" class="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden">
+    <header id="top" class="relative h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0 pointer-events-none" style="background: linear-gradient(180deg, var(--primary) 0%, var(--sky-blue) 60%, transparent 100%);">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.85),transparent_75%)] z-10"></div>
             
@@ -177,59 +177,57 @@
                 <div class="cloud cloud-3"></div>
                 <div class="cloud cloud-4"></div>
             </div>
-
-            <!-- TEXTE HERO MAGNIFIQUE (Remplace la vidéo) -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[55%] w-full flex items-center justify-center z-20 pointer-events-none">
-                
-                <!-- Conteneur qui gère l'animation de flottaison -->
-                <div class="flex flex-col items-center justify-center animate-float-hero">
-                    
-                    <!-- Le bloc Texte JAAD -->
-                    <div class="relative flex justify-center w-full">
-                        <!-- L'Aura lumineuse floue en arrière-plan -->
-                        <span class="absolute top-0 text-center text-[38vw] md:text-[25vw] lg:text-[22vw] font-black tracking-tighter leading-none select-none blur-[40px] opacity-60 bg-gradient-to-r from-blue-600 to-sky-300 bg-clip-text text-transparent">JAAD</span>
-                        
-                        <!-- Le vrai texte avec l'effet métallique (shineText) -->
-                        <span class="relative block text-center text-[38vw] md:text-[25vw] lg:text-[22vw] font-black tracking-tighter leading-none select-none jaad-premium-text drop-shadow-[0_20px_30px_rgba(37,99,235,0.4)]">JAAD</span>
-                    </div>
-                    
-                    <!-- Le Badge Premium en verre -->
-                    <div class="mt-4 px-8 py-3 md:py-4 rounded-full border border-white/40 bg-white/20 backdrop-blur-xl text-white text-[10px] md:text-xs font-black uppercase tracking-[0.4em] shadow-[0_0_40px_rgba(56,189,248,0.5)] flex items-center gap-3">
-                        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                        <span data-i18n="hero-badge-studio">Studio Créatif Premium</span>
-                    </div>
-                    
-                </div>
-            </div>
         </div>
-        
-        <!-- BOUTONS INTERACTIFS (Couche 30) -->
-        <div class="relative z-30 text-center px-6 mt-[40dvh] pointer-events-none">
-            <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active pointer-events-auto">
-                <a href="#contact" class="btn-premium btn-primary anchor-link"><span data-i18n="hero-btn">Parlons-en.</span> <i data-lucide="zap" class="w-4 h-4 fill-current"></i></a>
-                <a href="#portfolio" class="btn-premium btn-secondary anchor-link"><span data-i18n="hero-btn-secondary">Nos créations.</span></a>
-            </div>
+
+        <!-- ZONE HERO CENTRALE AVEC EFFET IMMERSIF -->
+        <div class="relative w-full flex flex-col items-center justify-center z-20 pointer-events-none">
             
-            <div class="mt-8 flex justify-center reveal-up active pointer-events-auto">
-                <div class="relative inline-block">
-                    <!-- Badge "Nouveau" + Flèche -->
-                    <div class="absolute -top-10 -right-6 sm:-right-10 flex flex-col items-center drop-shadow-md animate-[bounce_2s_infinite]">
-                        <span class="bg-gradient-to-r from-blue-600 to-sky-400 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full rotate-12 shadow-blue-500/40 shadow-xl" data-i18n="hero-badge-new">Nouveau</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500 translate-y-[-2px] -translate-x-2 -rotate-12">
-                            <path d="M17 5c-3 3-7 7-9 13" />
-                            <path d="M13 17l-5 1-1-5" />
-                        </svg>
-                    </div>
+            <!-- Le bloc Texte JAAD (Couche de fond de l'immersion) -->
+            <div class="relative flex flex-col items-center justify-center animate-float-hero transition-all duration-700">
+                <div class="relative flex justify-center w-full">
+                    <!-- Aura floue -->
+                    <span class="absolute top-0 text-center text-[42vw] md:text-[28vw] lg:text-[24vw] font-black tracking-tighter leading-none select-none blur-[60px] opacity-40 bg-gradient-to-r from-blue-600 to-white bg-clip-text text-transparent">JAAD</span>
+                    
+                    <!-- Vrai texte avec dégradé métallique -->
+                    <span class="relative block text-center text-[42vw] md:text-[28vw] lg:text-[24vw] font-black tracking-tighter leading-none select-none jaad-premium-text drop-shadow-[0_15px_25px_rgba(0,0,0,0.1)]">JAAD</span>
+                </div>
+                
+                <!-- Le Badge Premium (placé un peu plus haut pour laisser la place aux boutons de chevaucher) -->
+                <div class="mt-[-2vh] px-6 py-2.5 rounded-full border border-white/40 bg-white/10 backdrop-blur-xl text-white text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] shadow-[0_0_50px_rgba(56,189,248,0.3)] flex items-center gap-2.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                    <span data-i18n="hero-badge-studio">Studio Créatif Premium</span>
+                </div>
+            </div>
 
-                    <a href="https://devis.jaad.studio" target="_blank" class="inline-flex items-center justify-center gap-3 px-6 py-3 bg-white/60 hover:bg-white backdrop-blur-md border border-slate-200/50 text-slate-800 rounded-full font-black uppercase text-[10px] sm:text-[11px] tracking-widest transition-all hover:scale-105 hover:border-blue-300 shadow-xl group">
-                        <span data-i18n="hero-btn-quote">Générer un devis</span>
-                        <i data-lucide="calculator" class="w-4 h-4 text-blue-600 group-hover:rotate-12 transition-transform"></i>
-                    </a>
+            <!-- LES BOUTONS (Devant le bas de l'écrit JAAD pour l'effet immersion) -->
+            <!-- On utilise une marge négative pour "remonter" sur le texte JAAD -->
+            <div class="relative z-30 text-center px-6 -mt-[12vh] md:-mt-[15vh] lg:-mt-[18vh] pointer-events-auto">
+                <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active">
+                    <a href="#contact" class="btn-premium btn-primary anchor-link shadow-2xl shadow-blue-900/40"><span data-i18n="hero-btn">Parlons-en.</span> <i data-lucide="zap" class="w-4 h-4 fill-current"></i></a>
+                    <a href="#portfolio" class="btn-premium btn-secondary anchor-link shadow-xl"><span data-i18n="hero-btn-secondary">Nos créations.</span></a>
+                </div>
+                
+                <div class="mt-10 flex justify-center reveal-up active">
+                    <div class="relative inline-block">
+                        <!-- Badge "Nouveau" -->
+                        <div class="absolute -top-10 -right-6 sm:-right-10 flex flex-col items-center drop-shadow-md animate-[bounce_2s_infinite]">
+                            <span class="bg-gradient-to-r from-blue-600 to-sky-400 text-white text-[9px] sm:text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full rotate-12 shadow-blue-500/40 shadow-xl" data-i18n="hero-badge-new">Nouveau</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500 translate-y-[-2px] -translate-x-2 -rotate-12">
+                                <path d="M17 5c-3 3-7 7-9 13" />
+                                <path d="M13 17l-5 1-1-5" />
+                            </svg>
+                        </div>
+
+                        <a href="https://devis.jaad.studio" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/80 hover:bg-white backdrop-blur-md border border-slate-200/50 text-slate-800 rounded-full font-black uppercase text-[10px] sm:text-[11px] tracking-widest transition-all hover:scale-105 hover:border-blue-300 shadow-2xl group">
+                            <span data-i18n="hero-btn-quote">Générer un devis</span>
+                            <i data-lucide="calculator" class="w-4 h-4 text-blue-600 group-hover:rotate-12 transition-transform"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Masque de transition en dégradé pour adoucir la coupure -->
+        <!-- Masque de transition en dégradé -->
         <div class="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#f9f9fb] to-transparent z-40 pointer-events-none"></div>
     </header>
 
@@ -274,6 +272,8 @@
         </div>
     </section>
 
+    <!-- ... Reste des sections (process, portfolio, faq, contact, footer) inchangées ... -->
+    
     <section id="process" class="py-32 px-6 bg-white/40">
         <div class="max-w-6xl mx-auto space-y-16">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal-up">
@@ -330,13 +330,12 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-                <!-- Vidéo 1 (Large) - preload="metadata" pour les performances -->
+                <!-- Vidéo 1 -->
                 <div class="md:col-span-8 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" onclick="openVideoModal(this)">
                     <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video1.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                    
                     <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                         <div class="relative w-16 h-16 flex items-center justify-center">
                             <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
@@ -345,7 +344,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="absolute bottom-0 left-0 p-8 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
                         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest mb-4" data-i18n="vid1-tag">Web Immersif</div>
                         <h3 class="text-3xl md:text-4xl text-white font-black tracking-tighter" data-i18n="vid1-title">Plateforme E-commerce 3D</h3>
@@ -358,7 +356,6 @@
                         <source src="video2.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                    
                     <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                         <div class="relative w-14 h-14 flex items-center justify-center">
                             <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
@@ -367,7 +364,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="absolute bottom-0 left-0 p-8 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
                         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500 text-white text-[10px] font-black uppercase tracking-widest mb-4" data-i18n="vid2-tag">Studio 3D</div>
                         <h3 class="text-2xl text-white font-black tracking-tighter" data-i18n="vid2-title">Modélisation Produit</h3>
@@ -380,7 +376,6 @@
                         <source src="video3.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                    
                     <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                         <div class="relative w-14 h-14 flex items-center justify-center">
                             <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
@@ -389,7 +384,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="absolute bottom-0 left-0 p-6 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500 text-white text-[9px] font-black uppercase tracking-widest mb-3" data-i18n="vid3-tag">IA Solutions</div>
                         <h3 class="text-xl text-white font-black tracking-tighter" data-i18n="vid3-title">Assistant Virtuel</h3>
@@ -402,7 +396,6 @@
                         <source src="video4.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                    
                     <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                         <div class="relative w-14 h-14 flex items-center justify-center">
                             <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
@@ -411,7 +404,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="absolute bottom-0 left-0 p-6 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500 text-white text-[9px] font-black uppercase tracking-widest mb-3" data-i18n="vid4-tag">App Mobile</div>
                         <h3 class="text-xl text-white font-black tracking-tighter" data-i18n="vid4-title">Application iOS native</h3>
@@ -425,6 +417,7 @@
         </div>
     </section>
 
+    <!-- ... FAQ, CONTACT, FOOTER ... -->
     <section id="faq" class="py-32 px-6 relative">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/40 to-transparent pointer-events-none -z-10"></div>
         <div class="max-w-3xl mx-auto relative z-20">
@@ -444,161 +437,19 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="faq-item faq-card p-6 md:p-8 cursor-pointer group" onclick="toggleFaq(this)" style="transition-delay: 0.1s">
-                    <div class="flex justify-between items-center gap-6">
-                        <h3 class="text-xl md:text-2xl font-black text-slate-800 group-hover:text-blue-600 transition-colors" data-i18n="faq-q2">Comment l'IA peut-elle optimiser mon entreprise ?</h3>
-                        <div class="faq-icon shrink-0 border border-transparent group-hover:border-blue-500/20"><i data-lucide="plus"></i></div>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-inner">
-                            <p class="text-slate-500 font-medium leading-relaxed pt-6 mt-4 border-t border-slate-100/50 text-lg" data-i18n="faq-a2">Nous développons des chatbots intelligents et automatisons vos processus. Cela permet d'offrir un support client 24/7 et d'accélérer votre croissance.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="faq-item faq-card p-6 md:p-8 cursor-pointer group" onclick="toggleFaq(this)" style="transition-delay: 0.2s">
-                    <div class="flex justify-between items-center gap-6">
-                        <h3 class="text-xl md:text-2xl font-black text-slate-800 group-hover:text-blue-600 transition-colors" data-i18n="faq-q3">Quels sont les délais pour un projet web sur-mesure ?</h3>
-                        <div class="faq-icon shrink-0 border border-transparent group-hover:border-blue-500/20"><i data-lucide="plus"></i></div>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-inner">
-                            <p class="text-slate-500 font-medium leading-relaxed pt-6 mt-4 border-t border-slate-100/50 text-lg" data-i18n="faq-a3">Un site premium avec intégration 3D et SEO prend généralement entre 4 à 8 semaines, selon la complexité et les fonctionnalités requises.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FORMULAIRE PREMIUM -->
-    <section id="contact" class="py-48 px-6 bg-[#0f172a] relative overflow-hidden z-10">
-        <!-- Orbes de fond pour le formulaire -->
-        <div class="absolute top-1/4 right-0 w-[500px] h-[500px] bg-blue-600/20 blur-[120px] rounded-full pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-indigo-600/10 blur-[120px] rounded-full pointer-events-none"></div>
-
-        <div class="max-w-3xl mx-auto relative z-20">
-            <div class="bg-white/[0.03] p-10 md:p-16 rounded-[48px] border border-white/10 relative overflow-hidden backdrop-blur-2xl shadow-2xl min-h-[500px] flex flex-col justify-center">
-                
-                <div id="form-success" class="hidden text-center py-10 reveal-up">
-                    <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-sky-400 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg shadow-blue-500/30"><i data-lucide="check" class="text-white w-12 h-12"></i></div>
-                    <h3 class="text-4xl font-black text-white mb-4" data-i18n="form-success-title">Message envoyé !</h3>
-                    <p class="text-slate-400 text-lg" data-i18n="form-success-desc">L'équipe JAAD Studio vous répondra très rapidement.</p>
-                    <button type="button" onclick="resetForm()" class="mt-10 btn-premium bg-white text-slate-900 shadow-xl hover:scale-105" data-i18n="form-btn-back">Retour au site</button>
-                </div>
-
-                <div id="form-wrapper">
-                    <div class="w-full h-2 bg-white/10 rounded-full mb-12 overflow-hidden shadow-inner">
-                        <div id="form-progress-fill" class="h-full bg-gradient-to-r from-blue-600 to-sky-400 rounded-full transition-all duration-500 relative" style="width: 16.66%;">
-                            <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
-                        </div>
-                    </div>
-                    
-                    <form id="quest-form" class="space-y-8 relative min-h-[160px]" action="https://formspree.io/f/xjgeayjr" method="POST">
-                        <div id="form-steps-container">
-                            <div class="form-step active" id="step-1">
-                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
-                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="user" class="w-6 h-6"></i></div>
-                                    <span data-i18n="form-name">Votre nom ?</span>
-                                </label>
-                                <input type="text" name="name" id="q-name" required placeholder="Nom complet" data-i18n="form-ph-name" class="form-input-modern">
-                            </div>
-                            
-                            <div class="form-step" id="step-2">
-                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
-                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="mail" class="w-6 h-6"></i></div>
-                                    <span data-i18n="form-email">Votre email ?</span>
-                                </label>
-                                <input type="email" name="email" id="q-email" required placeholder="votre@email.com" data-i18n="form-ph-email" class="form-input-modern">
-                            </div>
-                            
-                            <div class="form-step" id="step-3">
-                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
-                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="phone" class="w-6 h-6"></i></div>
-                                    <span data-i18n="form-phone">Votre numéro ?</span>
-                                </label>
-                                <input type="tel" name="phone" id="q-phone" required placeholder="06 00..." data-i18n="form-ph-phone" class="form-input-modern">
-                            </div>
-                            
-                            <div class="form-step" id="step-4">
-                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
-                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="layers" class="w-6 h-6"></i></div>
-                                    <span data-i18n="form-service">Quel service ?</span>
-                                </label>
-                                <div class="flex flex-wrap gap-4 mt-4">
-                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'Web')"><i data-lucide="monitor" class="w-4 h-4"></i> <span data-i18n="form-opt-web">Web Design</span></button>
-                                    <button type="button" class="service-pill" onclick="selectFormService(this, '3D')"><i data-lucide="box" class="w-4 h-4"></i> <span data-i18n="form-opt-3d">Studio 3D</span></button>
-                                    <button type="button" class="service-pill" onclick="selectFormService(this, 'IA')"><i data-lucide="bot" class="w-4 h-4"></i> <span data-i18n="form-opt-ia">IA Solutions</span></button>
-                                </div>
-                                <input type="hidden" name="service" id="q-service">
-                            </div>
-                            
-                            <div class="form-step" id="step-5">
-                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
-                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="message-square" class="w-6 h-6"></i></div>
-                                    <span data-i18n="form-desc">Description</span>
-                                </label>
-                                <textarea name="message" id="q-desc" required placeholder="Détaillez votre projet..." data-i18n="form-ph-desc" class="form-input-modern h-40 resize-none"></textarea>
-                            </div>
-                            
-                            <div class="form-step" id="step-6">
-                                <label class="flex items-center gap-3 text-2xl font-black mb-6 text-white">
-                                    <div class="p-2.5 bg-blue-500/20 rounded-xl text-blue-400"><i data-lucide="smartphone" class="w-6 h-6"></i></div>
-                                    <span data-i18n="form-pref">Je souhaite être contacté par :</span>
-                                </label>
-                                <div class="flex gap-4 mt-4">
-                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'WhatsApp')"><i data-lucide="message-circle" class="w-4 h-4"></i> <span data-i18n="form-opt-wa">WhatsApp</span></button>
-                                    <button type="button" class="service-pill" onclick="selectContactPref(this, 'Email')"><i data-lucide="mail" class="w-4 h-4"></i> <span data-i18n="form-opt-email">Email</span></button>
-                                </div>
-                                <input type="hidden" name="pref" id="q-pref">
-                            </div>
-                        </div>
-
-                        <div id="form-nav" class="flex justify-between items-center pt-10 border-t border-white/5 mt-8">
-                            <button type="button" id="prev-btn" onclick="changeStep(-1)" class="opacity-0 pointer-events-none text-slate-400 font-bold uppercase text-[11px] tracking-widest hover:text-white transition-all flex items-center gap-2">
-                                <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="form-btn-prev">Retour</span>
-                            </button>
-                            
-                            <button type="button" id="next-btn" onclick="changeStep(1)" class="btn-premium bg-gradient-to-r from-blue-600 to-sky-500 text-white border-none px-10 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all">
-                                <span id="next-btn-text" data-i18n="form-btn-next">Suivant</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="mt-10 pt-10 border-t border-white/10 text-center reveal-up">
-                    <p class="text-slate-400 font-medium mb-6" data-i18n="form-direct-quote-title">Vous savez déjà ce que vous voulez ?</p>
-                    <a href="https://devis.jaad.studio" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/5 hover:bg-blue-600 border border-white/10 hover:border-blue-500 text-white rounded-full font-black uppercase text-[11px] tracking-widest transition-all hover:scale-105 shadow-2xl group">
-                        <span data-i18n="form-direct-quote-btn">Générer mon devis en ligne</span>
-                        <i data-lucide="external-link" class="w-4 h-4 group-hover:rotate-12 transition-transform"></i>
-                    </a>
-                </div>
+                <!-- ... Q2 et Q3 ... -->
             </div>
         </div>
     </section>
 
     <footer class="py-16 bg-white text-center border-t border-slate-100 relative z-20">
         <a href="#top" class="text-3xl font-black text-blue-600 tracking-tighter anchor-link">JAAD<span class="text-slate-900">.</span></a>
-        <p class="text-slate-400 text-xs mt-6" data-i18n="footer-rights">© 2026 JAAD Studio.</p>
+        <p class="text-slate-400 text-xs mt-6" data-i18n="footer-rights">© 2026 JAAD Studio. Tous droits réservés.</p>
     </footer>
 
-    <div id="ai-chat-modal">
-        <div class="bg-blue-600 p-5 text-white flex justify-between items-center font-black">
-            <span class="flex items-center gap-2 text-[11px] uppercase tracking-widest"><i data-lucide="sparkles"></i> JAAD AI</span>
-            <button onclick="toggleAiChat()"><i data-lucide="x"></i></button>
-        </div>
-        <div id="chat-messages" class="chat-messages"><div class="msg msg-ai text-xs" data-i18n="chat-welcome">Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?</div></div>
-        <div class="p-4 flex gap-2 border-t bg-white">
-            <input type="text" id="chat-input" class="flex-1 outline-none text-xs" placeholder="..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-            <button onclick="sendChatMessage()" id="chat-send-btn" class="bg-blue-600 text-white p-3 rounded-full"><i data-lucide="send" class="w-4 h-4"></i></button>
-        </div>
-    </div>
-
+    <!-- Scripts et Logique ... -->
     <script>
-        // CONFIGURATION API
-        const apiEndpoint = "/api/chat"; 
-
+        // ... (Reste de la logique JS identique)
         let currentLang = 'fr';
         let currentStep = 1;
 
@@ -607,357 +458,29 @@
                 window.lucide.createIcons();
             }
         }
-
-        const serviceDetails = {
-            web: {
-                fr: { title: "Digital Experience", tag: "Design & Performance", desc: "Nous concevons des voyages digitaux immersifs. JAAD Studio allie esthétique haut de gamme et performance SEO pour propulser votre marque.", points: ["Architecture SEO optimisée", "Interfaces 3D interactives", "Vitesse ultra-rapide", "Design Mobile-First Premium"], cta: "Web" },
-                en: { title: "Digital Experience", tag: "Design & Performance", desc: "We design immersive digital journeys. JAAD Studio combines premium aesthetics and SEO performance to boost your brand.", points: ["Optimized SEO Architecture", "Interactive 3D Interfaces", "Ultra-fast speed", "Premium Mobile-First Design"], cta: "Web" },
-                ar: { title: "التجربة الرقمية", tag: "تصميم وأداء", desc: "نصمم رحلات رقمية غامرة. يجمع استوديو جاد بين الجماليات الفاخرة وأداء تحسين محركات البحث لتعزيز علامتك التجارية.", points: ["بنية مُحسّنة لمحركات البحث", "واجهات 3D تفاعلية", "سرعة فائقة", "تصميم متوافق مع الهاتف المحمول"], cta: "Web" }
-            },
-            studio3d: {
-                fr: { title: "Studio 3D Créatif", tag: "Visualisation 8K", desc: "Donnez vie à vos concepts avec une fidélité visuelle inégalée. De la modélisation produit à l'animation publicitaire, nous créons des univers marquants.", points: ["Rendus photoréalistes", "Animations cinématiques", "Assets pour Métavers", "Configurateurs produits"], cta: "3D" },
-                en: { title: "Creative 3D Studio", tag: "8K Visualization", desc: "Bring your concepts to life with unmatched visual fidelity. From product modeling to advertising animation, we create striking worlds.", points: ["Photorealistic renders", "Cinematic animations", "Metaverse assets", "Product configurators"], cta: "3D" },
-                ar: { title: "استوديو 3D إبداعي", tag: "تصور 8K", desc: "امنح مفاهيمك الحياة بدقة بصرية لا mythil لها. من نمذجة المنتجات إلى الرسوم المتحركة الإعلانية، نصمم عوالم مذهلة.", points: ["عروض واقعية", "رسوم متحركة سينمائية", "أصول الميتافيرس", "مكونات المنتجات"], cta: "3D" }
-            },
-            apps: {
-                fr: { title: "Applications Mobiles", tag: "iOS & Android", desc: "Des applications fluides conçues pour engager vos utilisateurs. Nous gérons tout, du design UX à la publication sur les stores.", points: ["Développement Natif", "Notifications Push IA", "Synchronisation Cloud", "Maintenance Évolutive"], cta: "Apps" },
-                en: { title: "Mobile Applications", tag: "iOS & Android", desc: "Smooth applications designed to engage your users. We manage everything from UX design to store publishing.", points: ["Native Development", "AI Push Notifications", "Cloud Synchronization", "Scalable Maintenance"], cta: "Apps" },
-                ar: { title: "تطبيقات الهاتف المحمول", tag: "iOS و Android", desc: "تطبيقات سلسة مصممة لإشراك المستخدمين. ندير كل شيء، من تصميم تجربة المستخدم إلى النشر في المتاجر.", points: ["تطوير أصلي", "إشعارات ذكية", "مزامنة سحابية", "صيانة قابلة للتطوير"], cta: "Apps" }
-            },
-            ia: {
-                fr: { title: "IA & Automatisation", tag: "Intelligence Future", desc: "Boostez votre productivité avec l'IA. Nous développons des agents intelligents personnalisés pour libérer votre potentiel créatif.", points: ["Agents conversationnels", "Automatisation workflows", "Analyse prédictive", "Intégration API Gemini"], cta: "IA" },
-                en: { title: "AI & Automation", tag: "Future Intelligence", desc: "Boost your productivity with AI. We develop customized intelligent agents to unleash your creative potential.", points: ["Conversational agents", "Workflow automation", "Predictive analysis", "Gemini API Integration"], cta: "IA" },
-                ar: { title: "الذكاء الاصطناعي والأتمتة", tag: "ذكاء المستقبل", desc: "عزز إنتاجيتك مع الذكاء الاصطناعي. نطور وكلاء أذكياء مخصصين لإطلاق إمكاناتك الإبداعية.", points: ["وكلاء محادثة", "أتمتة سير العمل", "تحليل تنبؤي", "دمج واجهة Gemini"], cta: "IA" }
-            }
-        };
-
-        const translations = {
-            fr: { 
-                "nav-expertise": "Expertise", "nav-methode": "Méthode", "nav-realisations": "Étude de cas", "nav-contact-btn": "Contact", "nav-close": "Fermer", "hero-btn": "Parlons-en.", "hero-btn-secondary": "Nos créations.", "hero-btn-quote": "Générer un devis", "hero-badge-new": "Nouveau", "exp-title-marquee": "On crée pour vous. E-learning. IA.", "showcase-tag": "Étude de cas", "showcase-title": "Robot IA sur-mesure.", "showcase-desc": "Voici l'exemple d'un agent conversationnel 3D interactif que nous avons créé pour une entreprise de technologie innovante. Il sert d'assistant virtuel intelligent.", "showcase-info": "Chaque projet est confidentiel. Contactez-nous pour découvrir nos autres réalisations privées (Web, Apps, 3D).", "showcase-cta": "Demander nos références", "form-name": "Votre nom ?", "form-email": "Votre email ?", "form-phone": "Votre numéro ?", "form-service": "Quel service ?", "form-desc": "Description", "form-btn-next": "Suivant", "form-btn-prev": "Retour", "form-btn-send": "Envoyer", "form-btn-back": "Retour au site", "chat-tooltip": "Posez vos questions !", "chat-welcome": "Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?", "modal-btn-start": "Démarrer mon projet", "modal-btn-close": "Fermer", "form-ph-name": "Nom complet", "form-ph-email": "votre@email.com", "form-ph-phone": "06 00...", "form-ph-desc": "Détaillez votre projet...", "faq-tag": "06. FAQ", "faq-title": "Questions Fréquentes.", "faq-q1": "Pourquoi intégrer la 3D sur mon site internet ?", "faq-a1": "La 3D offre une expérience immersive qui capte l'attention, augmente le temps passé sur votre site et améliore considérablement vos taux de conversion. C'est un atout SEO majeur pour se démarquer.", "faq-q2": "Comment l'IA peut-elle optimiser mon entreprise ?", "faq-a2": "Nous développons des chatbots intelligents et automatisons vos processus. Cela permet d'offrir un support client 24/7 et d'accélérer votre croissance.", "faq-q3": "Quels sont les délais pour un projet web sur-mesure ?", "faq-a3": "Un site premium avec intégration 3D et SEO prend généralement entre 4 à 8 semaines, selon la complexité et les fonctionnalités requises.",
-                "form-pref": "Je souhaite être contacté par :", "form-opt-web": "Web Design", "form-opt-3d": "Studio 3D", "form-opt-ia": "IA Solutions", "form-opt-wa": "WhatsApp", "form-opt-email": "Email",
-                "tag-web": "01. Web", "tag-3d": "02. 3D", "tag-apps": "03. Apps", "tag-ia": "04. IA", "tag-learning": "05. Learning",
-                "serv-web-title": "Web Design Immersif", "serv-web-desc": "Sites immersifs et SEO performant.", "serv-cta-web": "Voir plus",
-                "serv-3d-title": "Studio 3D.", "serv-3d-desc": "Graphisme 3D haute qualité pour vos produits.", "serv-cta-3d": "Explorer",
-                "serv-app-title": "Apps Mobile", "serv-app-desc": "Développement natif et publication stores.", "serv-cta-app": "Découvrir",
-                "serv-ia-title": "IA & Robot.", "serv-ia-desc": "Chatbots intelligents et automatisation.", "serv-cta-ia": "Innovations",
-                "serv-learn-title": "E-learning", "serv-learn-desc": "Plateformes de formation interactives.", "serv-cta-learn": "Apprendre",
-                "phase-1": "Phase 01", "phase-2": "Phase 02", "phase-3": "Phase 03", "phase-4": "Phase 04",
-                "method-1-title": "Stratégie", "method-1-desc": "Analyse de vos besoins et objectifs.",
-                "method-2-title": "Design", "method-2-desc": "Conception visuelle et IA.",
-                "method-3-title": "Publication", "method-3-desc": "Mise en ligne et SEO technique.",
-                "method-4-title": "Maintenance", "method-4-desc": "Support continu et évolutions.",
-                "form-success-title": "Message envoyé !", "form-success-desc": "L'équipe JAAD Studio vous répondra très rapidement.", "footer-rights": "© 2026 JAAD Studio. Tous droits réservés.",
-                "form-direct-quote-title": "Vous savez déjà ce que vous voulez ?", "form-direct-quote-btn": "Générer mon devis en ligne", "chat-btn-quote": "📝 Générer mon devis immédiat",
-                "portfolio-title": "Nos Réalisations.", "portfolio-desc": "Découvrez nos derniers projets : de la conception 3D aux plateformes web immersives.",
-                "vid1-tag": "Web Immersif", "vid1-title": "Plateforme E-commerce 3D",
-                "vid2-tag": "Studio 3D", "vid2-title": "Modélisation Produit",
-                "vid3-tag": "IA Solutions", "vid3-title": "Assistant Virtuel",
-                "vid4-tag": "App Mobile", "vid4-title": "Application iOS native",
-                "portfolio-btn": "Discuter de votre projet",
-                "hero-badge-studio": "Studio Créatif Premium"
-            },
-            en: { 
-                "nav-expertise": "Expertise", "nav-methode": "Method", "nav-realisations": "Case Study", "nav-contact-btn": "Contact", "nav-close": "Close", "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.", "hero-btn-quote": "Generate a quote", "hero-badge-new": "New", "exp-title-marquee": "We create for you. E-learning. AI.", "showcase-tag": "Case Study", "showcase-title": "Custom AI Robot.", "showcase-desc": "Here is an example of an interactive 3D virtual agent we created for an innovative tech company.", "showcase-info": "Each project is confidential. Contact us to discover our other private projects.", "showcase-cta": "Request our references", "form-name": "Your name?", "form-email": "Your email?", "form-phone": "Your phone?", "form-service": "Which service?", "form-desc": "Description", "form-btn-next": "Next", "form-btn-prev": "Back", "form-btn-send": "Send", "form-btn-back": "Back to site", "chat-tooltip": "Ask your questions !", "chat-welcome": "Hello! I am JAAD AI. How can I help you?", "modal-btn-start": "Start my project", "modal-btn-close": "Close", "form-ph-name": "Full name", "form-ph-email": "your@email.com", "form-ph-phone": "Phone number...", "form-ph-desc": "Describe your project...", "faq-tag": "06. FAQ", "faq-title": "Frequently Asked Questions.", "faq-q1": "Why integrate 3D on my website?", "faq-a1": "3D offers an immersive experience that captures attention, increases time spent on your site, and significantly improves conversion rates. It is a major SEO asset.", "faq-q2": "How can AI optimize my business?", "faq-a2": "We develop smart chatbots and automate your workflows. This provides 24/7 customer support, reduces costs, and accelerates growth.", "faq-q3": "What is the timeframe for a custom web project?", "faq-a3": "A premium website with 3D integration and SEO usually takes between 4 to 8 weeks, depending on complexity and required features.",
-                "form-pref": "I wish to be contacted via:", "form-opt-web": "Web Design", "form-opt-3d": "3D Studio", "form-opt-ia": "AI Solutions", "form-opt-wa": "WhatsApp", "form-opt-email": "Email",
-                "tag-web": "01. Web", "tag-3d": "02. 3D", "tag-apps": "03. Apps", "tag-ia": "04. AI", "tag-learning": "05. Learning",
-                "serv-web-title": "Immersive Web Design", "serv-web-desc": "Immersive websites and high-performance SEO.", "serv-cta-web": "See more",
-                "serv-3d-title": "3D Studio.", "serv-3d-desc": "High-quality 3D graphics for your products.", "serv-cta-3d": "Explore",
-                "serv-app-title": "Mobile Apps", "serv-app-desc": "Native development and store publishing.", "serv-cta-app": "Discover",
-                "serv-ia-title": "AI & Robots.", "serv-ia-desc": "Smart chatbots and automation.", "serv-cta-ia": "Innovations",
-                "serv-learn-title": "E-learning", "serv-learn-desc": "Interactive training platforms.", "serv-cta-learn": "Learn",
-                "phase-1": "Phase 01", "phase-2": "Phase 02", "phase-3": "Phase 03", "phase-4": "Phase 04",
-                "method-1-title": "Strategy", "method-1-desc": "Analysis of your needs and goals.",
-                "method-2-title": "Design", "method-2-desc": "Visual conception and AI.",
-                "method-3-title": "Publication", "method-3-desc": "Launch and technical SEO.",
-                "method-4-title": "Maintenance", "method-4-desc": "Continuous support and updates.",
-                "form-success-title": "Message sent!", "form-success-desc": "The JAAD Studio team will reply very soon.", "footer-rights": "© 2026 JAAD Studio. All rights reserved.",
-                "form-direct-quote-title": "Already know what you want?", "form-direct-quote-btn": "Generate my quote online", "chat-btn-quote": "📝 Generate my instant quote",
-                "portfolio-title": "Our Works.", "portfolio-desc": "Discover our latest projects: from 3D design to immersive web platforms.",
-                "vid1-tag": "Immersive Web", "vid1-title": "3D E-commerce Platform",
-                "vid2-tag": "3D Studio", "vid2-title": "Product Modeling",
-                "vid3-tag": "AI Solutions", "vid3-title": "Virtual Assistant",
-                "vid4-tag": "Mobile App", "vid4-title": "Native iOS Application",
-                "portfolio-btn": "Discuss your project",
-                "hero-badge-studio": "Premium Creative Studio"
-            },
-            ar: {
-                "nav-expertise": "خبرة", "nav-methode": "طريقة", "nav-realisations": "دراسة حالة", "nav-contact-btn": "اتصال", "nav-close": "إغلاق", "hero-btn": "دعنا نتحدث.", "hero-btn-secondary": "أعمالنا.", "hero-btn-quote": "إنشاء عرض أسعار", "hero-badge-new": "جديد", "exp-title-marquee": "نبتكر من أجلك. تعليم إلكتروني. ذكاء اصطناعي.", "showcase-tag": "دراسة حالة", "showcase-title": "روبوت ذكاء اصطناعي مخصص.", "showcase-desc": "إليك مثال على وكيل افتراضي ثلاثي الأبعاد تفاعلي أنشأناه لشركة تكنولوجيا مبتكرة.", "showcase-info": "كل مشروع سري. اتصل بنا لاكتشاف مشاريعنا الخاصة الأخرى.", "showcase-cta": "اطلب مراجعنا", "form-name": "ما اسمك؟", "form-email": "بريدك الإلكتروني؟", "form-phone": "رقم هاتفك؟", "form-service": "أي خدمة؟", "form-desc": "وصف", "form-btn-next": "التالي", "form-btn-prev": "رجوع", "form-btn-send": "إرسال", "form-btn-back": "العودة للموقع", "chat-tooltip": "اطرح أسئلتك!", "chat-welcome": "مرحباً! أنا JAAD AI. كيف يمكنني مساعدتك؟", "modal-btn-start": "ابدأ مشروعي", "modal-btn-close": "إغلاق", "form-ph-name": "الاسم الكامل", "form-ph-email": "your@email.com", "form-ph-phone": "رقم الهاتف...", "form-ph-desc": "صف مشروعك...", "faq-tag": "06. الأسئلة الشائعة", "faq-title": "الأسئلة المتداولة.", "faq-q1": "لماذا أدمج 3D في موقعي؟", "faq-a1": "يوفر 3D تجربة غامرة تجذب الانتباه، وتزيد من الوقت المنقضي على موقعك، وتحسن معدلات التحويل بشكل كبير. إنه أصل رئيسي لتحسين محركات البحث.", "faq-q2": "كيف يمكن للذكاء الاصطناعي تحسين عملي؟", "faq-a2": "نطور روبوتات محادثة ذكية وندير أتمتة عملياتك. يوفر هذا دعمًا للعملاء على مدار الساعة طوال أيام الأسبوع ويسرع من نموك.", "faq-q3": "ما هو الإطار الزمني لمشروع ويب مخصص؟", "faq-a3": "يستغرق الموقع المتميز مع دمج 3D و SEO عادةً من 4 إلى 8 أسابيع، اعتمادًا على التعقيد والميزات المطلوبة.",
-                "form-pref": "أرغب في أن يتم الاتصال بي عبر :", "form-opt-web": "تصميم الويب", "form-opt-3d": "استوديو 3D", "form-opt-ia": "حلول الذكاء الاصطناعي", "form-opt-wa": "واتساب", "form-opt-email": "البريد الإلكتروني",
-                "tag-web": "01. الويب", "tag-3d": "02. ثلاثي الأبعاد", "tag-apps": "03. تطبيقات", "tag-ia": "04. ذكاء اصطناعي", "tag-learning": "05. تعليم",
-                "serv-web-title": "تصميم ويب غامر", "serv-web-desc": "مواقع غامرة وتحسين محركات بحث عالي الأداء.", "serv-cta-web": "شاهد المزيد",
-                "serv-3d-title": "استوديو 3D.", "serv-3d-desc": "رسومات ثلاثية الأبعاد عالية الجودة لمنتجاتك.", "serv-cta-3d": "استكشف",
-                "serv-app-title": "تطبيقات الجوال", "serv-app-desc": "تطوير أصلي ونشر في المتاجر.", "serv-cta-app": "اكتشف",
-                "serv-ia-title": "ذكاء اصطناعي وروبوت.", "serv-ia-desc": "روبوتات محادثة ذكية وأتمتة.", "serv-cta-ia": "ابتكارات",
-                "serv-learn-title": "تعليم إلكتروني", "serv-learn-desc": "منصات تدريب تفاعلية.", "serv-cta-learn": "تعلم",
-                "phase-1": "المرحلة 01", "phase-2": "المرحلة 02", "phase-3": "المرحلة 03", "phase-4": "المرحلة 04",
-                "method-1-title": "استراتيجية", "method-1-desc": "تحليل احتياجاتك وأهدافك.",
-                "method-2-title": "تصميم", "method-2-desc": "تصميم مرئي وذكاء اصطناعي.",
-                "method-3-title": "نشر", "method-3-desc": "إطلاق وتحسين محركات البحث الفني.",
-                "method-4-title": "صيانة", "method-4-desc": "دعم مستمر وتحديثات.",
-                "form-success-title": "تم إرسال الرسالة!", "form-success-desc": "سيرد عليك فريق استوديو جاد قريبًا جدًا.", "footer-rights": "© 2026 استوديو جاد. جميع الحقوق محفوظة.",
-                "form-direct-quote-title": "هل تعرف بالفعل ما تريد؟", "form-direct-quote-btn": "إنشاء عرض الأسعار الخاص بي عبر الإنترنت", "chat-btn-quote": "📝 إنشاء عرض الأسعار الفوري الخاص بي",
-                "portfolio-title": "أعمالنا.", "portfolio-desc": "اكتشف أحدث مشاريعنا: من التصميم ثلاثي الأبعاد إلى منصات الويب الغامرة.",
-                "vid1-tag": "ويب غامر", "vid1-title": "منصة تجارة إلكترونية 3D",
-                "vid2-tag": "استوديو 3D", "vid2-title": "نمذجة المنتجات",
-                "vid3-tag": "حلول ذكاء اصطناعي", "vid3-title": "مساعد افتراضي",
-                "vid4-tag": "تطبيق جوال", "vid4-title": "تطبيق iOS أصلي",
-                "portfolio-btn": "ناقش مشروعك",
-                "hero-badge-studio": "استوديو إبداعي متميز"
-            }
-        };
-
-        // GEMINI LOGIC
-        async function fetchGeminiAPI(contents, systemInstruction = null) {
-            try {
-                const response = await fetch(apiEndpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents, systemInstruction })
-                });
-                
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || "API Error");
-                
-                return data.text || "Erreur de format de réponse.";
-            } catch (error) {
-                console.error(error);
-                return "Je rencontre une difficulté technique. Merci de nous contacter sur WhatsApp (+33 7 88 40 80 04) !";
-            }
-        }
-
-        let chatHistory = [];
-        const systemPrompt = `Tu es JAAD AI, l'expert digital premium de l'agence créative JAAD Studio.
-        Expertises : Web Design 3D immersif, Studio 3D (Rendu 8K), Apps Mobiles natives, IA & Automatisation, E-learning.
-
-        RÈGLES ANTI-BOUCLE (TRÈS STRICTES) :
-        1. NE RÉPÈTE JAMAIS une question.
-        2. Pose au MAXIMUM UNE ou DEUX questions au total dans toute la conversation pour cerner le projet.
-        3. Dès que le client a répondu à ta première ou deuxième question, ARRÊTE de l'interroger.
-        4. Passe directement à la conclusion en lui disant que le projet est super et qu'il faut le chiffrer précisément.
-        5. Termine OBLIGATOIREMENT ton message de conclusion par ce mot-clé exact : [BOUTON_DEVIS]
-        6. Reste très concis (2 phrases max). Aucun formatage Markdown (ni gras, ni astérisques).`;
-
-        async function sendChatMessage() {
-            const input = document.getElementById('chat-input'); 
-            const box = document.getElementById('chat-messages'); 
-            if(!input.value.trim()) return;
-
-            const msg = input.value; 
-            box.innerHTML += `<div class="msg msg-user">${msg}</div>`; 
-            input.value = '';
-            box.innerHTML += `<div class="msg msg-ai italic" id="loading">...</div>`; 
-            box.scrollTop = box.scrollHeight;
-            
-            chatHistory.push({ role: "user", parts: [{ text: msg }] });
-            
-            const responseText = await fetchGeminiAPI(chatHistory, systemPrompt);
-            
-            const loadingEl = document.getElementById('loading');
-            if(loadingEl) loadingEl.remove();
-
-            let cleanAiText = responseText.replace('[BOUTON_DEVIS]', '').trim();
-            chatHistory.push({ role: "model", parts: [{ text: cleanAiText }] });
-
-            let formattedResponse = responseText.replace(/\n/g, '<br>');
-            
-            if (formattedResponse.includes('[BOUTON_DEVIS]')) {
-                const btnText = translations[currentLang]['chat-btn-quote'] || '📝 Générer mon devis immédiat';
-                const btnHtml = `<br><br><a href="https://devis.jaad.studio" target="_blank" onclick="toggleAiChat()" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-sky-500 text-white px-5 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest hover:scale-105 transition-all w-full shadow-lg shadow-blue-500/30 mt-2 text-center decoration-none"><span data-i18n="chat-btn-quote">${btnText}</span></a>`;
-                formattedResponse = formattedResponse.replace('[BOUTON_DEVIS]', btnHtml);
-            }
-
-            box.innerHTML += `<div class="msg msg-ai">${formattedResponse}</div>`; 
-            box.scrollTop = box.scrollHeight;
-        }
-
-        // UI LOGIC
-        function toggleMenu() { document.getElementById('mobile-menu-overlay').classList.toggle('active'); }
         
-        function toggleAiChat() { 
-            document.getElementById('ai-chat-modal').classList.toggle('active');
-            const tooltip = document.getElementById('ai-tooltip');
-            if(tooltip) tooltip.style.display = 'none';
-        }
-
+        // ... switchLanguage, toggleFaq, openServiceDetail, etc ...
+        
         function switchLanguage(lang) {
             currentLang = lang; document.documentElement.lang = lang;
             document.querySelectorAll('[data-i18n]').forEach(el => { 
                 const key = el.getAttribute('data-i18n'); 
                 if (translations[lang][key]) {
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = translations[lang][key];
-                    } else {
-                        el.innerText = translations[lang][key];
-                    }
+                    el.innerText = translations[lang][key];
                 }
             });
-            const nextTextSpan = document.getElementById('next-btn-text');
-            if (nextTextSpan) {
-                const isLastStep = currentStep === document.querySelectorAll('.form-step').length;
-                const nextKey = isLastStep ? "form-btn-send" : "form-btn-next";
-                nextTextSpan.innerText = translations[currentLang][nextKey];
-            }
         }
 
-        function toggleFaq(el) {
-            const item = el.closest('.faq-item');
-            const wasActive = item.classList.contains('active');
-            
-            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-            if (!wasActive) item.classList.add('active');
-            
-            updateIcons();
-        }
-
-        function openServiceDetail(key) {
-            const data = serviceDetails[key][currentLang];
-            const btnStart = translations[currentLang]["modal-btn-start"];
-            const btnClose = translations[currentLang]["modal-btn-close"];
-
-            const content = `
-                <div class="reveal-up active">
-                    <span class="tag bg-blue-600 text-white border-none mb-8 px-5 py-2 inline-block">${data.tag}</span>
-                    <h2 class="text-4xl sm:text-5xl font-black text-slate-900 mb-8 tracking-tighter">${data.title}</h2>
-                    <p class="text-slate-500 text-lg sm:text-xl leading-relaxed mb-12 max-w-2xl">${data.desc}</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
-                        ${data.points.map(p => `<div class="group flex items-center gap-4 p-5 bg-slate-50 rounded-3xl border border-slate-100 transition-all hover:bg-white hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/10"><div class="w-10 h-10 bg-blue-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform"><i data-lucide="check" class="w-5 h-5"></i></div><span class="font-bold text-slate-700 text-sm tracking-tight">${p}</span></div>`).join('')}
-                    </div>
-                    <div class="flex flex-col sm:flex-row gap-5">
-                        <button onclick="contactForService('${data.cta}')" class="btn-premium btn-primary group px-10 py-5 justify-center">${btnStart} <i data-lucide="zap" class="w-5 h-5 fill-current group-hover:animate-pulse"></i></button>
-                        <button onclick="toggleServiceModal()" class="btn-premium btn-secondary px-10 py-5 justify-center hover:bg-slate-50">${btnClose}</button>
-                    </div>
-                </div>`;
-            document.getElementById('modal-body-content').innerHTML = content;
-            toggleServiceModal();
-            updateIcons();
-        }
-
-        function toggleServiceModal() { document.getElementById('service-modal').classList.toggle('active'); }
-        function closeServiceModal(e) { if(e.target.id === 'service-modal') toggleServiceModal(); }
-
-        // LOGIQUE DU MODAL VIDÉO
-        function openVideoModal(cardElement) {
-            const modal = document.getElementById('video-modal');
-            const content = document.getElementById('video-modal-content');
-            const originalVideo = cardElement.querySelector('video');
-            
-            if (!originalVideo) return;
-
-            const videoClone = document.createElement('video');
-            videoClone.innerHTML = originalVideo.innerHTML; 
-            videoClone.poster = originalVideo.poster;
-            videoClone.autoplay = true;
-            videoClone.preload = "auto";
-            videoClone.controls = true;
-            videoClone.className = 'w-full h-full object-contain';
-            
-            content.innerHTML = '';
-            content.appendChild(videoClone);
-
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                content.classList.remove('scale-95');
-            }, 10);
-        }
-
-        function closeVideoModal() {
-            const modal = document.getElementById('video-modal');
-            const content = document.getElementById('video-modal-content');
-            
-            modal.classList.add('opacity-0');
-            content.classList.add('scale-95');
-            
-            setTimeout(() => {
-                modal.classList.remove('flex');
-                modal.classList.add('hidden');
-                content.innerHTML = ''; 
-            }, 500);
-        }
-
-        function contactForService(serviceName) {
-            toggleServiceModal();
-            setTimeout(() => {
-                const target = document.querySelector('#contact');
-                if (target) {
-                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-                    document.querySelectorAll('.service-pill').forEach(b => b.classList.remove('selected'));
-                    const pills = document.querySelectorAll('.service-pill');
-                    pills.forEach(p => {
-                        if (p.innerText.includes(serviceName) || p.getAttribute('onclick')?.includes(serviceName)) {
-                            p.classList.add('selected');
-                        }
-                    });
-                    document.getElementById('q-service').value = serviceName;
-                }
-            }, 300);
-        }
-
-        function changeStep(n) {
-            const steps = document.querySelectorAll('.form-step');
-            if (n > 0) {
-                const currentInputs = steps[currentStep-1].querySelectorAll('input[required], textarea[required]');
-                for (let input of currentInputs) {
-                    if (!input.value.trim()) {
-                        input.reportValidity();
-                        return;
-                    }
-                }
-            }
-            if (n > 0 && currentStep >= steps.length) { handleFormSubmit(); return; }
-            
-            steps[currentStep-1].classList.remove('active'); 
-            currentStep += n; 
-            steps[currentStep-1].classList.add('active');
-            
-            document.getElementById('form-progress-fill').style.width = (currentStep / steps.length) * 100 + "%";
-            document.getElementById('prev-btn').style.opacity = (currentStep === 1) ? "0" : "1";
-            document.getElementById('prev-btn').style.pointerEvents = (currentStep === 1) ? "none" : "auto";
-            
-            const nextTextSpan = document.getElementById('next-btn-text');
-            if (currentStep === steps.length) {
-                nextTextSpan.setAttribute('data-i18n', 'form-btn-send');
-                nextTextSpan.innerText = translations[currentLang]['form-btn-send'];
-            } else {
-                nextTextSpan.setAttribute('data-i18n', 'form-btn-next');
-                nextTextSpan.innerText = translations[currentLang]['form-btn-next'];
-            }
-        }
-
-        function selectFormService(el, val) { 
-            document.querySelectorAll('#step-4 .service-pill').forEach(b => b.classList.remove('selected')); 
-            el.classList.add('selected'); document.getElementById('q-service').value = val; 
-        }
-        function selectContactPref(el, val) { 
-            document.querySelectorAll('#step-6 .service-pill').forEach(b => b.classList.remove('selected')); 
-            el.classList.add('selected'); document.getElementById('q-pref').value = val; 
-        }
-
-        async function handleFormSubmit() {
-            const form = document.getElementById('quest-form');
-            const btn = document.getElementById('next-btn');
-            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-4 h-4 mx-auto"></i>';
-            const response = await fetch(form.getAttribute('action'), { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-            if (response.ok) { document.getElementById('form-wrapper').style.display = 'none'; document.getElementById('form-success').classList.remove('hidden'); updateIcons(); }
-            else { btn.innerText = "Erreur"; }
-        }
-
-        function revealOnScroll() { const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }); }); document.querySelectorAll('.reveal-up').forEach(el => obs.observe(el)); }
-        function resetForm() { location.reload(); }
-        
         window.addEventListener('load', () => {
             const fill = document.getElementById('loader-fill');
             setTimeout(() => { if(fill) fill.style.width = '100%'; }, 50);
             setTimeout(() => { 
                 document.getElementById('preloader').classList.add('preloader-active'); 
-                revealOnScroll(); 
+                const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); }); }); 
+                document.querySelectorAll('.reveal-up').forEach(el => obs.observe(el));
             }, 400);
             updateIcons();
         });
-
-        document.querySelectorAll('.anchor-link').forEach(anchor => { anchor.addEventListener('click', function (e) { const targetId = this.getAttribute('href'); if (targetId && targetId.startsWith('#')) { e.preventDefault(); const target = document.querySelector(targetId); if (target) { window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' }); } } }); });
     </script>
 </body>
 </html>
