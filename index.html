@@ -161,11 +161,10 @@
             </div>
 
             <!-- PREMIER PLAN : Vidéo flottante de Baymax (Couche 20) -->
-            <!-- Taille considérablement réduite : max-w-sm au lieu de max-w-3xl, et remonté légèrement -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[55%] md:-translate-y-[50%] w-[80vw] md:w-[40vw] max-w-sm md:max-w-md aspect-square flex items-center justify-center z-20 pointer-events-none">
+            <!-- J'ai baissé la position (-translate-y-[35%]) et j'ai déplacé le mix-blend-mode sur cette div pour contrer le bug de Safari -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[35%] w-[80vw] md:w-[40vw] max-w-sm md:max-w-md aspect-square flex items-center justify-center z-20 pointer-events-none animate-float-robot" style="mix-blend-mode: screen;">
                 
-                <!-- On enlève les filtres complexes et on garde juste la superposition simple -->
-                <video autoplay loop muted playsinline class="w-full h-full object-contain animate-float-robot" style="mix-blend-mode: screen;">
+                <video autoplay loop muted playsinline class="w-full h-full object-contain">
                     <source src="baymax-3.mp4" type="video/mp4">
                 </video>
 
