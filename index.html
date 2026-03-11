@@ -40,47 +40,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Script Tailwind -->
+    <!-- Script Tailwind (Pour un fonctionnement immédiat) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Fichier CSS personnalisé -->
+    <!-- Ton fichier CSS personnalisé -->
     <link href="./style.css" rel="stylesheet">
     
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* Animation de lévitation pour le bloc central */
-        @keyframes floatHero {
+        /* Animation de flottaison douce et luxueuse pour la vidéo */
+        @keyframes floatRobot {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-30px); }
         }
-        .animate-float-hero {
-            animation: floatHero 6s ease-in-out infinite;
-        }
-
-        /* Effet de texte métallique/liquide luxueux */
-        .jaad-premium-text {
-            background: linear-gradient(
-                to right, 
-                #ffffff 0%, 
-                #e0f2fe 20%, 
-                #38bdf8 40%, 
-                #1d4ed8 50%, 
-                #38bdf8 60%, 
-                #e0f2fe 80%, 
-                #ffffff 100%
-            );
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shineText 5s linear infinite;
-        }
-
-        @keyframes shineText {
-            to { background-position: 200% center; }
+        .animate-float-robot {
+            animation: floatRobot 6s ease-in-out infinite;
         }
     </style>
 </head>
@@ -114,6 +90,7 @@
             <i data-lucide="x" class="w-6 h-6"></i>
         </button>
         <div class="relative w-full max-w-6xl aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/20 scale-95 transition-transform duration-500 bg-black flex items-center justify-center" id="video-modal-content" onclick="event.stopPropagation()">
+            <!-- La vidéo clonée viendra s'insérer ici -->
         </div>
     </div>
 
@@ -178,33 +155,27 @@
                 <div class="cloud cloud-4"></div>
             </div>
 
-            <!-- TEXTE HERO MAGNIFIQUE (Remplace la vidéo) -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[55%] w-full flex items-center justify-center z-20 pointer-events-none">
+            <!-- ARRIÈRE-PLAN : Texte JAAD Géant (Couche 18) -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] md:-translate-y-[55%] w-full flex items-center justify-center z-[18] pointer-events-none">
+                <span class="text-[35vw] md:text-[22vw] font-black text-white/90 tracking-tighter leading-none select-none drop-shadow-2xl">JAAD</span>
+            </div>
+
+            <!-- PREMIER PLAN : Vidéo flottante magique (Couche 20) -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[35%] w-[80vw] md:w-[40vw] max-w-sm md:max-w-md aspect-square flex items-center justify-center z-20 pointer-events-none animate-float-robot" style="mix-blend-mode: screen;">
                 
-                <!-- Conteneur qui gère l'animation de flottaison -->
-                <div class="flex flex-col items-center justify-center animate-float-hero">
-                    
-                    <!-- Le bloc Texte JAAD -->
-                    <div class="relative flex justify-center w-full">
-                        <!-- L'Aura lumineuse floue en arrière-plan -->
-                        <span class="absolute top-0 text-center text-[38vw] md:text-[25vw] lg:text-[22vw] font-black tracking-tighter leading-none select-none blur-[40px] opacity-60 bg-gradient-to-r from-blue-600 to-sky-300 bg-clip-text text-transparent">JAAD</span>
-                        
-                        <!-- Le vrai texte avec l'effet métallique (shineText) -->
-                        <span class="relative block text-center text-[38vw] md:text-[25vw] lg:text-[22vw] font-black tracking-tighter leading-none select-none jaad-premium-text drop-shadow-[0_20px_30px_rgba(37,99,235,0.4)]">JAAD</span>
-                    </div>
-                    
-                    <!-- Le Badge Premium en verre -->
-                    <div class="mt-4 px-8 py-3 md:py-4 rounded-full border border-white/40 bg-white/20 backdrop-blur-xl text-white text-[10px] md:text-xs font-black uppercase tracking-[0.4em] shadow-[0_0_40px_rgba(56,189,248,0.5)] flex items-center gap-3">
-                        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-                        <span data-i18n="hero-badge-studio">Studio Créatif Premium</span>
-                    </div>
-                    
-                </div>
+                <!-- NOUVEAU : Aura lumineuse bleue qui respire derrière le robot -->
+                <div class="absolute inset-10 bg-blue-500/30 blur-[50px] rounded-full animate-[pulse_4s_ease-in-out_infinite] z-0"></div>
+
+                <!-- Vidéo canva.mp4 en boucle avec ombre holographique -->
+                <video autoplay loop muted playsinline class="w-full h-full object-contain relative z-10 transition-transform duration-700 hover:scale-105" style="filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.4));">
+                    <source src="canva.mp4" type="video/mp4">
+                </video>
+
             </div>
         </div>
         
         <!-- BOUTONS INTERACTIFS (Couche 30) -->
-        <div class="relative z-30 text-center px-6 mt-[40dvh] pointer-events-none">
+        <div class="relative z-30 text-center px-6 mt-[35dvh] pointer-events-none">
             <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active pointer-events-auto">
                 <a href="#contact" class="btn-premium btn-primary anchor-link"><span data-i18n="hero-btn">Parlons-en.</span> <i data-lucide="zap" class="w-4 h-4 fill-current"></i></a>
                 <a href="#portfolio" class="btn-premium btn-secondary anchor-link"><span data-i18n="hero-btn-secondary">Nos créations.</span></a>
@@ -337,6 +308,7 @@
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
                     
+                    <!-- Nouveau Bouton Play Centré Animé -->
                     <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                         <div class="relative w-16 h-16 flex items-center justify-center">
                             <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
@@ -352,13 +324,14 @@
                     </div>
                 </div>
 
-                <!-- Vidéo 2 -->
+                <!-- Vidéo 2 - preload="metadata" -->
                 <div class="md:col-span-4 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.1s" onclick="openVideoModal(this)">
                     <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video2.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
                     
+                    <!-- Nouveau Bouton Play Centré Animé -->
                     <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                         <div class="relative w-14 h-14 flex items-center justify-center">
                             <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
@@ -374,13 +347,14 @@
                     </div>
                 </div>
 
-                <!-- Vidéo 3 -->
+                <!-- Vidéo 3 - preload="metadata" -->
                 <div class="md:col-span-6 relative rounded-[2rem] overflow-hidden group h-[350px] md:h-[400px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.2s" onclick="openVideoModal(this)">
                     <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video3.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
                     
+                    <!-- Nouveau Bouton Play Centré Animé -->
                     <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                         <div class="relative w-14 h-14 flex items-center justify-center">
                             <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
@@ -396,13 +370,14 @@
                     </div>
                 </div>
 
-                <!-- Vidéo 4 -->
+                <!-- Vidéo 4 - preload="metadata" -->
                 <div class="md:col-span-6 relative rounded-[2rem] overflow-hidden group h-[350px] md:h-[400px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.3s" onclick="openVideoModal(this)">
                     <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video4.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
                     
+                    <!-- Nouveau Bouton Play Centré Animé -->
                     <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                         <div class="relative w-14 h-14 flex items-center justify-center">
                             <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
@@ -567,6 +542,7 @@
                     </form>
                 </div>
 
+                <!-- Nouveau bouton vers le devis en ligne -->
                 <div class="mt-10 pt-10 border-t border-white/10 text-center reveal-up">
                     <p class="text-slate-400 font-medium mb-6" data-i18n="form-direct-quote-title">Vous savez déjà ce que vous voulez ?</p>
                     <a href="https://devis.jaad.studio" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/5 hover:bg-blue-600 border border-white/10 hover:border-blue-500 text-white rounded-full font-black uppercase text-[11px] tracking-widest transition-all hover:scale-105 shadow-2xl group">
@@ -653,8 +629,7 @@
                 "vid2-tag": "Studio 3D", "vid2-title": "Modélisation Produit",
                 "vid3-tag": "IA Solutions", "vid3-title": "Assistant Virtuel",
                 "vid4-tag": "App Mobile", "vid4-title": "Application iOS native",
-                "portfolio-btn": "Discuter de votre projet",
-                "hero-badge-studio": "Studio Créatif Premium"
+                "portfolio-btn": "Discuter de votre projet"
             },
             en: { 
                 "nav-expertise": "Expertise", "nav-methode": "Method", "nav-realisations": "Case Study", "nav-contact-btn": "Contact", "nav-close": "Close", "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.", "hero-btn-quote": "Generate a quote", "hero-badge-new": "New", "exp-title-marquee": "We create for you. E-learning. AI.", "showcase-tag": "Case Study", "showcase-title": "Custom AI Robot.", "showcase-desc": "Here is an example of an interactive 3D virtual agent we created for an innovative tech company.", "showcase-info": "Each project is confidential. Contact us to discover our other private projects.", "showcase-cta": "Request our references", "form-name": "Your name?", "form-email": "Your email?", "form-phone": "Your phone?", "form-service": "Which service?", "form-desc": "Description", "form-btn-next": "Next", "form-btn-prev": "Back", "form-btn-send": "Send", "form-btn-back": "Back to site", "chat-tooltip": "Ask your questions !", "chat-welcome": "Hello! I am JAAD AI. How can I help you?", "modal-btn-start": "Start my project", "modal-btn-close": "Close", "form-ph-name": "Full name", "form-ph-email": "your@email.com", "form-ph-phone": "Phone number...", "form-ph-desc": "Describe your project...", "faq-tag": "06. FAQ", "faq-title": "Frequently Asked Questions.", "faq-q1": "Why integrate 3D on my website?", "faq-a1": "3D offers an immersive experience that captures attention, increases time spent on your site, and significantly improves conversion rates. It is a major SEO asset.", "faq-q2": "How can AI optimize my business?", "faq-a2": "We develop smart chatbots and automate your workflows. This provides 24/7 customer support, reduces costs, and accelerates growth.", "faq-q3": "What is the timeframe for a custom web project?", "faq-a3": "A premium website with 3D integration and SEO usually takes between 4 to 8 weeks, depending on complexity and required features.",
@@ -677,8 +652,7 @@
                 "vid2-tag": "3D Studio", "vid2-title": "Product Modeling",
                 "vid3-tag": "AI Solutions", "vid3-title": "Virtual Assistant",
                 "vid4-tag": "Mobile App", "vid4-title": "Native iOS Application",
-                "portfolio-btn": "Discuss your project",
-                "hero-badge-studio": "Premium Creative Studio"
+                "portfolio-btn": "Discuss your project"
             },
             ar: {
                 "nav-expertise": "خبرة", "nav-methode": "طريقة", "nav-realisations": "دراسة حالة", "nav-contact-btn": "اتصال", "nav-close": "إغلاق", "hero-btn": "دعنا نتحدث.", "hero-btn-secondary": "أعمالنا.", "hero-btn-quote": "إنشاء عرض أسعار", "hero-badge-new": "جديد", "exp-title-marquee": "نبتكر من أجلك. تعليم إلكتروني. ذكاء اصطناعي.", "showcase-tag": "دراسة حالة", "showcase-title": "روبوت ذكاء اصطناعي مخصص.", "showcase-desc": "إليك مثال على وكيل افتراضي ثلاثي الأبعاد تفاعلي أنشأناه لشركة تكنولوجيا مبتكرة.", "showcase-info": "كل مشروع سري. اتصل بنا لاكتشاف مشاريعنا الخاصة الأخرى.", "showcase-cta": "اطلب مراجعنا", "form-name": "ما اسمك؟", "form-email": "بريدك الإلكتروني؟", "form-phone": "رقم هاتفك؟", "form-service": "أي خدمة؟", "form-desc": "وصف", "form-btn-next": "التالي", "form-btn-prev": "رجوع", "form-btn-send": "إرسال", "form-btn-back": "العودة للموقع", "chat-tooltip": "اطرح أسئلتك!", "chat-welcome": "مرحباً! أنا JAAD AI. كيف يمكنني مساعدتك؟", "modal-btn-start": "ابدأ مشروعي", "modal-btn-close": "إغلاق", "form-ph-name": "الاسم الكامل", "form-ph-email": "your@email.com", "form-ph-phone": "رقم الهاتف...", "form-ph-desc": "صف مشروعك...", "faq-tag": "06. الأسئلة الشائعة", "faq-title": "الأسئلة المتداولة.", "faq-q1": "لماذا أدمج 3D في موقعي؟", "faq-a1": "يوفر 3D تجربة غامرة تجذب الانتباه، وتزيد من الوقت المنقضي على موقعك، وتحسن معدلات التحويل بشكل كبير. إنه أصل رئيسي لتحسين محركات البحث.", "faq-q2": "كيف يمكن للذكاء الاصطناعي تحسين عملي؟", "faq-a2": "نطور روبوتات محادثة ذكية وندير أتمتة عملياتك. يوفر هذا دعمًا للعملاء على مدار الساعة طوال أيام الأسبوع ويسرع من نموك.", "faq-q3": "ما هو الإطار الزمني لمشروع ويب مخصص؟", "faq-a3": "يستغرق الموقع المتميز مع دمج 3D و SEO عادةً من 4 إلى 8 أسابيع، اعتمادًا على التعقيد والميزات المطلوبة.",
@@ -701,8 +675,7 @@
                 "vid2-tag": "استوديو 3D", "vid2-title": "نمذجة المنتجات",
                 "vid3-tag": "حلول ذكاء اصطناعي", "vid3-title": "مساعد افتراضي",
                 "vid4-tag": "تطبيق جوال", "vid4-title": "تطبيق iOS أصلي",
-                "portfolio-btn": "ناقش مشروعك",
-                "hero-badge-studio": "استوديو إبداعي متميز"
+                "portfolio-btn": "ناقش مشروعك"
             }
         };
 
