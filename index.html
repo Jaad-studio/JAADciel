@@ -160,12 +160,15 @@
                 <span class="text-[35vw] md:text-[22vw] font-black text-white/90 tracking-tighter leading-none select-none drop-shadow-2xl">JAAD</span>
             </div>
 
-            <!-- PREMIER PLAN : Vidéo flottante de Baymax (Couche 20) -->
-            <!-- J'ai baissé la position (-translate-y-[35%]) et j'ai déplacé le mix-blend-mode sur cette div pour contrer le bug de Safari -->
+            <!-- PREMIER PLAN : Vidéo flottante magique (Couche 20) -->
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[35%] w-[80vw] md:w-[40vw] max-w-sm md:max-w-md aspect-square flex items-center justify-center z-20 pointer-events-none animate-float-robot" style="mix-blend-mode: screen;">
                 
-                <video autoplay loop muted playsinline class="w-full h-full object-contain">
-                    <source src="baymax-3.mp4" type="video/mp4">
+                <!-- NOUVEAU : Aura lumineuse bleue qui respire derrière le robot -->
+                <div class="absolute inset-10 bg-blue-500/30 blur-[50px] rounded-full animate-[pulse_4s_ease-in-out_infinite] z-0"></div>
+
+                <!-- Vidéo canva.mp4 en boucle avec ombre holographique -->
+                <video autoplay loop muted playsinline class="w-full h-full object-contain relative z-10 transition-transform duration-700 hover:scale-105" style="filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.4));">
+                    <source src="canva.mp4" type="video/mp4">
                 </video>
 
             </div>
