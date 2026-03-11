@@ -39,7 +39,6 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://my.spline.design">
 
     <!-- Script Tailwind (Pour un fonctionnement immédiat) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -49,6 +48,17 @@
     
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Animation de flottaison douce et luxueuse pour la vidéo */
+        @keyframes floatRobot {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+        .animate-float-robot {
+            animation: floatRobot 6s ease-in-out infinite;
+        }
+    </style>
 </head>
 <body class="relative">
 
@@ -145,16 +155,20 @@
                 <div class="cloud cloud-4"></div>
             </div>
 
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[140vw] md:w-full h-full flex items-center justify-center">
-                <!-- Iframe avec chargement fainéant (lazy) pour améliorer la vitesse -->
-                <iframe id="hero-spline" 
-                        src='https://my.spline.design/baymaxinlove-EmcbFPi0lep1BCpAqecwkQ7T/' 
-                        loading="lazy"
-                        frameborder='0' width="100%" height="100%"
-                        class="opacity-0 transition-opacity duration-1000 relative z-20" 
-                        onload="this.style.opacity='1'"></iframe>
+            <!-- ARRIÈRE-PLAN : Texte JAAD Géant (Couche 18) -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] md:-translate-y-[55%] w-full flex items-center justify-center z-[18] pointer-events-none">
+                <span class="text-[35vw] md:text-[22vw] font-black text-white/90 tracking-tighter leading-none select-none drop-shadow-2xl">JAAD</span>
+            </div>
+
+            <!-- PREMIER PLAN : Vidéo flottante de Baymax (Couche 20) -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[120vw] md:w-[80vw] max-w-3xl h-full flex items-center justify-center z-20 pointer-events-none">
+                <video autoplay loop muted playsinline class="w-full h-full object-contain animate-float-robot" style="filter: drop-shadow(0 30px 40px rgba(37, 99, 235, 0.2)); mix-blend-mode: screen;">
+                    <source src="baymax.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
+        
+        <!-- BOUTONS INTERACTIFS (Couche 30) -->
         <div class="relative z-30 text-center px-6 mt-[35dvh] pointer-events-none">
             <div class="flex flex-col md:flex-row gap-5 justify-center reveal-up active pointer-events-auto">
                 <a href="#contact" class="btn-premium btn-primary anchor-link"><span data-i18n="hero-btn">Parlons-en.</span> <i data-lucide="zap" class="w-4 h-4 fill-current"></i></a>
