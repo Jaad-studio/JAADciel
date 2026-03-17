@@ -302,7 +302,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
                 <!-- Vidéo 1 (Large) - preload="metadata" pour les performances -->
-                <div class="md:col-span-12 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" onclick="openVideoModal(this)">
+                <div class="md:col-span-8 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" onclick="openVideoModal(this)">
                     <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video1.mp4#t=0.1" type="video/mp4">
                     </video>
@@ -319,13 +319,13 @@
                     </div>
 
                     <div class="absolute bottom-0 left-0 p-8 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest mb-4" data-i18n="vid1-tag">E-commerce</div>
-                        <h3 class="text-3xl md:text-4xl text-white font-black tracking-tighter" data-i18n="vid1-title">Vente de Drones</h3>
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest mb-4" data-i18n="vid1-tag">Web Immersif</div>
+                        <h3 class="text-3xl md:text-4xl text-white font-black tracking-tighter" data-i18n="vid1-title">Plateforme E-commerce 3D</h3>
                     </div>
                 </div>
 
                 <!-- Vidéo 2 - preload="metadata" -->
-                <div class="md:col-span-6 relative rounded-[2rem] overflow-hidden group h-[350px] md:h-[400px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.1s" onclick="openVideoModal(this)">
+                <div class="md:col-span-4 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.1s" onclick="openVideoModal(this)">
                     <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                         <source src="video2.mp4#t=0.1" type="video/mp4">
                     </video>
@@ -342,8 +342,8 @@
                     </div>
 
                     <div class="absolute bottom-0 left-0 p-8 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500 text-white text-[10px] font-black uppercase tracking-widest mb-4" data-i18n="vid2-tag">E-commerce</div>
-                        <h3 class="text-2xl text-white font-black tracking-tighter" data-i18n="vid2-title">Boutique de Lampes</h3>
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500 text-white text-[10px] font-black uppercase tracking-widest mb-4" data-i18n="vid2-tag">Studio 3D</div>
+                        <h3 class="text-2xl text-white font-black tracking-tighter" data-i18n="vid2-title">Modélisation Produit</h3>
                     </div>
                 </div>
 
@@ -365,8 +365,31 @@
                     </div>
 
                     <div class="absolute bottom-0 left-0 p-6 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500 text-white text-[9px] font-black uppercase tracking-widest mb-3" data-i18n="vid3-tag">Site Web</div>
-                        <h3 class="text-xl text-white font-black tracking-tighter" data-i18n="vid3-title">Agence de Voyage</h3>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500 text-white text-[9px] font-black uppercase tracking-widest mb-3" data-i18n="vid3-tag">IA Solutions</div>
+                        <h3 class="text-xl text-white font-black tracking-tighter" data-i18n="vid3-title">Assistant Virtuel</h3>
+                    </div>
+                </div>
+
+                <!-- Vidéo 4 - preload="metadata" -->
+                <div class="md:col-span-6 relative rounded-[2rem] overflow-hidden group h-[350px] md:h-[400px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.3s" onclick="openVideoModal(this)">
+                    <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                        <source src="video4.mp4#t=0.1" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+                    
+                    <!-- Nouveau Bouton Play Centré Animé -->
+                    <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                        <div class="relative w-14 h-14 flex items-center justify-center">
+                            <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
+                            <div class="relative w-14 h-14 bg-white/20 backdrop-blur-md border border-white/40 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-white/30">
+                                <i data-lucide="play" class="w-5 h-5 ml-1 fill-white"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 p-6 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500 text-white text-[9px] font-black uppercase tracking-widest mb-3" data-i18n="vid4-tag">App Mobile</div>
+                        <h3 class="text-xl text-white font-black tracking-tighter" data-i18n="vid4-title">Application iOS native</h3>
                     </div>
                 </div>
             </div>
@@ -602,9 +625,10 @@
                 "form-success-title": "Message envoyé !", "form-success-desc": "L'équipe JAAD Studio vous répondra très rapidement.", "footer-rights": "© 2026 JAAD Studio. Tous droits réservés.",
                 "form-direct-quote-title": "Vous savez déjà ce que vous voulez ?", "form-direct-quote-btn": "Générer mon devis en ligne", "chat-btn-quote": "📝 Générer mon devis immédiat",
                 "portfolio-title": "Nos Réalisations.", "portfolio-desc": "Découvrez nos derniers projets : de la conception 3D aux plateformes web immersives.",
-                "vid1-tag": "E-commerce", "vid1-title": "Vente de Drones",
-                "vid2-tag": "E-commerce", "vid2-title": "Boutique de Lampes",
-                "vid3-tag": "Site Web", "vid3-title": "Agence de Voyage",
+                "vid1-tag": "Web Immersif", "vid1-title": "Plateforme E-commerce 3D",
+                "vid2-tag": "Studio 3D", "vid2-title": "Modélisation Produit",
+                "vid3-tag": "IA Solutions", "vid3-title": "Assistant Virtuel",
+                "vid4-tag": "App Mobile", "vid4-title": "Application iOS native",
                 "portfolio-btn": "Discuter de votre projet"
             },
             en: { 
@@ -624,9 +648,10 @@
                 "form-success-title": "Message sent!", "form-success-desc": "The JAAD Studio team will reply very soon.", "footer-rights": "© 2026 JAAD Studio. All rights reserved.",
                 "form-direct-quote-title": "Already know what you want?", "form-direct-quote-btn": "Generate my quote online", "chat-btn-quote": "📝 Generate my instant quote",
                 "portfolio-title": "Our Works.", "portfolio-desc": "Discover our latest projects: from 3D design to immersive web platforms.",
-                "vid1-tag": "E-commerce", "vid1-title": "Drone Sales",
-                "vid2-tag": "E-commerce", "vid2-title": "Lamp Store",
-                "vid3-tag": "Website", "vid3-title": "Travel Agency",
+                "vid1-tag": "Immersive Web", "vid1-title": "3D E-commerce Platform",
+                "vid2-tag": "3D Studio", "vid2-title": "Product Modeling",
+                "vid3-tag": "AI Solutions", "vid3-title": "Virtual Assistant",
+                "vid4-tag": "Mobile App", "vid4-title": "Native iOS Application",
                 "portfolio-btn": "Discuss your project"
             },
             ar: {
@@ -646,9 +671,10 @@
                 "form-success-title": "تم إرسال الرسالة!", "form-success-desc": "سيرد عليك فريق استوديو جاد قريبًا جدًا.", "footer-rights": "© 2026 استوديو جاد. جميع الحقوق محفوظة.",
                 "form-direct-quote-title": "هل تعرف بالفعل ما تريد؟", "form-direct-quote-btn": "إنشاء عرض الأسعار الخاص بي عبر الإنترنت", "chat-btn-quote": "📝 إنشاء عرض الأسعار الفوري الخاص بي",
                 "portfolio-title": "أعمالنا.", "portfolio-desc": "اكتشف أحدث مشاريعنا: من التصميم ثلاثي الأبعاد إلى منصات الويب الغامرة.",
-                "vid1-tag": "تجارة إلكترونية", "vid1-title": "بيع طائرات بدون طيار",
-                "vid2-tag": "تجارة إلكترونية", "vid2-title": "متجر مصابيح",
-                "vid3-tag": "موقع إلكتروني", "vid3-title": "وكالة سفر",
+                "vid1-tag": "ويب غامر", "vid1-title": "منصة تجارة إلكترونية 3D",
+                "vid2-tag": "استوديو 3D", "vid2-title": "نمذجة المنتجات",
+                "vid3-tag": "حلول ذكاء اصطناعي", "vid3-title": "مساعد افتراضي",
+                "vid4-tag": "تطبيق جوال", "vid4-title": "تطبيق iOS أصلي",
                 "portfolio-btn": "ناقش مشروعك"
             }
         };
