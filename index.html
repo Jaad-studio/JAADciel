@@ -160,9 +160,16 @@
                 <span class="text-[35vw] md:text-[22vw] font-black text-white/90 tracking-tighter leading-none select-none drop-shadow-2xl">JAAD</span>
                 
                 <!-- PREMIER PLAN : Spline interactif (Couche 20) calé au milieu des AA -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-[65%] -translate-y-[65%] w-[160vw] h-[120vh] md:w-[130vw] md:h-[130vh] flex items-center justify-center z-[20] pointer-events-auto animate-float-robot">
-                    <div class="absolute right-[25%] bottom-[25%] w-64 h-64 bg-blue-500/20 blur-[60px] rounded-full animate-[pulse_4s_ease-in-out_infinite] z-0 pointer-events-none"></div>
-                    <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-OArcR9pKQjuBWHStsuxQ9MZO/" frameborder="0" width="100%" height="100%" class="w-full h-full relative z-10 scale-125 md:scale-110" style="filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.4));"></iframe>
+                <div class="absolute top-1/2 left-1/2 w-full h-full pointer-events-none z-[20] flex items-center justify-center" style="transform: translate(-50%, -55%);">
+                    <div class="w-full h-full animate-float-robot flex items-center justify-center relative">
+                        <!-- Aura lumineuse -->
+                        <div class="absolute w-64 h-64 md:w-96 md:h-96 bg-blue-500/20 blur-[80px] rounded-full z-0 pointer-events-none"></div>
+                        
+                        <!-- Wrapper d'offset pour corriger le centrage interne du Spline -->
+                        <div class="relative w-[100vw] h-[100vh] md:w-[70vw] md:h-[80vh] pointer-events-auto" style="transform: translate(-25%, -30%) scale(1.5);">
+                            <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-OArcR9pKQjuBWHStsuxQ9MZO/" frameborder="0" width="100%" height="100%" class="w-full h-full relative z-10" style="filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.3));"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
