@@ -160,9 +160,9 @@
                 <span class="text-[35vw] md:text-[22vw] font-black text-white/90 tracking-tighter leading-none select-none drop-shadow-2xl">JAAD</span>
                 
                 <!-- PREMIER PLAN : Spline interactif (Couche 20) calé au milieu des AA -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[100vw] h-[60vh] md:w-[70vw] md:h-[80vh] flex items-center justify-center z-[20] pointer-events-auto animate-float-robot">
-                    <div class="absolute inset-x-10 inset-y-5 bg-blue-500/20 blur-[60px] rounded-full animate-[pulse_4s_ease-in-out_infinite] z-0 pointer-events-none"></div>
-                    <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-OArcR9pKQjuBWHStsuxQ9MZO/" frameborder="0" width="100%" height="100%" class="w-full h-full relative z-10" style="filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.4));"></iframe>
+                <div class="absolute top-1/2 left-1/2 -translate-x-[65%] -translate-y-[65%] w-[160vw] h-[120vh] md:w-[130vw] md:h-[130vh] flex items-center justify-center z-[20] pointer-events-auto animate-float-robot">
+                    <div class="absolute right-[25%] bottom-[25%] w-64 h-64 bg-blue-500/20 blur-[60px] rounded-full animate-[pulse_4s_ease-in-out_infinite] z-0 pointer-events-none"></div>
+                    <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-OArcR9pKQjuBWHStsuxQ9MZO/" frameborder="0" width="100%" height="100%" class="w-full h-full relative z-10 scale-125 md:scale-110" style="filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.4));"></iframe>
                 </div>
             </div>
         </div>
@@ -659,9 +659,10 @@
 
         RÈGLES DE CONVERSION (TRÈS STRICTES) :
         1. Sois hyper intelligent, naturel, empathique et brillant. 
-        2. Tu peux répondre à ses questions ou l'aider, mais dirige subtilement la conversation vers un projet digital.
-        3. Quand le prospect semble prêt ou intéressé, termine OBLIGATOIREMENT ton message par ce mot-clé exact : [BOUTON_DEVIS], cela affichera le bouton pour générer un devis.
-        4. Aucun formatage Markdown (ni gras, ni astérisques).`;
+        2. EXTRÊME CONCISION OBLIGATOIRE : Tes réponses DOIVENT faire entre 1 SEULE phrase courte et un MAXIMUM ABSOLU de 2 phrases. Jamais de longs textes. Sois concis.
+        3. Tu peux répondre à ses questions ou l'aider, mais dirige subtilement la conversation vers un projet digital.
+        4. Quand le prospect semble prêt ou intéressé, termine OBLIGATOIREMENT ton message par ce mot-clé exact : [BOUTON_DEVIS], cela affichera le bouton pour générer un devis.
+        5. Aucun formatage Markdown (ni gras, ni astérisques).`;
 
         async function sendChatMessage() {
             const input = document.getElementById('chat-input'); 
