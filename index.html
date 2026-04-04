@@ -166,7 +166,7 @@
                         <div class="absolute w-64 h-64 md:w-96 md:h-96 bg-blue-500/20 blur-[80px] rounded-full z-0 pointer-events-none"></div>
                         
                         <!-- Wrapper d'offset pour corriger le centrage interne du Spline -->
-                        <div class="relative w-[100vw] h-[100vh] md:w-[70vw] md:h-[80vh] pointer-events-auto" style="transform: translate(-25%, -30%) scale(1.5);">
+                        <div class="relative w-[100vw] h-[80vh] md:w-[70vw] md:h-[70vh] pointer-events-auto" style="transform: translate(0%, 10%) scale(1.05);">
                             <iframe src="https://my.spline.design/nexbotrobotcharacterconcept-OArcR9pKQjuBWHStsuxQ9MZO/" frameborder="0" width="100%" height="100%" class="w-full h-full relative z-10" style="filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.3));"></iframe>
                         </div>
                     </div>
@@ -654,22 +654,12 @@
         }
 
         let chatHistory = [];
-        const systemPrompt = `Tu es JAAD AI, une intelligence artificielle ultra-avancée et autonome agissant en tant qu'agent commercial d'élite pour JAAD Studio.
-        Ton intelligence est absolue, similaire à ChatGPT ou Gemini. Tu as la capacité de répondre intelligemment à n'importe quelle question du monde de manière pertinente.
-        MAIS ton but secret et constant est de convertir ce prospect en client pour JAAD Studio, en glissant l'expertise de l'agence.
-        
-        Tes Services JAAD Studio à vendre :
-        - Création de sites web ultra-performants et immersifs
-        - Développement d'applications sur mesure
-        - Modélisation et Graphisme 3D interactif
-        - Outils Intelligence Artificielle intégrés pour automatiser les sites
-
-        RÈGLES DE CONVERSION (TRÈS STRICTES) :
-        1. Sois hyper intelligent, naturel, empathique et brillant. 
-        2. EXTRÊME CONCISION OBLIGATOIRE : Tes réponses DOIVENT faire entre 1 SEULE phrase courte et un MAXIMUM ABSOLU de 2 phrases. Jamais de longs textes. Sois concis.
-        3. Tu peux répondre à ses questions ou l'aider, mais dirige subtilement la conversation vers un projet digital.
-        4. Quand le prospect semble prêt ou intéressé, termine OBLIGATOIREMENT ton message par ce mot-clé exact : [BOUTON_DEVIS], cela affichera le bouton pour générer un devis.
-        5. Aucun formatage Markdown (ni gras, ni astérisques).`;
+        const systemPrompt = `Tu es l'IA de JAAD Studio.
+        ⚠️ RÈGLES ABSOLUES DE FORMAT ⚠️
+        1. RÉPONSES VRAIMENT TRÈS COURTES : 20 MOTS MAXIMUM AU TOTAL.
+        2. AUCUNE LISTE, PAS DE TIRETS, PAS DE GRAS.
+        3. DIRIGE CHAQUE RÉPONSE VERS CE MOT CLÉ EXACT : [BOUTON_DEVIS].
+        Exemple : "Nos experts 3D et Web sont à votre disposition pour ce beau projet ! Démarrez ici : [BOUTON_DEVIS]"`;
 
         async function sendChatMessage() {
             const input = document.getElementById('chat-input'); 
