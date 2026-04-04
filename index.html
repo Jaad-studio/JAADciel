@@ -197,26 +197,65 @@
         <div class="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#f9f9fb] to-transparent z-40 pointer-events-none"></div>
     </header>
 
-    <section id="services" class="py-32 px-6">
-        <div class="marquee-wrapper mb-20">
-            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-20">
-                <span data-i18n="exp-title-marquee">On crée pour vous. E-learning. IA.</span>
-                <span data-i18n="exp-title-marquee">On crée pour vous. E-learning. IA.</span>
+    <section id="services" class="py-32 px-4 md:px-6 relative overflow-hidden bg-slate-50">
+        <!-- Decors dynamiques -->
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(37,99,235,0.05),transparent_70%)] pointer-events-none"></div>
+        <div class="absolute top-1/2 -left-32 w-96 h-96 bg-blue-400/10 blur-[100px] rounded-full mix-blend-multiply pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-sky-300/10 blur-[120px] rounded-full mix-blend-multiply pointer-events-none"></div>
+
+        <div class="marquee-wrapper mb-24">
+            <div class="marquee-content text-6xl md:text-9xl font-black uppercase tracking-tighter text-blue-600 opacity-[0.03]">
+                <span data-i18n="exp-title-marquee">Sites Web. Applications. Graphisme 3D. IA.</span>
+                <span data-i18n="exp-title-marquee">Sites Web. Applications. Graphisme 3D. IA.</span>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto bento-grid relative z-20">
-            <article class="md:col-span-3 bento-item reveal-up" onclick="openServiceDetail('web')">
-                <span class="tag" data-i18n="tag-web">01. Web</span>
-                <h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-web-title">Web Design Immersif</h3>
-                <p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-web-desc">Sites immersifs et SEO performant.</p>
-                <div class="mt-8 text-blue-600 font-bold text-xs uppercase flex items-center gap-2"><span data-i18n="serv-cta-web">Voir plus</span> <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-            </article>
-            <article class="md:col-span-3 bento-item reveal-up" style="transition-delay: 0.1s" onclick="openServiceDetail('learning')">
-                <span class="tag" data-i18n="tag-learning">02. Learning</span>
-                <h3 class="text-3xl font-black mb-6 text-blue-600" data-i18n="serv-learn-title">E-learning</h3>
-                <p class="text-slate-600 font-medium leading-relaxed" data-i18n="serv-learn-desc">Plateformes de formation interactives.</p>
-                <div class="mt-8 text-blue-600 font-bold text-xs uppercase flex items-center gap-2"><span data-i18n="serv-cta-learn">Apprendre</span> <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
-            </article>
+        
+        <div class="max-w-7xl mx-auto relative z-20">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- 1. Sites Web (Large) -->
+                <article class="md:col-span-8 group relative bg-white hover:bg-white/90 border border-slate-100 rounded-[40px] p-10 md:p-14 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-2xl hover:shadow-blue-500/10 overflow-hidden cursor-pointer reveal-up" onclick="openServiceDetail('web')">
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-blue-500/5 blur-[50px] rounded-full group-hover:scale-150 transition-all duration-700"></div>
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-[10px] font-black uppercase tracking-widest mb-8 shadow-sm">01. Sites Web</span>
+                    <h3 class="text-4xl md:text-5xl font-black mb-6 text-slate-900 group-hover:text-blue-600 transition-colors tracking-tight">Développement Web</h3>
+                    <p class="text-slate-500 text-lg font-medium leading-relaxed max-w-xl">Création de sites vitrines et e-commerce ultra-performants, immersifs et optimisés pour la conversion.</p>
+                    <div class="absolute bottom-10 right-10 w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                    </div>
+                </article>
+
+                <!-- 2. Applications (Small) -->
+                <article class="md:col-span-4 group relative bg-white hover:bg-white/90 border border-slate-100 rounded-[40px] p-10 mt-0 lg:mt-12 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-2xl hover:shadow-indigo-500/10 overflow-hidden cursor-pointer reveal-up" style="transition-delay: 0.1s;" onclick="openServiceDetail('web')">
+                    <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-indigo-500/5 blur-[40px] rounded-full group-hover:scale-150 transition-all duration-700"></div>
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-[10px] font-black uppercase tracking-widest mb-8 shadow-sm">02. App</span>
+                    <h3 class="text-3xl font-black mb-4 text-slate-900 group-hover:text-indigo-600 transition-colors tracking-tight">Applications</h3>
+                    <p class="text-slate-500 font-medium leading-relaxed text-lg">Web-apps fonctionnelles et solutions logicielles métiers sur mesure.</p>
+                    <div class="absolute top-10 right-10 w-12 h-12 rounded-2xl bg-white border border-slate-100 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all shadow-sm">
+                        <i data-lucide="smartphone" class="w-5 h-5"></i>
+                    </div>
+                </article>
+
+                <!-- 3. Outils IA (Small) -->
+                <article class="md:col-span-4 group relative bg-gradient-to-br from-slate-900 to-blue-950 hover:to-blue-900 border border-slate-800 rounded-[40px] p-10 transition-all duration-500 shadow-2xl hover:shadow-blue-900/40 overflow-hidden cursor-pointer reveal-up" style="transition-delay: 0.2s;" onclick="openServiceDetail('web')">
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50"></div>
+                    <div class="relative z-10">
+                        <span class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-[10px] font-black uppercase tracking-widest mb-8">03. Intelligence</span>
+                        <h3 class="text-3xl font-black mb-4 text-white group-hover:text-blue-300 transition-colors tracking-tight">Outils IA</h3>
+                        <p class="text-slate-400 font-medium leading-relaxed">Intégration d'agents intelligents et automatisation IA pour convertir vos leads.</p>
+                        <div class="mt-8 flex items-center text-blue-400 font-bold text-sm uppercase tracking-widest gap-2 group-hover:gap-4 transition-all">Explorer <i data-lucide="arrow-right" class="w-4 h-4"></i></div>
+                    </div>
+                </article>
+
+                <!-- 4. Graphisme 3D (Large) -->
+                <article class="md:col-span-8 group relative bg-white hover:bg-white/90 border border-slate-100/50 hover:border-sky-200 rounded-[40px] p-10 md:p-14 mb-0 lg:-mt-12 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-2xl hover:shadow-sky-500/10 overflow-hidden cursor-pointer reveal-up" style="transition-delay: 0.3s;" onclick="openServiceDetail('web')">
+                    <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-sky-500/5 blur-[50px] rounded-full group-hover:scale-150 transition-all duration-700"></div>
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-sky-50 border border-sky-100 text-sky-600 text-[10px] font-black uppercase tracking-widest mb-8 shadow-sm">04. Création</span>
+                    <h3 class="text-4xl md:text-5xl font-black mb-6 text-slate-900 group-hover:text-sky-500 transition-colors tracking-tight">Graphismes 3D</h3>
+                    <p class="text-slate-500 text-lg font-medium leading-relaxed max-w-xl">Conception de modélisations WebGL interactives sur mesure pour bluffer vos futurs clients.</p>
+                    <div class="absolute bottom-10 right-10 w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-white transition-all shadow-sm">
+                        <i data-lucide="box" class="w-6 h-6"></i>
+                    </div>
+                </article>
+            </div>
         </div>
     </section>
 
@@ -299,73 +338,31 @@
                 <p class="text-slate-500 mt-6 max-w-2xl mx-auto text-lg font-medium" data-i18n="portfolio-desc">Découvrez nos derniers projets : de la conception 3D aux plateformes web immersives.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-                <!-- Vidéo 1 (Drone) -->
-                <div class="md:col-span-12 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" onclick="openVideoModal(this)">
-                    <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
-                        <source src="video1.mp4#t=0.1" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                    
-                    <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                        <div class="relative w-16 h-16 flex items-center justify-center">
-                            <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
-                            <div class="relative w-16 h-16 bg-white/20 backdrop-blur-md border border-white/40 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-white/30">
-                                <i data-lucide="play" class="w-6 h-6 ml-1 fill-white"></i>
-                            </div>
+            <div class="md:mx-auto max-w-5xl relative rounded-[40px] overflow-hidden group bg-white border border-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.03)] hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-700 reveal-up">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.05),transparent_50%)] pointer-events-none"></div>
+
+                <div class="relative p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-10">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-8 text-center sm:text-left">
+                        <div class="shrink-0 w-24 h-24 md:w-28 md:h-28 bg-slate-50 border border-slate-100 rounded-3xl flex items-center justify-center relative shadow-inner group-hover:-translate-y-2 group-hover:rotate-6 transition-all duration-500">
+                            <!-- Instagram Symbol with very subtle colors -->
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-800 transition-transform group-hover:scale-110 duration-500">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="inline-block px-4 py-1.5 rounded-full bg-slate-50 text-slate-600 text-[10px] font-black uppercase tracking-widest mb-4 border border-slate-100">Galerie</span>
+                            <h3 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter mb-4">Voir nos réalisations</h3>
+                            <p class="text-slate-500 font-medium text-lg leading-relaxed max-w-md">Découvrez en avant-première nos projets web et modélisations sur Instagram.</p>
                         </div>
                     </div>
-
-                    <div class="absolute bottom-0 left-0 p-8 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500 text-white text-[10px] font-black uppercase tracking-widest mb-4" data-i18n="vid1-tag">Web Immersif</div>
-                        <h3 class="text-3xl md:text-4xl text-white font-black tracking-tighter" data-i18n="vid1-title">Plateforme E-commerce 3D</h3>
-                    </div>
-                </div>
-
-                <!-- Vidéo 5 -->
-                <div class="md:col-span-7 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" onclick="openVideoModal(this)">
-                    <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
-                        <source src="video5.mp4#t=0.1" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
                     
-                    <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                        <div class="relative w-16 h-16 flex items-center justify-center">
-                            <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
-                            <div class="relative w-16 h-16 bg-white/20 backdrop-blur-md border border-white/40 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-white/30">
-                                <i data-lucide="play" class="w-6 h-6 ml-1 fill-white"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="absolute bottom-0 left-0 p-8 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest mb-4" data-i18n="vid3-tag">Production Vidéo</div>
-                        <h3 class="text-3xl md:text-4xl text-white font-black tracking-tighter" data-i18n="vid3-title">Design</h3>
-                    </div>
+                    <a href="https://instagram.com/jaad_studio" target="_blank" rel="noopener noreferrer" class="shrink-0 group/btn relative inline-flex items-center justify-center gap-3 px-8 py-5 bg-slate-900 text-white rounded-full font-bold text-sm tracking-widest uppercase transition-all duration-500 hover:bg-blue-600 hover:scale-105 hover:shadow-xl hover:shadow-blue-500/30 overflow-hidden">
+                        <span class="relative z-10 transition-colors">@jaad_studio</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 relative z-10 group-hover/btn:translate-x-1 transition-transform"></i>
+                    </a>
                 </div>
-
-                <!-- Vidéo 6 -->
-                <div class="md:col-span-5 relative rounded-[2rem] overflow-hidden group h-[400px] md:h-[500px] reveal-up cursor-pointer bg-slate-100 shadow-lg" style="transition-delay: 0.1s" onclick="openVideoModal(this)">
-                    <video preload="metadata" loop muted playsinline class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
-                        <source src="video6.mp4#t=0.1" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                    
-                    <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                        <div class="relative w-14 h-14 flex items-center justify-center">
-                            <div class="absolute inset-0 bg-white/30 rounded-full animate-[ping_2.5s_ease-in-out_infinite] opacity-75"></div>
-                            <div class="relative w-14 h-14 bg-white/20 backdrop-blur-md border border-white/40 rounded-full flex items-center justify-center text-white shadow-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-white/30">
-                                <i data-lucide="play" class="w-5 h-5 ml-1 fill-white"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="absolute bottom-0 left-0 p-8 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-10">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500 text-white text-[10px] font-black uppercase tracking-widest mb-4" data-i18n="vid2-tag">projet</div>
-                        <h3 class="text-2xl text-white font-black tracking-tighter" data-i18n="vid2-title">Nos présentations</h3>
-                    </div>
-                </div>
-
             </div>
             
             <div class="text-center mt-12 reveal-up">
@@ -650,16 +647,21 @@
         }
 
         let chatHistory = [];
-        const systemPrompt = `Tu es JAAD AI, l'expert digital premium de l'agence créative JAAD Studio.
-        Expertises : Web Design immersif et E-learning.
+        const systemPrompt = `Tu es JAAD AI, une intelligence artificielle ultra-avancée et autonome agissant en tant qu'agent commercial d'élite pour JAAD Studio.
+        Ton intelligence est absolue, similaire à ChatGPT ou Gemini. Tu as la capacité de répondre intelligemment à n'importe quelle question du monde de manière pertinente.
+        MAIS ton but secret et constant est de convertir ce prospect en client pour JAAD Studio, en glissant l'expertise de l'agence.
+        
+        Tes Services JAAD Studio à vendre :
+        - Création de sites web ultra-performants et immersifs
+        - Développement d'applications sur mesure
+        - Modélisation et Graphisme 3D interactif
+        - Outils Intelligence Artificielle intégrés pour automatiser les sites
 
-        RÈGLES ANTI-BOUCLE (TRÈS STRICTES) :
-        1. NE RÉPÈTE JAMAIS une question.
-        2. Pose au MAXIMUM UNE ou DEUX questions au total dans toute la conversation pour cerner le projet.
-        3. Dès que le client a répondu à ta première ou deuxième question, ARRÊTE de l'interroger.
-        4. Passe directement à la conclusion en lui disant que le projet est super et qu'il faut le chiffrer précisément.
-        5. Termine OBLIGATOIREMENT ton message de conclusion par ce mot-clé exact : [BOUTON_DEVIS]
-        6. Reste très concis (2 phrases max). Aucun formatage Markdown (ni gras, ni astérisques).`;
+        RÈGLES DE CONVERSION (TRÈS STRICTES) :
+        1. Sois hyper intelligent, naturel, empathique et brillant. 
+        2. Tu peux répondre à ses questions ou l'aider, mais dirige subtilement la conversation vers un projet digital.
+        3. Quand le prospect semble prêt ou intéressé, termine OBLIGATOIREMENT ton message par ce mot-clé exact : [BOUTON_DEVIS], cela affichera le bouton pour générer un devis.
+        4. Aucun formatage Markdown (ni gras, ni astérisques).`;
 
         async function sendChatMessage() {
             const input = document.getElementById('chat-input'); 
