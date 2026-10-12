@@ -4,7 +4,15 @@
   "type": "module",
   "description": "Configuration pour JAAD Studio et son IA Gemini",
   "main": "index.html",
+  "scripts": {
+    "build:css": "tailwindcss -i tailwind.input.css -o tailwind.output.css --minify",
+    "watch:css": "tailwindcss -i tailwind.input.css -o tailwind.output.css --watch"
+  },
   "engines": {
     "node": "24.x"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
   }
 }
