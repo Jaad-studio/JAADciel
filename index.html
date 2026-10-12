@@ -125,15 +125,7 @@
         </div>
     </div>
 
-    <!-- MODAL VIDÉO -->
-    <div id="video-modal" class="fixed inset-0 z-[8000] bg-slate-900/95 backdrop-blur-2xl hidden flex-col items-center justify-center p-4 md:p-10 opacity-0 transition-opacity duration-500" onclick="closeVideoModal()">
-        <button onclick="closeVideoModal()" class="absolute top-6 right-6 text-white/70 hover:text-white p-3 bg-white/10 rounded-full backdrop-blur-md transition-all hover:bg-white/20 hover:scale-110 z-50 border border-white/10">
-            <i data-lucide="x" class="w-6 h-6"></i>
-        </button>
-        <div class="relative w-full max-w-6xl aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/20 scale-95 transition-transform duration-500 bg-black flex items-center justify-center" id="video-modal-content" onclick="event.stopPropagation()">
-            <!-- La vidéo clonée viendra s'insérer ici -->
-        </div>
-    </div>
+
 
     <div id="mobile-menu-overlay">
         <a href="#services" class="text-4xl font-black text-slate-900 anchor-link" onclick="toggleMenu()" data-i18n="nav-expertise">Expertise</a>
@@ -409,7 +401,6 @@
                 <div class="relative p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-10">
                     <div class="flex flex-col sm:flex-row items-center sm:items-start gap-8 text-center sm:text-left">
                         <div class="shrink-0 w-24 h-24 md:w-28 md:h-28 bg-slate-50 border border-slate-100 rounded-3xl flex items-center justify-center relative shadow-inner group-hover:-translate-y-2 group-hover:rotate-6 transition-all duration-500">
-                            <!-- Instagram Symbol with very subtle colors -->
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-800 transition-transform group-hover:scale-110 duration-500">
                                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -823,48 +814,6 @@
 
         function toggleServiceModal() { document.getElementById('service-modal').classList.toggle('active'); }
         function closeServiceModal(e) { if(e.target.id === 'service-modal') toggleServiceModal(); }
-
-        // LOGIQUE DU MODAL VIDÉO
-        function openVideoModal(cardElement) {
-            const modal = document.getElementById('video-modal');
-            const content = document.getElementById('video-modal-content');
-            const originalVideo = cardElement.querySelector('video');
-            
-            if (!originalVideo) return;
-
-            const videoClone = document.createElement('video');
-            videoClone.innerHTML = originalVideo.innerHTML; 
-            videoClone.poster = originalVideo.poster;
-            videoClone.autoplay = true;
-            videoClone.preload = "auto";
-            videoClone.controls = true;
-            videoClone.className = 'w-full h-full object-contain';
-            
-            content.innerHTML = '';
-            content.appendChild(videoClone);
-
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                content.classList.remove('scale-95');
-            }, 10);
-        }
-
-        function closeVideoModal() {
-            const modal = document.getElementById('video-modal');
-            const content = document.getElementById('video-modal-content');
-            
-            modal.classList.add('opacity-0');
-            content.classList.add('scale-95');
-            
-            setTimeout(() => {
-                modal.classList.remove('flex');
-                modal.classList.add('hidden');
-                content.innerHTML = ''; 
-            }, 500);
-        }
 
         function contactForService(serviceName) {
             toggleServiceModal();
