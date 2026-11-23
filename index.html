@@ -154,7 +154,7 @@
         </div>
     </nav>
 
-    <div class="fixed bottom-8 right-8 z-[1500] flex flex-col items-end gap-4">
+    <div id="floating-chat-dock" class="fixed bottom-8 right-8 z-[1500] flex flex-col items-end gap-4 transition-all duration-300">
         <div class="flex items-center gap-3">
             <div id="ai-tooltip" class="relative animate-bounce cursor-pointer origin-right transition-all duration-300" onclick="toggleAiChat()">
                 <div class="bg-white/95 backdrop-blur-md text-slate-800 text-[10px] sm:text-[11px] uppercase tracking-wider font-black px-4 py-3 rounded-2xl shadow-2xl border border-slate-100 flex items-center gap-2">
@@ -166,11 +166,11 @@
                 </div>
                 <div class="absolute right-[-4px] top-1/2 -translate-y-1/2 w-3 h-3 bg-white/95 rotate-45 border-t border-r border-slate-100 rounded-tr-[2px]"></div>
             </div>
-            <button id="ai-chat-trigger" onclick="toggleAiChat()" class="w-14 h-14 shrink-0 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
-                <i data-lucide="sparkles"></i>
+            <button id="ai-chat-trigger" onclick="toggleAiChat()" aria-label="Ouvrir l'assistant JAAD Studio" title="Discuter avec JAAD Studio" class="w-14 h-14 shrink-0 rounded-full bg-slate-900 hover:bg-blue-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-all">
+                <i data-lucide="message-square-text" class="w-6 h-6"></i>
             </button>
         </div>
-        <a href="https://wa.me/33626789839" target="_blank" class="w-14 h-14 shrink-0 rounded-full bg-[#25d366] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
+        <a href="https://wa.me/33626789839" target="_blank" aria-label="Contacter sur WhatsApp" title="WhatsApp JAAD Studio" class="w-14 h-14 shrink-0 rounded-full bg-[#25d366] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
             <i data-lucide="message-circle"></i>
         </a>
     </div>
@@ -585,21 +585,40 @@
         <p class="text-slate-400 text-xs mt-6" data-i18n="footer-rights">© 2026 JAAD Studio.</p>
     </footer>
 
-    <!-- TERMINAL IA GLASSMORPHISM -->
-    <div id="ai-chat-modal">
-        <div class="px-6 py-5 border-b border-white/40 flex justify-between items-center font-black relative overflow-hidden shrink-0">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-sky-400/5 z-0"></div>
-            <span class="relative z-10 flex items-center gap-2 text-[12px] uppercase tracking-widest text-slate-800"><i data-lucide="sparkles" class="w-4 h-4 text-blue-600"></i> JAAD AI</span>
-            <button onclick="toggleAiChat()" class="relative z-10 text-slate-400 hover:text-slate-900 hover:rotate-90 transition-all duration-300"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <!-- ASSISTANT CONVERSATIONNEL JAAD STUDIO -->
+    <div id="ai-chat-modal" role="dialog" aria-label="Assistant JAAD Studio">
+        <div class="chat-header">
+            <div class="chat-header-left">
+                <span class="chat-brand-badge">J<span>.</span></span>
+                <div>
+                    <div class="chat-title">Assistant JAAD Studio</div>
+                    <div class="chat-status">
+                        <span class="chat-status-dot"></span>
+                        <span data-i18n="chat-status">En ligne · Posez n'importe quelle question</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button type="button" onclick="resetAiChat()" aria-label="Nouvelle discussion" title="Nouvelle discussion" class="chat-icon-btn">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                </button>
+                <button type="button" onclick="toggleAiChat()" aria-label="Fermer le chat" title="Fermer" class="chat-icon-btn">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
         </div>
-        <div id="chat-messages" class="chat-messages relative">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-400/5 blur-[40px] rounded-full pointer-events-none"></div>
-            <div class="msg msg-ai relative z-10" data-i18n="chat-welcome">Bonjour ! Je suis l'IA de JAAD Studio. En quoi puis-je dynamiser votre projet aujourd'hui ?</div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="msg msg-ai" data-i18n="chat-welcome">Bonjour ! Je suis l'assistant de JAAD Studio. Posez-moi n'importe quelle question — sur nos sites, nos outils IA, nos tarifs ou même un sujet totalement libre.</div>
+            <div id="chat-quick-replies" class="chat-quick-wrap">
+                <button type="button" class="chat-quick-btn" onclick="sendQuickReply('Quels outils IA et applications internes créez-vous pour les entreprises ?')">Outils IA &amp; Apps internes</button>
+                <button type="button" class="chat-quick-btn" onclick="sendQuickReply('Combien coûte un site internet chez JAAD Studio ?')">Tarifs d'un site web</button>
+                <button type="button" class="chat-quick-btn" onclick="sendQuickReply('Pouvez-vous me montrer des exemples de vos réalisations ?')">Voir des réalisations</button>
+                <button type="button" class="chat-quick-btn" onclick="sendQuickReply('Explique-moi simplement comment l’IA peut faire gagner du temps à une entreprise')">Comment l’IA aide une PME ?</button>
+            </div>
         </div>
-        <div class="p-5 flex gap-3 border-t border-white/40 relative shrink-0">
-            <div class="absolute inset-0 bg-white/20 z-0"></div>
-            <input type="text" id="chat-input" class="flex-1 outline-none text-[13px] bg-white/60 backdrop-blur-md border border-white/80 px-5 py-3.5 rounded-full shadow-inner text-slate-800 placeholder-slate-400 focus:border-blue-300 focus:bg-white/90 transition-colors z-10" placeholder="Rédigez votre demande..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
-            <button onclick="sendChatMessage()" id="chat-send-btn" class="bg-blue-600 hover:bg-blue-700 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-[0_10px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:scale-105 transition-all shrink-0 z-10"><i data-lucide="send" class="w-5 h-5 ml-[-2px]"></i></button>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" class="chat-input-field" placeholder="Écrivez votre question..." onkeydown="if(event.key === 'Enter' && !event.shiftKey){ event.preventDefault(); sendChatMessage(); }">
+            <button type="button" onclick="sendChatMessage()" id="chat-send-btn" aria-label="Envoyer le message" title="Envoyer" class="chat-send-btn"><i data-lucide="send" class="w-4 h-4"></i></button>
         </div>
     </div>
 
@@ -631,7 +650,7 @@
 
         const translations = {
             fr: { 
-                "nav-expertise": "Expertise", "nav-methode": "Méthode", "nav-realisations": "Étude de cas", "nav-contact-btn": "Contact", "nav-close": "Fermer", "hero-btn": "Parlons-en.", "hero-btn-secondary": "Nos créations.", "hero-btn-quote": "Générer un devis", "hero-badge-new": "Nouveau", "exp-title-marquee": "On crée pour vous. E-learning. IA.", "showcase-tag": "Étude de cas", "showcase-title": "Robot IA sur-mesure.", "showcase-desc": "Voici l'exemple d'un agent conversationnel 3D interactif que nous avons créé pour une entreprise de technologie innovante. Il sert d'assistant virtuel intelligent.", "showcase-info": "Chaque projet est confidentiel. Contactez-nous pour découvrir nos autres réalisations privées (Web, Apps, 3D).", "showcase-cta": "Demander nos références", "form-name": "Votre nom ?", "form-email": "Votre email ?", "form-phone": "Votre numéro ?", "form-service": "Quel service ?", "form-desc": "Description", "form-btn-next": "Suivant", "form-btn-prev": "Retour", "form-btn-send": "Envoyer", "form-btn-back": "Retour au site", "chat-tooltip": "Posez vos questions !", "chat-welcome": "Bonjour ! Je suis JAAD AI. Comment puis-je vous aider ?", "modal-btn-start": "Démarrer mon projet", "modal-btn-close": "Fermer", "form-ph-name": "Nom complet", "form-ph-email": "votre@email.com", "form-ph-phone": "06 00...", "form-ph-desc": "Détaillez votre projet...", "faq-tag": "06. FAQ", "faq-title": "Questions Fréquentes.", "faq-q1": "Pourquoi intégrer la 3D sur mon site internet ?", "faq-a1": "La 3D offre une expérience immersive qui capte l'attention, augmente le temps passé sur votre site et améliore considérablement vos taux de conversion. C'est un atout SEO majeur pour se démarquer.", "faq-q2": "Comment l'IA peut-elle optimiser mon entreprise ?", "faq-a2": "Nous développons des chatbots intelligents et automatisons vos processus. Cela permet d'offrir un support client 24/7 et d'accélérer votre croissance.", "faq-q3": "Quels sont les délais pour un projet web sur-mesure ?", "faq-a3": "Un site premium avec intégration 3D et SEO prend généralement entre 4 à 8 semaines, selon la complexité et les fonctionnalités requises.",
+                "nav-expertise": "Expertise", "nav-methode": "Méthode", "nav-realisations": "Étude de cas", "nav-contact-btn": "Contact", "nav-close": "Fermer", "hero-btn": "Parlons-en.", "hero-btn-secondary": "Nos créations.", "hero-btn-quote": "Générer un devis", "hero-badge-new": "Nouveau", "exp-title-marquee": "On crée pour vous. E-learning. IA.", "showcase-tag": "Étude de cas", "showcase-title": "Robot IA sur-mesure.", "showcase-desc": "Voici l'exemple d'un agent conversationnel 3D interactif que nous avons créé pour une entreprise de technologie innovante. Il sert d'assistant virtuel intelligent.", "showcase-info": "Chaque projet est confidentiel. Contactez-nous pour découvrir nos autres réalisations privées (Web, Apps, 3D).", "showcase-cta": "Demander nos références", "form-name": "Votre nom ?", "form-email": "Votre email ?", "form-phone": "Votre numéro ?", "form-service": "Quel service ?", "form-desc": "Description", "form-btn-next": "Suivant", "form-btn-prev": "Retour", "form-btn-send": "Envoyer", "form-btn-back": "Retour au site", "chat-tooltip": "Posez vos questions !", "chat-status": "En ligne · Posez n'importe quelle question", "chat-welcome": "Bonjour ! Je suis l'assistant de JAAD Studio. Posez-moi n'importe quelle question — sur nos sites, nos outils IA, nos tarifs ou même un sujet totalement libre.", "modal-btn-start": "Démarrer mon projet", "modal-btn-close": "Fermer", "form-ph-name": "Nom complet", "form-ph-email": "votre@email.com", "form-ph-phone": "06 00...", "form-ph-desc": "Détaillez votre projet...", "faq-tag": "06. FAQ", "faq-title": "Questions Fréquentes.", "faq-q1": "Pourquoi intégrer la 3D sur mon site internet ?", "faq-a1": "La 3D offre une expérience immersive qui capte l'attention, augmente le temps passé sur votre site et améliore considérablement vos taux de conversion. C'est un atout SEO majeur pour se démarquer.", "faq-q2": "Comment l'IA peut-elle optimiser mon entreprise ?", "faq-a2": "Nous développons des chatbots intelligents et automatisons vos processus. Cela permet d'offrir un support client 24/7 et d'accélérer votre croissance.", "faq-q3": "Quels sont les délais pour un projet web sur-mesure ?", "faq-a3": "Un site premium avec intégration 3D et SEO prend généralement entre 4 à 8 semaines, selon la complexité et les fonctionnalités requises.",
                 "form-pref": "Je souhaite être contacté par :", "form-opt-web": "Web Design", "form-opt-learn": "E-learning", "form-opt-wa": "WhatsApp", "form-opt-email": "Email",
                 "tag-web": "01. Web", "tag-learning": "02. Learning",
                 "serv-web-title": "Web Design Immersif", "serv-web-desc": "Sites immersifs et SEO performant.", "serv-cta-web": "Voir plus",
@@ -642,7 +661,7 @@
                 "method-3-title": "Publication", "method-3-desc": "Mise en ligne et SEO technique.",
                 "method-4-title": "Maintenance", "method-4-desc": "Support continu et évolutions.",
                 "form-success-title": "Message envoyé !", "form-success-desc": "L'équipe JAAD Studio vous répondra très rapidement.", "footer-rights": "© 2026 JAAD Studio. Tous droits réservés.",
-                "form-direct-quote-title": "Vous savez déjà ce que vous voulez ?", "form-direct-quote-btn": "Générer mon devis en ligne", "chat-btn-quote": "📝 Générer mon devis immédiat",
+                "form-direct-quote-title": "Vous savez déjà ce que vous voulez ?", "form-direct-quote-btn": "Générer mon devis en ligne", "chat-btn-quote": "Faire mon devis en 4 questions",
                 "portfolio-title": "Nos Réalisations.", "portfolio-desc": "Découvrez nos derniers projets web immersifs.",
                 "vid1-tag": "Web Immersif", "vid1-title": "Plateforme E-commerce 3D",
                 "vid2-tag": "E-learning", "vid2-title": "Nos présentations",
@@ -650,7 +669,7 @@
                 "portfolio-btn": "Discuter de votre projet"
             },
             en: { 
-                "nav-expertise": "Expertise", "nav-methode": "Method", "nav-realisations": "Case Study", "nav-contact-btn": "Contact", "nav-close": "Close", "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.", "hero-btn-quote": "Generate a quote", "hero-badge-new": "New", "exp-title-marquee": "We create for you. E-learning. AI.", "showcase-tag": "Case Study", "showcase-title": "Custom AI Robot.", "showcase-desc": "Here is an example of an interactive 3D virtual agent we created for an innovative tech company.", "showcase-info": "Each project is confidential. Contact us to discover our other private projects.", "showcase-cta": "Request our references", "form-name": "Your name?", "form-email": "Your email?", "form-phone": "Your phone?", "form-service": "Which service?", "form-desc": "Description", "form-btn-next": "Next", "form-btn-prev": "Back", "form-btn-send": "Send", "form-btn-back": "Back to site", "chat-tooltip": "Ask your questions !", "chat-welcome": "Hello! I am JAAD AI. How can I help you?", "modal-btn-start": "Start my project", "modal-btn-close": "Close", "form-ph-name": "Full name", "form-ph-email": "your@email.com", "form-ph-phone": "Phone number...", "form-ph-desc": "Describe your project...", "faq-tag": "06. FAQ", "faq-title": "Frequently Asked Questions.", "faq-q1": "Why integrate 3D on my website?", "faq-a1": "3D offers an immersive experience that captures attention, increases time spent on your site, and significantly improves conversion rates. It is a major SEO asset.", "faq-q2": "How can AI optimize my business?", "faq-a2": "We develop smart chatbots and automate your workflows. This provides 24/7 customer support, reduces costs, and accelerates growth.", "faq-q3": "What is the timeframe for a custom web project?", "faq-a3": "A premium website with 3D integration and SEO usually takes between 4 to 8 weeks, depending on complexity and required features.",
+                "nav-expertise": "Expertise", "nav-methode": "Method", "nav-realisations": "Case Study", "nav-contact-btn": "Contact", "nav-close": "Close", "hero-btn": "Let's talk.", "hero-btn-secondary": "Our works.", "hero-btn-quote": "Generate a quote", "hero-badge-new": "New", "exp-title-marquee": "We create for you. E-learning. AI.", "showcase-tag": "Case Study", "showcase-title": "Custom AI Robot.", "showcase-desc": "Here is an example of an interactive 3D virtual agent we created for an innovative tech company.", "showcase-info": "Each project is confidential. Contact us to discover our other private projects.", "showcase-cta": "Request our references", "form-name": "Your name?", "form-email": "Your email?", "form-phone": "Your phone?", "form-service": "Which service?", "form-desc": "Description", "form-btn-next": "Next", "form-btn-prev": "Back", "form-btn-send": "Send", "form-btn-back": "Back to site", "chat-tooltip": "Ask your questions !", "chat-status": "Online · Ask me anything", "chat-welcome": "Hello! I am the JAAD Studio assistant. Ask me anything — about our websites, AI tools, pricing, or any topic at all.", "modal-btn-start": "Start my project", "modal-btn-close": "Close", "form-ph-name": "Full name", "form-ph-email": "your@email.com", "form-ph-phone": "Phone number...", "form-ph-desc": "Describe your project...", "faq-tag": "06. FAQ", "faq-title": "Frequently Asked Questions.", "faq-q1": "Why integrate 3D on my website?", "faq-a1": "3D offers an immersive experience that captures attention, increases time spent on your site, and significantly improves conversion rates. It is a major SEO asset.", "faq-q2": "How can AI optimize my business?", "faq-a2": "We develop smart chatbots and automate your workflows. This provides 24/7 customer support, reduces costs, and accelerates growth.", "faq-q3": "What is the timeframe for a custom web project?", "faq-a3": "A premium website with 3D integration and SEO usually takes between 4 to 8 weeks, depending on complexity and required features.",
                 "form-pref": "I wish to be contacted via:", "form-opt-web": "Web Design", "form-opt-learn": "E-learning", "form-opt-wa": "WhatsApp", "form-opt-email": "Email",
                 "tag-web": "01. Web", "tag-learning": "02. Learning",
                 "serv-web-title": "Immersive Web Design", "serv-web-desc": "Immersive websites and high-performance SEO.", "serv-cta-web": "See more",
@@ -661,7 +680,7 @@
                 "method-3-title": "Publication", "method-3-desc": "Launch and technical SEO.",
                 "method-4-title": "Maintenance", "method-4-desc": "Continuous support and updates.",
                 "form-success-title": "Message sent!", "form-success-desc": "The JAAD Studio team will reply very soon.", "footer-rights": "© 2026 JAAD Studio. All rights reserved.",
-                "form-direct-quote-title": "Already know what you want?", "form-direct-quote-btn": "Generate my quote online", "chat-btn-quote": "📝 Generate my instant quote",
+                "form-direct-quote-title": "Already know what you want?", "form-direct-quote-btn": "Generate my quote online", "chat-btn-quote": "Get my quote in 4 questions",
                 "portfolio-title": "Our Works.", "portfolio-desc": "Discover our latest immersive web projects.",
                 "vid1-tag": "Immersive Web", "vid1-title": "3D E-commerce Platform",
                 "vid2-tag": "E-learning", "vid2-title": "Our presentations",
@@ -669,7 +688,7 @@
                 "portfolio-btn": "Discuss your project"
             },
             ar: {
-                "nav-expertise": "خبرة", "nav-methode": "طريقة", "nav-realisations": "دراسة حالة", "nav-contact-btn": "اتصال", "nav-close": "إغلاق", "hero-btn": "دعنا نتحدث.", "hero-btn-secondary": "أعمالنا.", "hero-btn-quote": "إنشاء عرض أسعار", "hero-badge-new": "جديد", "exp-title-marquee": "نبتكر من أجلك. تعليم إلكتروني. ذكاء اصطناعي.", "showcase-tag": "دراسة حالة", "showcase-title": "روبوت ذكاء اصطناعي مخصص.", "showcase-desc": "إليك مثال على وكيل افتراضي ثلاثي الأبعاد تفاعلي أنشأناه لشركة تكنولوجيا مبتكرة.", "showcase-info": "كل مشروع سري. اتصل بنا لاكتشاف مشاريعنا الخاصة الأخرى.", "showcase-cta": "اطلب مراجعنا", "form-name": "ما اسمك؟", "form-email": "بريدك الإلكتروني؟", "form-phone": "رقم هاتفك؟", "form-service": "أي خدمة؟", "form-desc": "وصف", "form-btn-next": "التالي", "form-btn-prev": "رجوع", "form-btn-send": "إرسال", "form-btn-back": "العودة للموقع", "chat-tooltip": "اطرح أسئلتك!", "chat-welcome": "مرحباً! أنا JAAD AI. كيف يمكنني مساعدتك؟", "modal-btn-start": "ابدأ مشروعي", "modal-btn-close": "إغلاق", "form-ph-name": "الاسم الكامل", "form-ph-email": "your@email.com", "form-ph-phone": "رقم الهاتف...", "form-ph-desc": "صف مشروعك...", "faq-tag": "06. الأسئلة الشائعة", "faq-title": "الأسئلة المتداولة.", "faq-q1": "لماذا أدمج 3D في موقعي؟", "faq-a1": "يوفر 3D تجربة غامرة تجذب الانتباه، وتزيد من الوقت المنقضي على موقعك، وتحسن معدلات التحويل بشكل كبير. إنه أصل رئيسي لتحسين محركات البحث.", "faq-q2": "كيف يمكن للذكاء الاصطناعي تحسين عملي؟", "faq-a2": "نطور روبوتات محادثة ذكية وندير أتمتة عملياتك. يوفر هذا دعمًا للعملاء على مدار الساعة طوال أيام الأسبوع ويسرع من نموك.", "faq-q3": "ما هو الإطار الزمني لمشروع ويب مخصص؟", "faq-a3": "يستغرق الموقع المتميز مع دمج 3D و SEO عادةً من 4 إلى 8 أسابيع، اعتمادًا على التعقيد والميزات المطلوبة.",
+                "nav-expertise": "خبرة", "nav-methode": "طريقة", "nav-realisations": "دراسة حالة", "nav-contact-btn": "اتصال", "nav-close": "إغلاق", "hero-btn": "دعنا نتحدث.", "hero-btn-secondary": "أعمالنا.", "hero-btn-quote": "إنشاء عرض أسعار", "hero-badge-new": "جديد", "exp-title-marquee": "نبتكر من أجلك. تعليم إلكتروني. ذكاء اصطناعي.", "showcase-tag": "دراسة حالة", "showcase-title": "روبوت ذكاء اصطناعي مخصص.", "showcase-desc": "إليك مثال على وكيل افتراضي ثلاثي الأبعاد تفاعلي أنشأناه لشركة تكنولوجيا مبتكرة.", "showcase-info": "كل مشروع سري. اتصل بنا لاكتشاف مشاريعنا الخاصة الأخرى.", "showcase-cta": "اطلب مراجعنا", "form-name": "ما اسمك؟", "form-email": "بريدك الإلكتروني؟", "form-phone": "رقم هاتفك؟", "form-service": "أي خدمة؟", "form-desc": "وصف", "form-btn-next": "التالي", "form-btn-prev": "رجوع", "form-btn-send": "إرسال", "form-btn-back": "العودة للموقع", "chat-tooltip": "اطرح أسئلتك!", "chat-status": "متصل · اسألني أي شيء", "chat-welcome": "مرحباً! أنا مساعد JAAD Studio. اسألني أي سؤال — عن مواقعنا أو أدوات الذكاء الاصطناعي أو الأسعار أو أي موضوع آخر.", "modal-btn-start": "ابدأ مشروعي", "modal-btn-close": "إغلاق", "form-ph-name": "الاسم الكامل", "form-ph-email": "your@email.com", "form-ph-phone": "رقم الهاتف...", "form-ph-desc": "صف مشروعك...", "faq-tag": "06. الأسئلة الشائعة", "faq-title": "الأسئلة المتداولة.", "faq-q1": "لماذا أدمج 3D في موقعي؟", "faq-a1": "يوفر 3D تجربة غامرة تجذب الانتباه، وتزيد من الوقت المنقضي على موقعك، وتحسن معدلات التحويل بشكل كبير. إنه أصل رئيسي لتحسين محركات البحث.", "faq-q2": "كيف يمكن للذكاء الاصطناعي تحسين عملي؟", "faq-a2": "نطور روبوتات محادثة ذكية وندير أتمتة عملياتك. يوفر هذا دعمًا للعملاء على مدار الساعة طوال أيام الأسبوع ويسرع من نموك.", "faq-q3": "ما هو الإطار الزمني لمشروع ويب مخصص؟", "faq-a3": "يستغرق الموقع المتميز مع دمج 3D و SEO عادةً من 4 إلى 8 أسابيع، اعتمادًا على التعقيد والميزات المطلوبة.",
                 "form-pref": "أرغب في أن يتم الاتصال بي عبر :", "form-opt-web": "تصميم الويب", "form-opt-learn": "تعليم إلكتروني", "form-opt-wa": "واتساب", "form-opt-email": "البريد الإلكتروني",
                 "tag-web": "01. الويب", "tag-learning": "02. تعليم",
                 "serv-web-title": "تصميم ويب غامر", "serv-web-desc": "مواقع غامرة وتحسين محركات بحث عالي الأداء.", "serv-cta-web": "شاهد المزيد",
@@ -680,7 +699,7 @@
                 "method-3-title": "نشر", "method-3-desc": "إطلاق وتحسين محركات البحث الفني.",
                 "method-4-title": "صيانة", "method-4-desc": "دعم مستمر وتحديثات.",
                 "form-success-title": "تم إرسال الرسالة!", "form-success-desc": "سيرد عليك فريق استوديو جاد قريبًا جدًا.", "footer-rights": "© 2026 استوديو جاد. جميع الحقوق محفوظة.",
-                "form-direct-quote-title": "هل تعرف بالفعل ما تريد؟", "form-direct-quote-btn": "إنشاء عرض الأسعار الخاص بي عبر الإنترنت", "chat-btn-quote": "📝 إنشاء عرض الأسعار الفوري الخاص بي",
+                "form-direct-quote-title": "هل تعرف بالفعل ما تريد؟", "form-direct-quote-btn": "إنشاء عرض الأسعار الخاص بي عبر الإنترنت", "chat-btn-quote": "احصل على عرض أسعار في 4 أسئلة",
                 "portfolio-title": "أعمالنا.", "portfolio-desc": "اكتشف أحدث مشاريعنا الويب الغامرة.",
                 "vid1-tag": "ويب غامر", "vid1-title": "منصة تجارة إلكترونية 3D",
                 "vid2-tag": "تعليم إلكتروني", "vid2-title": "عروضنا",
@@ -690,72 +709,188 @@
         };
 
         // GEMINI LOGIC
-        async function fetchGeminiAPI(contents, systemInstruction = null) {
+        async function fetchGeminiAPI(contents) {
             try {
                 const response = await fetch(apiEndpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents, systemInstruction })
+                    body: JSON.stringify({ contents })
                 });
-                
+
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.error || "API Error");
-                
-                return data.text || "Erreur de format de réponse.";
+
+                return data.text || "Désolé, je n'ai pas reçu de réponse exploitable.";
             } catch (error) {
                 console.error(error);
-                return "Je rencontre une difficulté technique. Merci de nous contacter sur WhatsApp (+33 7 88 40 80 04) !";
+                return "Je rencontre un petit souci technique. Vous pouvez écrire directement à Jâd sur WhatsApp au 06 26 78 98 39 ! [BOUTON_WHATSAPP]";
             }
         }
 
         let chatHistory = [];
-        const systemPrompt = `Tu es l'IA de JAAD Studio.
-        ⚠️ RÈGLES ABSOLUES DE FORMAT ⚠️
-        1. RÉPONSES VRAIMENT TRÈS COURTES : 20 MOTS MAXIMUM AU TOTAL.
-        2. AUCUNE LISTE, PAS DE TIRETS, PAS DE GRAS.
-        3. DIRIGE CHAQUE RÉPONSE VERS CE MOT CLÉ EXACT : [BOUTON_DEVIS].
-        Exemple : "Nos experts 3D et Web sont à votre disposition pour ce beau projet ! Démarrez ici : [BOUTON_DEVIS]"`;
+        let isChatSending = false;
 
-        async function sendChatMessage() {
-            const input = document.getElementById('chat-input'); 
-            const box = document.getElementById('chat-messages'); 
-            if(!input.value.trim()) return;
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
 
-            const msg = input.value; 
-            box.innerHTML += `<div class="msg msg-user">${msg}</div>`; 
-            input.value = '';
-            box.innerHTML += `<div class="msg msg-ai italic" id="loading">...</div>`; 
-            box.scrollTop = box.scrollHeight;
-            
-            chatHistory.push({ role: "user", parts: [{ text: msg }] });
-            
-            const responseText = await fetchGeminiAPI(chatHistory, systemPrompt);
-            
-            const loadingEl = document.getElementById('loading');
-            if(loadingEl) loadingEl.remove();
+        function buildWhatsAppPrefillUrl() {
+            const recentUserMsgs = chatHistory
+                .filter(m => m.role === 'user')
+                .slice(-3)
+                .map(m => m.parts?.[0]?.text || '')
+                .filter(Boolean)
+                .join(' / ');
+            const text = recentUserMsgs
+                ? `Bonjour Jâd, je viens de discuter sur jaad.studio au sujet de : ${recentUserMsgs}`
+                : `Bonjour Jâd, je souhaite échanger sur un projet avec JAAD Studio.`;
+            return `https://wa.me/33626789839?text=${encodeURIComponent(text)}`;
+        }
 
-            let cleanAiText = responseText.replace('[BOUTON_DEVIS]', '').trim();
-            chatHistory.push({ role: "model", parts: [{ text: cleanAiText }] });
+        function renderAiMarkdown(rawText) {
+            const hasQuoteBtn = rawText.includes('[BOUTON_DEVIS]');
+            const hasWaBtn = rawText.includes('[BOUTON_WHATSAPP]');
+            const cleaned = rawText
+                .replace(/\[BOUTON_DEVIS\]/g, '')
+                .replace(/\[BOUTON_WHATSAPP\]/g, '')
+                .trim();
 
-            let formattedResponse = responseText.replace(/\n/g, '<br>');
-            
-            if (formattedResponse.includes('[BOUTON_DEVIS]')) {
-                const btnText = translations[currentLang]['chat-btn-quote'] || '📝 Générer mon devis immédiat';
-                const btnHtml = `<br><br><a href="https://devis.jaad.studio" target="_blank" onclick="toggleAiChat()" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-sky-500 text-white px-5 py-3 rounded-2xl text-[11px] font-black uppercase tracking-widest hover:scale-105 transition-all w-full shadow-lg shadow-blue-500/30 mt-2 text-center decoration-none"><span data-i18n="chat-btn-quote">${btnText}</span></a>`;
-                formattedResponse = formattedResponse.replace('[BOUTON_DEVIS]', btnHtml);
+            const lines = cleaned.split('\n');
+            let html = '';
+            let inList = false;
+
+            const formatInline = (line) => {
+                let s = escapeHtml(line);
+                s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                s = s.replace(/(https?:\/\/[^\s<]+)/g, (url) => {
+                    const cleanUrl = url.replace(/[.,);!?]+$/, '');
+                    const suffix = url.slice(cleanUrl.length);
+                    return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="chat-inline-link">${cleanUrl.replace(/^https?:\/\//, '')}</a>${suffix}`;
+                });
+                return s;
+            };
+
+            for (const rawLine of lines) {
+                const trimmed = rawLine.trim();
+                if (/^[-•*]\s+/.test(trimmed)) {
+                    if (!inList) {
+                        html += '<ul>';
+                        inList = true;
+                    }
+                    html += `<li>${formatInline(trimmed.replace(/^[-•*]\s+/, ''))}</li>`;
+                } else {
+                    if (inList) {
+                        html += '</ul>';
+                        inList = false;
+                    }
+                    if (trimmed === '') {
+                        html += '<div style="height:6px;"></div>';
+                    } else {
+                        html += `<div>${formatInline(trimmed)}</div>`;
+                    }
+                }
+            }
+            if (inList) html += '</ul>';
+
+            if (hasQuoteBtn || hasWaBtn) {
+                html += '<div class="chat-actions-row">';
+                if (hasQuoteBtn) {
+                    const btnText = translations[currentLang]['chat-btn-quote'] || 'Faire mon devis en 4 questions';
+                    html += `<a href="https://devis.jaad.studio" target="_blank" rel="noopener noreferrer" class="chat-action-quote">${escapeHtml(btnText)} →</a>`;
+                }
+                if (hasWaBtn) {
+                    html += `<a href="${buildWhatsAppPrefillUrl()}" target="_blank" rel="noopener noreferrer" class="chat-action-wa">Continuer sur WhatsApp (06 26 78 98 39)</a>`;
+                }
+                html += '</div>';
             }
 
-            box.innerHTML += `<div class="msg msg-ai">${formattedResponse}</div>`; 
+            return html;
+        }
+
+        function sendQuickReply(text) {
+            const input = document.getElementById('chat-input');
+            if (!input || isChatSending) return;
+            input.value = text;
+            sendChatMessage();
+        }
+
+        function resetAiChat() {
+            chatHistory = [];
+            const box = document.getElementById('chat-messages');
+            const welcomeText = translations[currentLang]['chat-welcome'] || "Bonjour ! Je suis l'assistant de JAAD Studio. Posez-moi n'importe quelle question.";
+            box.innerHTML = `
+                <div class="msg msg-ai">${escapeHtml(welcomeText)}</div>
+                <div id="chat-quick-replies" class="chat-quick-wrap">
+                    <button type="button" class="chat-quick-btn" onclick="sendQuickReply('Quels outils IA et applications internes créez-vous pour les entreprises ?')">Outils IA &amp; Apps internes</button>
+                    <button type="button" class="chat-quick-btn" onclick="sendQuickReply('Combien coûte un site internet chez JAAD Studio ?')">Tarifs d'un site web</button>
+                    <button type="button" class="chat-quick-btn" onclick="sendQuickReply('Pouvez-vous me montrer des exemples de vos réalisations ?')">Voir des réalisations</button>
+                    <button type="button" class="chat-quick-btn" onclick="sendQuickReply('Explique-moi simplement comment l’IA peut faire gagner du temps à une entreprise')">Comment l’IA aide une PME ?</button>
+                </div>
+            `;
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('chat-send-btn');
+            const box = document.getElementById('chat-messages');
+            const msg = input.value.trim();
+            if (!msg || isChatSending) return;
+
+            isChatSending = true;
+            if (sendBtn) sendBtn.disabled = true;
+
+            const quick = document.getElementById('chat-quick-replies');
+            if (quick) quick.remove();
+
+            box.insertAdjacentHTML('beforeend', `<div class="msg msg-user">${escapeHtml(msg)}</div>`);
+            input.value = '';
+            box.insertAdjacentHTML(
+                'beforeend',
+                `<div class="msg msg-ai" id="loading"><div class="typing-dots"><span></span><span></span><span></span></div></div>`
+            );
             box.scrollTop = box.scrollHeight;
+
+            chatHistory.push({ role: 'user', parts: [{ text: msg }] });
+
+            const responseText = await fetchGeminiAPI(chatHistory);
+
+            const loadingEl = document.getElementById('loading');
+            if (loadingEl) loadingEl.remove();
+
+            const cleanAiText = responseText
+                .replace(/\[BOUTON_DEVIS\]/g, '')
+                .replace(/\[BOUTON_WHATSAPP\]/g, '')
+                .trim();
+            chatHistory.push({ role: 'model', parts: [{ text: cleanAiText }] });
+
+            box.insertAdjacentHTML('beforeend', `<div class="msg msg-ai">${renderAiMarkdown(responseText)}</div>`);
+            box.scrollTop = box.scrollHeight;
+
+            isChatSending = false;
+            if (sendBtn) sendBtn.disabled = false;
+            input.focus();
         }
 
         // UI LOGIC
         function toggleMenu() { document.getElementById('mobile-menu-overlay').classList.toggle('active'); }
-        
-        function toggleAiChat() { 
-            document.getElementById('ai-chat-modal').classList.toggle('active');
+
+        function toggleAiChat() {
+            const modal = document.getElementById('ai-chat-modal');
+            const dock = document.getElementById('floating-chat-dock');
             const tooltip = document.getElementById('ai-tooltip');
-            if(tooltip) tooltip.style.display = 'none';
+            const isOpen = modal.classList.toggle('active');
+            if (dock) dock.classList.toggle('chat-open', isOpen);
+            if (tooltip) tooltip.style.display = 'none';
+            if (isOpen) {
+                setTimeout(() => {
+                    const input = document.getElementById('chat-input');
+                    if (input) input.focus();
+                }, 150);
+            }
         }
 
         function switchLanguage(lang) {
