@@ -222,15 +222,16 @@ body {
 
 #ai-chat-modal {
     position: fixed; bottom: 1.5rem; right: 1.5rem; width: 410px; max-width: calc(100vw - 2rem);
-    height: min(78vh, 620px);
-    background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+    height: min(620px, calc(100dvh - 132px));
+    background: #ffffff;
     border-radius: 26px; z-index: 7000; display: none; flex-direction: column; overflow: hidden;
-    border: 1px solid rgba(226, 232, 240, 0.95);
+    border: 1px solid #e2e8f0;
     box-shadow: 0 32px 80px -18px rgba(15, 23, 42, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
-    transform: translateY(18px) scale(0.96); opacity: 0; transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(18px) scale(0.96); opacity: 0;
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease;
 }
 #ai-chat-modal.active { display: flex; transform: translateY(0) scale(1); opacity: 1; }
-.chat-messages { flex: 1; overflow-y: auto; padding: 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.75rem; background: #f8fafc; scroll-behavior: smooth; }
+.chat-messages { flex: 1; min-height: 0; overflow-y: auto; padding: 1.15rem 1.2rem; display: flex; flex-direction: column; gap: 0.75rem; background: #f8fafc; }
 .msg { padding: 0.78rem 1rem; border-radius: 18px; font-size: 13.2px; line-height: 1.52; max-width: 88%; font-weight: 500; word-wrap: break-word; }
 .msg-user { align-self: flex-end; background: #0f172a; color: #ffffff; border-bottom-right-radius: 5px; box-shadow: 0 8px 18px -6px rgba(15, 23, 42, 0.28); }
 .msg-ai { align-self: flex-start; background: #ffffff; border: 1px solid #e2e8f0; color: #0f172a; border-bottom-left-radius: 5px; box-shadow: 0 4px 12px -4px rgba(15, 23, 42, 0.06); }
@@ -410,7 +411,7 @@ body {
 @media (max-width: 640px) {
     #ai-chat-modal {
         left: 0.75rem; right: 0.75rem; bottom: 0.75rem; width: auto; max-width: none;
-        height: min(82dvh, 620px); border-radius: 22px;
+        height: min(600px, calc(100dvh - 116px)); border-radius: 22px;
     }
 }
 
