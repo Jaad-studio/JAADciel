@@ -333,6 +333,7 @@ body {
     border-radius: 999px;
     background: #10b981;
     display: inline-block;
+    flex-shrink: 0;
 }
 .chat-header-actions {
     display: flex;
