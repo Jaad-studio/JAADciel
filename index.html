@@ -729,6 +729,9 @@
 
         let chatHistory = [];
         let isChatSending = false;
+        let chatTurnCount = 0;
+        let lastQuoteBtnTurn = -99;
+        let lastWaBtnTurn = -99;
 
         function escapeHtml(str) {
             return String(str)
@@ -751,9 +754,19 @@
             return `https://wa.me/33626789839?text=${encodeURIComponent(text)}`;
         }
 
-        function renderAiMarkdown(rawText) {
-            const hasQuoteBtn = rawText.includes('[BOUTON_DEVIS]');
-            const hasWaBtn = rawText.includes('[BOUTON_WHATSAPP]');
+        function renderAiMarkdown(rawText, userMsg = '') {
+            const explicitQuoteAsk = /\b(devis|simulat|chiffr|estim)\b/i.test(userMsg);
+            const explicitWaAsk = /\b(whatsapp|tel|téléphone|appel|contact|numéro|numero|j[âa]d|parler|rdv|rendez-vous)\b/i.test(userMsg);
+
+            const wantsQuoteBtn = rawText.includes('[BOUTON_DEVIS]');
+            const wantsWaBtn = rawText.includes('[BOUTON_WHATSAPP]');
+
+            const hasQuoteBtn = wantsQuoteBtn && ((chatTurnCount - lastQuoteBtnTurn >= 4) || explicitQuoteAsk);
+            const hasWaBtn = wantsWaBtn && ((chatTurnCount - lastWaBtnTurn >= 4) || explicitWaAsk);
+
+            if (hasQuoteBtn) lastQuoteBtnTurn = chatTurnCount;
+            if (hasWaBtn) lastWaBtnTurn = chatTurnCount;
+
             const cleaned = rawText
                 .replace(/\[BOUTON_DEVIS\]/g, '')
                 .replace(/\[BOUTON_WHATSAPP\]/g, '')
@@ -822,6 +835,9 @@
 
         function resetAiChat() {
             chatHistory = [];
+            chatTurnCount = 0;
+            lastQuoteBtnTurn = -99;
+            lastWaBtnTurn = -99;
             const box = document.getElementById('chat-messages');
             const welcomeText = translations[currentLang]['chat-welcome'] || "Bonjour ! Je suis l'assistant de JAAD Studio. Posez-moi n'importe quelle question.";
             box.innerHTML = `
@@ -863,13 +879,10 @@
             const loadingEl = document.getElementById('loading');
             if (loadingEl) loadingEl.remove();
 
-            const cleanAiText = responseText
-                .replace(/\[BOUTON_DEVIS\]/g, '')
-                .replace(/\[BOUTON_WHATSAPP\]/g, '')
-                .trim();
-            chatHistory.push({ role: 'model', parts: [{ text: cleanAiText }] });
+            chatTurnCount += 1;
+            chatHistory.push({ role: 'model', parts: [{ text: responseText.trim() }] });
 
-            box.insertAdjacentHTML('beforeend', `<div class="msg msg-ai">${renderAiMarkdown(responseText)}</div>`);
+            box.insertAdjacentHTML('beforeend', `<div class="msg msg-ai">${renderAiMarkdown(responseText, msg)}</div>`);
             box.scrollTop = box.scrollHeight;
 
             isChatSending = false;
