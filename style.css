@@ -203,6 +203,17 @@ body {
 #service-modal.active .modal-content { transform: scale(1) translateY(0); }
 
 /* --- AI CHAT TERMINAL --- */
+#floating-chat-dock {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1500;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
 #floating-chat-dock.chat-open {
     opacity: 0;
     pointer-events: none;
